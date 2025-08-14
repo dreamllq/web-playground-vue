@@ -1,4 +1,4 @@
-import { ComponentId, ComponentType, IComponent, PropItem } from '@/types/component';
+import { ComponentId, ComponentType, IComponent, PropItem } from '@core/types/component';
 import { v4 as uuidv4 } from 'uuid';
 
 export class Component<TRef = any, TProps = Record<string, PropItem>, TSlots = Record<string, Component<any, any, any>[]>> implements IComponent<TProps> {

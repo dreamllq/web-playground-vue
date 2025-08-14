@@ -4,9 +4,14 @@
   "workspaces": [
     "packages/*"
   ],
-  "dependencies": {},
+  "scripts": {
+    "dev": "vite",
+    "build": "lerna exec -- npm run build"
+  },
+  "dependencies": {
+    "vue-router": "^4.5.1"
+  },
   "devDependencies": {
-    "lerna": "^8.2.3",
     "@types/jest": "^29.5.1",
     "@types/lodash": "^4.14.194",
     "@types/uuid": "^9.0.1",
@@ -19,6 +24,10 @@
     "eslint": "^9.31.0",
     "husky": "^8.0.3",
     "jest": "^29.5.0",
+    "l-play-core": "workspace:*",
+    "l-play-dom-component": "workspace:*",
+    "l-play-element-plus-component": "workspace:*",
+    "lerna": "^8.2.3",
     "lint-staged": "^13.2.2",
     "llqm-eslint": "^1.0.0-alpha.34",
     "llqm-stylelint": "^1.0.0-alpha.34",

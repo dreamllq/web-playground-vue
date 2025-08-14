@@ -5,7 +5,7 @@
 <script setup lang="ts">
 import { PropType } from 'vue';
 import { useProvideStore } from './store';
-import { Playground } from '@/models/playground';
+import { Playground } from '@core/models/playground';
 
 const props = defineProps({
   playground: {

@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { Variable } from './variable';
-import { IAction, ParamItem, ParamType } from '@/types/action';
+import { IAction, ParamItem, ParamType } from '@core/types/action';
 import { Ref } from 'vue';
 
 export class Action implements IAction {

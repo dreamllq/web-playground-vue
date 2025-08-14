@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      vue-router:
+        specifier: ^4.5.1
+        version: 4.5.1(vue@3.5.18(typescript@5.8.3))
     devDependencies:
       '@types/jest':
         specifier: ^29.5.1
@@ -44,6 +48,15 @@ importers:
       jest:
         specifier: ^29.5.0
         version: 29.7.0(@types/node@24.1.0)(ts-node@10.9.1(@types/node@24.1.0)(typescript@5.8.3))
+      l-play-core:
+        specifier: workspace:*
+        version: link:packages/core
+      l-play-dom-component:
+        specifier: workspace:*
+        version: link:packages/dom-component
+      l-play-element-plus-component:
+        specifier: workspace:*
+        version: link:packages/element-plus-component
       lerna:
         specifier: ^8.2.3
         version: 8.2.3(encoding@0.1.13)
@@ -107,6 +120,20 @@ importers:
       vue-tsc:
         specifier: ^2.2.12
         version: 2.2.12(typescript@5.8.3)
+
+  packages/core: {}
+
+  packages/dom-component:
+    dependencies:
+      l-play-core:
+        specifier: workspace:*
+        version: link:../core
+
+  packages/element-plus-component:
+    dependencies:
+      l-play-core:
+        specifier: workspace:*
+        version: link:../core
 
 packages:
 
@@ -1341,6 +1368,9 @@ packages:
 
   '@vue/compiler-vue2@2.7.16':
     resolution: {integrity: sha512-qYC3Psj9S/mfu9uVi5WvNZIzq+xnXMhOwbTFKKDD7b1lhpnn71jXSFdTQ+WsIEk0ONCd7VV2IMm7ONl6tbQ86A==}
+
+  '@vue/devtools-api@6.6.4':
+    resolution: {integrity: sha512-sGhTPMuXqZ1rVOk32RylztWkfXTRhuS7vgAKv0zjqk8gbsHkJ7xfFf+jbySxt7tWObEJwyKaHMikV/WGDiQm8g==}
 
   '@vue/language-core@2.2.12':
     resolution: {integrity: sha512-IsGljWbKGU1MZpBPN+BvPAdr55YPkj2nB/TBNGNC32Vy2qLG25DYu/NBN2vNtZqdRbTRjaoYrahLrToim2NanA==}
@@ -4364,6 +4394,11 @@ packages:
     peerDependencies:
       eslint: ^8.57.0 || ^9.0.0
 
+  vue-router@4.5.1:
+    resolution: {integrity: sha512-ogAF3P97NPm8fJsE4by9dwSYtDwXIY1nFY9T6DyQnGHd1E2Da94w9JIolpe42LJGIl0DwOHBi8TcRPlPGwbTtw==}
+    peerDependencies:
+      vue: ^3.2.0
+
   vue-tsc@2.2.12:
     resolution: {integrity: sha512-P7OP77b2h/Pmk+lZdJ0YWs+5tJ6J2+uOQPo7tlBnY44QqQSPYvS0qVT4wqDJgwrZaLe47etJLLQRFia71GYITw==}
     hasBin: true
@@ -5938,6 +5973,8 @@ snapshots:
     dependencies:
       de-indent: 1.0.2
       he: 1.2.0
+
+  '@vue/devtools-api@6.6.4': {}
 
   '@vue/language-core@2.2.12(typescript@5.8.3)':
     dependencies:
@@ -9379,6 +9416,11 @@ snapshots:
       semver: 7.7.2
     transitivePeerDependencies:
       - supports-color
+
+  vue-router@4.5.1(vue@3.5.18(typescript@5.8.3)):
+    dependencies:
+      '@vue/devtools-api': 6.6.4
+      vue: 3.5.18(typescript@5.8.3)
 
   vue-tsc@2.2.12(typescript@5.8.3):
     dependencies:

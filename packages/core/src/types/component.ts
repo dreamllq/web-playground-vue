@@ -1,5 +1,5 @@
-import { Action } from '@/models/action';
-import { Variable } from '@/models/variable';
+import { Action } from '@core/models/action';
+import { Variable } from '@core/models/variable';
 
 export enum ComponentType {
   COMPONENT='COMPONENT',

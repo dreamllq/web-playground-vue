@@ -33,11 +33,6 @@
         "src/*",
         "src/*.vue",
         "src/*/index.vue"
-      ],
-      "@core/*": [
-        "src/*",
-        "src/*.vue",
-        "src/*/index.vue"
       ]
     },
     "typeRoots": [

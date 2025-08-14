@@ -1,5 +1,5 @@
-import { Playground } from '@/models/playground';
-import { ParamType } from '@/types/action';
+import { Playground } from '@core/models/playground';
+import { ParamType } from '@core/types/action';
 import { createInjectionState } from '@vueuse/core';
 import { ref } from 'vue';
 
@@ -7,7 +7,7 @@ const [useProvideStore, useStore] = createInjectionState((playground: Playground
   const variables = {};
   const actions: Record<string, (...args: any[])=> Promise<any> | any> = {};
   const refs = {};
-
+  
   playground.variables.forEach(variable => {
     variables[variable.id] = ref(variable.value);
   });

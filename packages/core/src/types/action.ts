@@ -1,4 +1,4 @@
-import { Variable } from '@/models/variable';
+import { Variable } from '@core/models/variable';
 import { Ref } from 'vue';
 
 export interface IAction{

@@ -1,9 +1,9 @@
-import { Component } from '@/models/component';
+import { Component } from '@core/models/component';
 import { defineAsyncComponent, defineComponent, h, PropType, ref } from 'vue';
 import { useStore } from '../store';
-import { PropType as ComponentPropType, PropValueType } from '@/types/component';
-import { Variable } from '@/models/variable';
-import { Action } from '@/models/action';
+import { PropType as ComponentPropType, PropValueType } from '@core/types/component';
+import { Variable } from '@core/models/variable';
+import { Action } from '@core/models/action';
 
 const ComponentRender = defineComponent((props) => {
   const { variables, actions, refs } = useStore()!;
@@ -54,8 +54,12 @@ const ComponentRender = defineComponent((props) => {
       _slots[key] = () => components.map(component => h(ComponentRender, { component: component as Component }));
     });
 
+    console.log('_props', _props);
+    console.log('_slots', _slots);
+    
 
     return h(component, _props, _slots);
+    // return h(h('div'), {}, { default: () => [h('div', { innerHTML: '1' })] });
   };
 },
 {
