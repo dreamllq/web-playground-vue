@@ -19,13 +19,18 @@ const [useProvideStore, useStore] = createInjectionState((playground: Playground
       action.params.forEach((param) => {
         if (param.type === ParamType.REF) { 
           gs.push(args[param.value]);
+        } else if (param.type === ParamType.CONTEXT) { 
+          gs.push(args[param.value]);
         } else if (param.type === ParamType.VALUE) {
           gs.push(param.value);
         } else {
           gs.push(null);
         }
       });
-      return action.handle(gs, { variables });
+      return action.handle(gs, {
+        variables,
+        refs
+      });
     };
   });
 

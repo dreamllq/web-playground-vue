@@ -10,20 +10,46 @@ const ComponentRender = defineComponent((props) => {
   const { variables, actions, refs } = useStore()!;
   const component = defineAsyncComponent(() => props.component.getComponent());
   const cProps = props.component.getProps();
-
   refs[props.component.id] = ref();
 
   return () => {
-    const _props = { ref: props.component.id };
+    const _props = { ref: refs[props.component.id] };
     Object.entries(cProps).forEach(([key, value]) => {
       if (value.type === ComponentPropType.PROP) {
         if (value.value.type === PropValueType.VARIABLE) {
           _props[key] = variables[(value.value.value as Variable).id].value;
+        } else if (value.value.type === PropValueType.VARIABLE_VALUE) {
+          const variable = variables[(value.value.value as Variable).id];
+          _props[key] = get(variable.value, value.value.key, undefined);
         } else if (value.value.type === PropValueType.VALUE) {
           _props[key] = value.value.value;
         } else if (value.value.type === PropValueType.SLOT_CONTEXT) {
           const cScopeSlot = props.scopeSlot[value.value.value.componentId];
           _props[key] = get(cScopeSlot, value.value.value.key, undefined);
+        } else if (value.value.type === PropValueType.FUNCTION) {
+          _props[key] = (...args) => {
+            if (Array.isArray(value.value.value)) {
+              value.value.value.reduce<null | Promise<void>>(async (acc, action) => {
+                if (acc) {
+                  acc.then(() => {
+                    if (action.async) {
+                      return actions[action.id](...args);
+                    } else {
+                      actions[action.id](...args);
+                    }
+                  });
+                } else {
+                  if (action.async) {
+                    return actions[action.id](...args);
+                  } else {
+                    actions[action.id](...args);
+                  }
+                }
+              }, null);
+            } else {
+              actions[(value.value.value as Action).id](...args);
+            }
+          };
         }
       } else if (value.type === ComponentPropType.EVENT) {
         _props[key] = (...args) => {

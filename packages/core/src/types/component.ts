@@ -21,13 +21,21 @@ export enum PropType {
 
 export enum PropValueType {
   VARIABLE = 'VARIABLE',
+  VARIABLE_VALUE = 'VARIABLE_VALUE',
   VALUE = 'VALUE',
-  SLOT_CONTEXT = 'SLOT_CONTEXT'
+  SLOT_CONTEXT = 'SLOT_CONTEXT',
+  FUNCTION = 'FUNCTION',
 }
 
 export type PropValueVariable = {
   type: PropValueType.VARIABLE,
   value: Variable
+};
+
+export type PropValueVariableValue = {
+  type: PropValueType.VARIABLE_VALUE,
+  value: Variable,
+  key: string
 };
 
 export type PropValueValue<TValue> = {
@@ -43,10 +51,15 @@ export type PropValueSlotContext = {
   };
 };
 
+export type PropValueFoundation = {
+  type: PropValueType.FUNCTION,
+  value: Action[] | Action;
+}
+
 
 export type PropValue<TValue = string | number | any[] | boolean | Record<string, any>> = {
   type: PropType.PROP,
-  value: PropValueVariable | PropValueValue<TValue> | PropValueSlotContext;
+  value: PropValueVariable | PropValueVariableValue | PropValueValue<TValue> | PropValueSlotContext | PropValueFoundation;
 }
 
 export type EventValue={

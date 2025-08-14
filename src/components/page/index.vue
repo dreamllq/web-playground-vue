@@ -10,15 +10,17 @@ import { AutoPagination } from '@/models/auto-pagination';
 import { FormGrid } from '@/models/form-grid';
 import { FormGridItem } from '@/models/form-grid-item';
 import { Layout } from '@/models/layout';
-import { Playground, PlaygroundRender, PropType, PropValueType, Variable } from 'l-play-core';
+import { Playground, PlaygroundRender, PropType, PropValueType, Variable, ParamType, ActionReturnType } from 'l-play-core';
 import { Text } from 'l-play-dom-component';
 import { Button, Input, Table, TableColumn } from 'l-play-element-plus-component';
+import { ActionOperator, ActionFetch, ActionRef } from 'l-play-action';
 
 const playground = new Playground();
 const layout = new Layout();
+const autoPagination = new AutoPagination();
 
 // #region filter
-const filter = new Variable('filter', {});
+const filter = new Variable('filter', { name: '111' });
 playground.variables.push(filter);
 
 const formGrid = new FormGrid();
@@ -49,7 +51,46 @@ formGridItem.props.prop = {
 
 const input = new Input();
 
+input.props.modelValue = {
+  type: PropType.PROP,
+  value: {
+    type: PropValueType.VARIABLE_VALUE,
+    value: filter,
+    key: 'name'
+  }
+};
+
+const aAction = new ActionOperator('aAction');
+aAction.params.push({
+  type: ParamType.CONTEXT,
+  value: 0
+});
+
+aAction.returnVariable = {
+  type: ActionReturnType.VARIABLE_VALUE,
+  value: filter,
+  key: 'name'
+};
+
+input.props['onUpdate:modelValue'] = {
+  type: PropType.EVENT,
+  value: [aAction]
+};
+
+playground.actions.push(aAction);
+
 formGridItem.slots.default = [input];
+
+const tableFetch = new ActionRef('tableFetch');
+tableFetch.ref = autoPagination;
+tableFetch.funcName = 'goFirstPage';
+
+playground.actions.push(tableFetch);
+
+formGrid.props.onSearch = {
+  type: PropType.EVENT,
+  value: tableFetch
+};
 
 formGrid.slots.default = [formGridItem];
 
@@ -115,7 +156,21 @@ layout.slots.buttonGroup = [createButton, batchDeleteButton];
 // #endregion
 
 // #region table
-const autoPagination = new AutoPagination();
+
+const fetchDataAction = new ActionFetch('fetchDataAction');
+fetchDataAction.url = 'https://api.sit.alsi.cn/iam/user-management/users?name=&roleIds=&mobile=&enabled=&pageNo=1&pageSize=20&orderItems%5B0%5D.column=create_time&orderItems%5B0%5D.asc=false';
+fetchDataAction.method = 'get';
+fetchDataAction.headers = {
+  'Content-Type': 'application/json',
+  'authorization': 'Bearer eyJraWQiOiJ1YWEtYXV0aG9yaXphdGlvbi1yc2Eta2V5IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiJwYWlwYWkiLCJhdXRvX2xvZ2luIjpmYWxzZSwiaXNzIjoiaHR0cDpcL1wvc2Nwby11YWEtc2VydmljZS50ZXN0LnN2Yy5jbHVzdGVyLmxvY2FsOjMwMDMxXC91YWEiLCJ1c2VySWQiOjY5NDI3OTE1MjM2NDMzOTIxLCJwbGF0Zm9ybSI6IkNPTVBMRVRFX0VESVRJT04iLCJhdXRob3JpdGllcyI6WyI2OTQyNzkxNTQ4NTkxNzE4NCJdLCJhdWQiOiJhcHNfc3lzdGVtIiwibmJmIjoxNzU1MTU5NDAwLCJzY29wZSI6WyJvcGVuaWQiXSwidGVuYW50SWQiOjY5NDI3OTE1MjM2NDMzOTIwLCJleHAiOjE3NTUxNjMwMDAsImlhdCI6MTc1NTE1OTQwMCwic3VwZXJ2aXNvciI6dHJ1ZX0.TNorhjum8cMNz9dGS_RiX0xmcJUCkR48p6XCOwFnuv7DUdcyg5HLvCjsYTBdqPevi-5QesCMZUHSHI4TOqb_bKt1p1WECy0UIRkuZjN7ubHquJW0g9MZkZMOxwRg0Dg2iSp6jAiMwyn1qK4IgpVXPf0ndgBOgAQp4omNZnRdTTMFAyv_qp5gnNU5g_ncGM9JUhpFnVcaZyJ4G0pQgvhd-ESJ-B5kgBgsl9bLop5q6nrqowzolYqajFwSO6R3bE8iUsOvblvZ4MFt0ZdcTzcP1bb4W4IvKFDgAZcXKbpKhR8PLYekFOPIuHHnZzmw7Nx1LgzpLHzC2n-FXIcqVNFYKg',
+  'siteid': '72794563987042304'
+};
+playground.actions.push(fetchDataAction);
+
+autoPagination.props.fetchData = {
+  type: PropType.EVENT,
+  value: [fetchDataAction]
+};
 
 const autoHeightWrapper = new AutoHeightWrapper();
 autoPagination.slots.default = [autoHeightWrapper];

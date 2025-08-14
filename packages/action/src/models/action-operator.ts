@@ -1,5 +1,6 @@
 import { Ref } from 'vue';
-import { Action } from 'l-play-core';
+import { Action, ActionReturnType } from 'l-play-core';
+import { set } from 'lodash';
 
 export class ActionOperator extends Action { 
   operator?:string;
@@ -13,7 +14,11 @@ export class ActionOperator extends Action {
       if (this.operator) {
 
       } else {
-        options.variables[this.returnVariable.id].value = paramValues[0];
+        if (this.returnVariable.type === ActionReturnType.VARIABLE) {
+          options.variables[this.returnVariable.value.id].value = paramValues[0];
+        } else if ((this.returnVariable.type === ActionReturnType.VARIABLE_VALUE)) {
+          set(options.variables[this.returnVariable.value.id].value, this.returnVariable.key, paramValues[0]);
+        }
       }
 
     }
