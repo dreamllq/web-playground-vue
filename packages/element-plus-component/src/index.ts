@@ -7,4 +7,5 @@ export { Input } from './models/input';
 export { Radio } from './models/radio';
 export { Select } from './models/select';
 export { Switch } from './models/switch';
+export { TableColumn } from './models/table-column';
 export { Table } from './models/table';

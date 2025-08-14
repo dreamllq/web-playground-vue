@@ -8,6 +8,18 @@ importers:
 
   .:
     dependencies:
+      '@alsi/auto-pagination':
+        specifier: ^3.2.11
+        version: 3.2.11
+      '@alsi/vue-auto-height-wrapper':
+        specifier: ^3.0.4
+        version: 3.0.4
+      '@alsi/vue-form-grid':
+        specifier: ^3.1.14
+        version: 3.1.14(vue@3.5.18(typescript@5.8.3))
+      '@alsi/vue-layout':
+        specifier: ^5.3.2
+        version: 5.3.2
       vue-router:
         specifier: ^4.5.1
         version: 4.5.1(vue@3.5.18(typescript@5.8.3))
@@ -48,6 +60,9 @@ importers:
       jest:
         specifier: ^29.5.0
         version: 29.7.0(@types/node@24.1.0)(ts-node@10.9.1(@types/node@24.1.0)(typescript@5.8.3))
+      l-play-action:
+        specifier: workspace:*
+        version: link:packages/action
       l-play-core:
         specifier: workspace:*
         version: link:packages/core
@@ -121,6 +136,12 @@ importers:
         specifier: ^2.2.12
         version: 2.2.12(typescript@5.8.3)
 
+  packages/action:
+    dependencies:
+      l-play-core:
+        specifier: workspace:*
+        version: link:../core
+
   packages/core: {}
 
   packages/dom-component:
@@ -136,6 +157,23 @@ importers:
         version: link:../core
 
 packages:
+
+  '@alsi/auto-pagination@3.2.11':
+    resolution: {integrity: sha512-2cqwytXmkBrKPYhgVgW8OrFc1uWPDY+afkzbU3+iIiFK8J73A+WH/mOoGneC+papREjYGWq7d+e1H4MWLoqzQw==}
+
+  '@alsi/vue-auto-height-wrapper@3.0.4':
+    resolution: {integrity: sha512-scJBdxkCJ0RZK/wn3Ff/G1+BOmXkJXzuSxhI1Op3vY5hovQ0dRyhloNFijNZRw+0ZeC2vRTRkoFBrEPMnM7ccQ==}
+
+  '@alsi/vue-form-grid@3.1.14':
+    resolution: {integrity: sha512-zpuJt2KE2QOdihW2n8tA4+Hc8BhowrONkxNZWWG3gAs6NkoGZgTnz31Y0iERC2ZdinrXXBJ8drGUrTp0obeNDw==}
+    peerDependencies:
+      vue: 3.x
+
+  '@alsi/vue-icons@1.0.43':
+    resolution: {integrity: sha512-xeBRtyX/r1IZZqHl3C9coz0g8jhi5tKxnFqkYiEBKYXR/gpfZl3o8xToG0+o8IQLZXa1z3zXs4Ab6L0dX/iTfQ==}
+
+  '@alsi/vue-layout@5.3.2':
+    resolution: {integrity: sha512-U0MDz88pBfLSx0MveBaL/TU6lE2gLy9BdkjNwU1zizlCvNlAupiCNPqdk0RRfzybYgZlOOoKQ9zKS9Fd3jgQew==}
 
   '@ampproject/remapping@2.3.0':
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
@@ -3659,6 +3697,10 @@ packages:
     resolution: {integrity: sha512-Pdlw/oPxN+aXdmM9R00JVC9WVFoCLTKJvDVLgmJ+qAffBMxsV85l/Lu7sNx4zSzPyoL2euImuEwHhOXdEgNFZQ==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
+  prismjs@1.30.0:
+    resolution: {integrity: sha512-DEvV2ZF2r2/63V+tK8hQvrR2ZGn10srHbXviTlcv7Kpzw8jWiNTqbVgjO3IY8RxrrOUF8VPMQQFysYYYv0YZxw==}
+    engines: {node: '>=6'}
+
   proc-log@4.2.0:
     resolution: {integrity: sha512-g8+OnU/L2v+wyiVK+D5fA34J7EH8jZ8DDlvwhRCMxmMj7UCBvxiO1mGeN+36JXIKF4zevU4kRBd8lVgG9vLelA==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
@@ -4538,6 +4580,21 @@ packages:
     engines: {node: '>=10'}
 
 snapshots:
+
+  '@alsi/auto-pagination@3.2.11': {}
+
+  '@alsi/vue-auto-height-wrapper@3.0.4': {}
+
+  '@alsi/vue-form-grid@3.1.14(vue@3.5.18(typescript@5.8.3))':
+    dependencies:
+      vue: 3.5.18(typescript@5.8.3)
+
+  '@alsi/vue-icons@1.0.43': {}
+
+  '@alsi/vue-layout@5.3.2':
+    dependencies:
+      '@alsi/vue-icons': 1.0.43
+      prismjs: 1.30.0
 
   '@ampproject/remapping@2.3.0':
     dependencies:
@@ -8687,6 +8744,8 @@ snapshots:
       '@jest/schemas': 29.6.3
       ansi-styles: 5.2.0
       react-is: 18.3.1
+
+  prismjs@1.30.0: {}
 
   proc-log@4.2.0: {}
 

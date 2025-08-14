@@ -1,6 +1,19 @@
-import { Component } from 'l-play-core';
+import { Component, PropValue } from 'l-play-core';
 
-export class Table extends Component {
+
+type TRef = InstanceType<typeof import('element-plus').ElTable>
+
+type TProps = {
+  border?: PropValue<boolean>,
+  data?: PropValue<any[]>,
+  height?: PropValue<string | number>,
+}
+
+type TSlots = {
+  default?: Component[]
+}
+
+export class Table extends Component<TRef, TProps, TSlots> {
   name: string = 'table';
 
   async getComponent(): Promise<any> {

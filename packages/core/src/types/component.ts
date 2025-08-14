@@ -1,3 +1,4 @@
+import { Component } from '@core/models/component';
 import { Action } from '@core/models/action';
 import { Variable } from '@core/models/variable';
 
@@ -20,7 +21,8 @@ export enum PropType {
 
 export enum PropValueType {
   VARIABLE = 'VARIABLE',
-  VALUE = 'VALUE'
+  VALUE = 'VALUE',
+  SLOT_CONTEXT = 'SLOT_CONTEXT'
 }
 
 export type PropValueVariable = {
@@ -33,9 +35,18 @@ export type PropValueValue<TValue> = {
   value: TValue;
 };
 
+export type PropValueSlotContext = {
+  type: PropValueType.SLOT_CONTEXT,
+  value: {
+    componentId: string,
+    key: string
+  };
+};
+
+
 export type PropValue<TValue = string | number | any[] | boolean | Record<string, any>> = {
   type: PropType.PROP,
-  value: PropValueVariable | PropValueValue<TValue>;
+  value: PropValueVariable | PropValueValue<TValue> | PropValueSlotContext;
 }
 
 export type EventValue={

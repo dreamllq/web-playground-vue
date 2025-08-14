@@ -9,6 +9,10 @@
     "build": "lerna exec -- npm run build"
   },
   "dependencies": {
+    "@alsi/auto-pagination": "^3.2.11",
+    "@alsi/vue-auto-height-wrapper": "^3.0.4",
+    "@alsi/vue-form-grid": "^3.1.14",
+    "@alsi/vue-layout": "^5.3.2",
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
@@ -24,6 +28,7 @@
     "eslint": "^9.31.0",
     "husky": "^8.0.3",
     "jest": "^29.5.0",
+    "l-play-action": "workspace:*",
     "l-play-core": "workspace:*",
     "l-play-dom-component": "workspace:*",
     "l-play-element-plus-component": "workspace:*",

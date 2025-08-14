@@ -3,7 +3,7 @@ import { Component } from './component';
 import { Variable } from './variable';
 
 export class Playground {
-  containers: Component[] = [];
+  components: Component[] = [];
   variables: Variable[] = [];
   actions: Action[] = [];
 }
