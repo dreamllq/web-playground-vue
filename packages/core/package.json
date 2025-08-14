@@ -1,0 +1,23 @@
+{
+  "name": "core",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "lvliqi <lvliqi_d@163.com>",
+  "homepage": "https://github.com/dreamllq/web-playground-vue#readme",
+  "license": "ISC",
+  "main": "src/index.ts",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dreamllq/web-playground-vue.git"
+  },
+  "scripts": {
+    "build": "vite build && vue-tsc -p tsconfig-build.json && tsc-alias -p tsconfig-build.json",
+    "preversion": "npm run build"
+  },
+  "bugs": {
+    "url": "https://github.com/dreamllq/web-playground-vue/issues"
+  }
+}

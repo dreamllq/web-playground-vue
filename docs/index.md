@@ -1,1 +1,0 @@
-<Demo c="hello-world/index"/>
