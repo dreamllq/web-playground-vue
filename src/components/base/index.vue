@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { Playground } from 'l-play-core';
+import { ActionReturnType, Playground } from 'l-play-core';
 import { PlaygroundRender } from 'l-play-core';
 import { Input } from 'l-play-element-plus-component';
 import { Variable } from 'l-play-core';
@@ -24,10 +24,13 @@ playground.variables.push(aVar);
 
 const aAction = new ActionOperator('aAction');
 aAction.params.push({
-  type: ParamType.REF,
+  type: ParamType.CONTEXT,
   value: 0
 });
-aAction.returnVariable = aVar;
+aAction.returnVariable = {
+  type: ActionReturnType.VARIABLE,
+  value: aVar
+};
 
 playground.actions.push(aAction);
 

@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Variable } from './variable';
 import { ActionReturn, ActionReturnType, IAction, ParamItem, ParamType } from '@core/types/action';
 import { Ref } from 'vue';
+import { set } from 'lodash';
 
 export class Action implements IAction {
   id: string = uuidv4();
@@ -18,9 +19,7 @@ export class Action implements IAction {
   }
   transformParams(params: any[], options: { variables: Record<string, Ref>; }): any[] {
     const paramValues = this.params.map((param, index) => {
-      if (param.type === ParamType.REF) {
-        return params[index];
-      } else if (param.type === ParamType.VALUE) {
+      if (param.type === ParamType.VALUE) {
         return param.value;
       } else if (param.type === ParamType.VARIABLE) {
         return options.variables[param.value.id].value;
@@ -29,5 +28,15 @@ export class Action implements IAction {
       }
     });
     return paramValues;
+  }
+
+  setReturnData(params: any[], options: { variables: Record<string, Ref>; }, data: any) {
+    if (this.returnVariable) {
+      if (this.returnVariable.type === ActionReturnType.VARIABLE) {
+        options.variables[this.returnVariable.value.id].value = data;
+      } else if (this.returnVariable.type === ActionReturnType.VARIABLE_VALUE) {
+        set(options.variables[this.returnVariable.value.id].value, this.returnVariable.key, data);
+      }
+    }
   }
 }

@@ -13,6 +13,8 @@
     "@alsi/vue-auto-height-wrapper": "^3.0.4",
     "@alsi/vue-form-grid": "^3.1.14",
     "@alsi/vue-layout": "^5.3.2",
+    "eventemitter3": "^5.0.1",
+    "jsonata": "^2.1.0",
     "vue-router": "^4.5.1"
   },
   "devDependencies": {

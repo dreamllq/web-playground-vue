@@ -12,6 +12,11 @@ export interface IComponent<TProps>{
   getProps(): TProps;
 }
 
+export type ActionDefine = {
+  value: Action[] | Action;
+  return?: Action;  
+}
+
 export type ComponentId = string;
 
 export enum PropType {
@@ -51,20 +56,18 @@ export type PropValueSlotContext = {
   };
 };
 
-export type PropValueFoundation = {
-  type: PropValueType.FUNCTION,
-  value: Action[] | Action;
-}
+export type PropValueFunction = {
+  type: PropValueType.FUNCTION
+} & ActionDefine
 
 
 export type PropValue<TValue = string | number | any[] | boolean | Record<string, any>> = {
   type: PropType.PROP,
-  value: PropValueVariable | PropValueVariableValue | PropValueValue<TValue> | PropValueSlotContext | PropValueFoundation;
+  value: PropValueVariable | PropValueVariableValue | PropValueValue<TValue> | PropValueSlotContext | PropValueFunction;
 }
 
-export type EventValue={
-  type: PropType.EVENT,
-  value: Action | Action[]
-}
+export type EventValue = {
+  type: PropType.EVENT
+} & ActionDefine
 
 export type PropItem = PropValue<any> | EventValue;

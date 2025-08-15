@@ -2,14 +2,13 @@ import { Variable } from '@core/models/variable';
 import { Ref } from 'vue';
 
 export interface IAction{
-  handle(params: any[], options:{variables:Record<string, Ref>, refs: Record<string, Ref>}): Promise<void> | void;
+  handle(params: any[], options:{variables:Record<string, Ref>, refs: Record<string, Ref>}): Promise<any> | any;
   transformParams(params: any[], options:{variables:Record<string, Ref>}): any[];
 }
 
 export enum ParamType {
   VARIABLE = 'VARIABLE',
   VALUE = 'VALUE',
-  REF='REF',
   CONTEXT='CONTEXT'
 }
 
@@ -24,19 +23,11 @@ export type ParamValue = {
 };
 
 // 上下文的参数
-export type ParamRef = {
-  type: ParamType.REF,
-  value: number
-};
-
-
-// 上下文的参数
 export type ParamContext = {
   type: ParamType.CONTEXT,
   value: number
 };
-export type ParamItem = ParamVariable | ParamValue | ParamRef | ParamContext;
-
+export type ParamItem = ParamVariable | ParamValue | ParamContext;
 
 export enum ActionReturnType {
   VARIABLE = 'VARIABLE',

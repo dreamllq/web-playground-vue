@@ -6,10 +6,6 @@ export class ActionRef extends Action {
   ref?: Component;
   funcName?: string;
 
-  constructor(name: string) {
-    super(name);
-  }
-
   async handle(params: any[], options): Promise<void> {
     if (this.ref && this.funcName) {
       console.log(111, options.refs);

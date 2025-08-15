@@ -2,8 +2,17 @@ import { Playground } from '@core/models/playground';
 import { ParamType } from '@core/types/action';
 import { createInjectionState } from '@vueuse/core';
 import { ref } from 'vue';
+import EventEmitter from 'eventemitter3';
+
 
 const [useProvideStore, useStore] = createInjectionState((playground: Playground) => {
+  const ee = new EventEmitter();
+  const bus = {
+    emit: ee.emit.bind(ee),
+    on: ee.on.bind(ee),
+    once: ee.once.bind(ee),
+    off: ee.off.bind(ee) 
+  };
   const variables = {};
   const actions: Record<string, (...args: any[])=> Promise<any> | any> = {};
   const refs = {};
@@ -17,9 +26,7 @@ const [useProvideStore, useStore] = createInjectionState((playground: Playground
       const gs:any[] = [];
       
       action.params.forEach((param) => {
-        if (param.type === ParamType.REF) { 
-          gs.push(args[param.value]);
-        } else if (param.type === ParamType.CONTEXT) { 
+        if (param.type === ParamType.CONTEXT) { 
           gs.push(args[param.value]);
         } else if (param.type === ParamType.VALUE) {
           gs.push(param.value);
@@ -27,6 +34,7 @@ const [useProvideStore, useStore] = createInjectionState((playground: Playground
           gs.push(null);
         }
       });
+      
       return action.handle(gs, {
         variables,
         refs
@@ -38,7 +46,8 @@ const [useProvideStore, useStore] = createInjectionState((playground: Playground
     playground,
     refs,
     variables,
-    actions
+    actions,
+    bus
   };
 });
 
