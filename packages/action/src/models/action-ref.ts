@@ -1,17 +1,22 @@
 import { Action } from 'l-play-core';
 import { Component } from 'l-play-core';
-import { Ref } from 'vue';
 
 export class ActionRef extends Action {
   ref?: Component;
   funcName?: string;
 
-  async handle(params: any[], options): Promise<void> {
+  handle(params: any[], options): Promise<void> | void {
     if (this.ref && this.funcName) {
-      console.log(111, options.refs);
-
-      await options.refs[this.ref.id].value[this.funcName]();
+      const paramValues = this.transformParams(params, options);
+      if (this.async) {
+        return (async () => {
+          const data = await options.refs[this.ref!.id].value[this.funcName!](...paramValues);
+          this.setResultData(params, options, data);
+        })();
+      } else {
+        const data = options.refs[this.ref!.id].value[this.funcName!](...paramValues);
+        this.setResultData(params, options, data);
+      }
     }
-    
   }
 }

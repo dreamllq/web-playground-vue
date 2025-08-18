@@ -7,6 +7,7 @@ type TRef = any;
 type TProps = {
   style?: PropValue<StyleValue>,
   innerHTML?: PropValue<string>,
+  class?: PropValue<string>
 }
 
 type TSlots = {

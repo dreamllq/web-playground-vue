@@ -22,7 +22,7 @@ const ComponentRender = defineComponent((props) => {
 
     const _props = {
       ref: refs[props.component.id],
-      _key: renderKey.value
+      key: renderKey.value
     };
     Object.entries(cProps).forEach(([key, value]) => {
       if (value.type === ComponentPropType.PROP) {
@@ -40,61 +40,55 @@ const ComponentRender = defineComponent((props) => {
             forceRerender();
           });
         } else if (value.value.type === PropValueType.FUNCTION) {
-          _props[key] = (...args) => {
-            if (Array.isArray(value.value.value)) {
-              return value.value.value.reduce<null | Promise<void>>(async (acc, action) => {
-                if (acc) {
-                  acc.then(() => {
-                    if (action.async) {
-                      return actions[action.id](...args);
-                    } else {
-                      actions[action.id](...args);
-                    }
-                  });
-                } else {
-                  if (action.async) {
-                    return actions[action.id](...args);
-                  } else {
-                    actions[action.id](...args);
-                  }
-                }
-              }, null)?.then(() => {
-                if ((value.value as PropValueFunction).return) {
-                  return actions[((value.value as PropValueFunction).return as Action).id](...args);
-                }
-              });
-            } else {
-              actions[(value.value.value as Action).id](...args);
-              if ((value.value as PropValueFunction).return) {
-                return actions[((value.value as PropValueFunction).return as Action).id](...args);
+          let _actions:Action[] = [];
+          if (Array.isArray(value.value.value)) {
+            _actions = value.value.value;
+          } else {
+            _actions = [value.value.value];
+          }
+
+          const async = _actions.some(item => item.async) || ((value.value as PropValueFunction).return && (value.value as PropValueFunction).return!.async);
+
+          if (async) {
+            _props[key] = async (...args) => {
+              for (const action of _actions) {
+                await actions[action.id](...args); 
               }
+              if ((value.value as PropValueFunction).return) {
+                return actions[(value.value as PropValueFunction).return!.id](...args);
+              }
+            };
+          } else {
+            _props[key] = async (...args) => {
+              for (const action of _actions) {
+                actions[action.id](...args); 
+              }
+              if ((value.value as PropValueFunction).return) {
+                return actions[(value.value as PropValueFunction).return!.id](...args);
+              }
+            };
+          }
+        }
+      } else if (value.type === ComponentPropType.EVENT) {
+        let _actions:Action[] = [];
+        if (Array.isArray(value.value)) {
+          _actions = value.value;
+        } else {
+          _actions = [value.value];
+        }
+        if (_actions.some(item => item.async)) {
+          _props[key] = async (...args) => {
+            for (const action of _actions) {
+              await actions[action.id](...args); 
+            }
+          };
+        } else {
+          _props[key] = async (...args) => {
+            for (const action of _actions) {
+              actions[action.id](...args); 
             }
           };
         }
-      } else if (value.type === ComponentPropType.EVENT) {
-        _props[key] = (...args) => {
-          if (Array.isArray(value.value)) {
-            value.value.reduce<null | Promise<void>>(async (acc, action) => {
-              if (acc) {
-                acc.then(() => {
-                  if (action.async) {
-                    return actions[action.id](...args);
-                  } else {
-                    actions[action.id](...args);
-                  }
-                });
-              } else {
-                if (action.async) {
-                  return actions[action.id](...args);
-                } else {
-                  actions[action.id](...args);
-                }
-              }
-            }, null);
-          } else {
-            actions[(value.value as Action).id](...args);
-          }
-        };
       }
     });
 

@@ -1,6 +1,21 @@
-import { Component } from 'l-play-core';
+import { Component, EventValue, PropValue } from 'l-play-core';
 
-export class Form extends Component {
+type TRef = InstanceType<typeof import('element-plus').ElForm>
+
+type TProps = {
+  model?: PropValue;
+  rules?: PropValue;
+  inline?: PropValue;
+  labelPosition?: PropValue<'left' | 'right' | 'top'>;
+  labelWidth?: PropValue;
+  labelSuffix?: PropValue;
+};
+
+type TSlots = {
+  default?: Component<any, any, any>[];
+}
+
+export class Form extends Component<TRef, TProps, TSlots> {
   name: string = 'form';
 
   async getComponent(): Promise<any> {

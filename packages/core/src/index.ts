@@ -7,3 +7,7 @@ export { Action } from './models/action';
 
 export * from './types/component';
 export * from './types/action';
+
+// util
+export * from './util/format-props';
+export * from './util/format-action';

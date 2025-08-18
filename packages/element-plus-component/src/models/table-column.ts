@@ -7,6 +7,7 @@ type TProps = {
   label: PropValue;
   minWidth: PropValue;
   showOverflowTooltip: PropValue<boolean>;
+  width: PropValue;
 }
 
 type TSlots = {

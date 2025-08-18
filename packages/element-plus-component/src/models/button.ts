@@ -7,7 +7,9 @@ type TProps = {
   size?: PropValue<'large' | 'default' | 'small'>,
   type?: PropValue<'default' | 'primary' | 'success' | 'warning' | 'danger' | 'info' | ''>,
   plain?: PropValue<boolean>,
+  link?:PropValue<boolean>,
   icon?: PropValue<string>,
+  loading?: PropValue<boolean>,
   'onClick'?: EventValue
 }
 

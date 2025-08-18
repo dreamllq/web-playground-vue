@@ -17,9 +17,15 @@ importers:
       '@alsi/vue-form-grid':
         specifier: ^3.1.14
         version: 3.1.14(vue@3.5.18(typescript@5.8.3))
+      '@alsi/vue-form-layout-wrapper':
+        specifier: ^1.1.6
+        version: 1.1.6
       '@alsi/vue-layout':
         specifier: ^5.3.2
         version: 5.3.2
+      '@element-plus/icons-vue':
+        specifier: ^2.3.2
+        version: 2.3.2(vue@3.5.18(typescript@5.8.3))
       eventemitter3:
         specifier: ^5.0.1
         version: 5.0.1
@@ -174,6 +180,9 @@ packages:
     resolution: {integrity: sha512-zpuJt2KE2QOdihW2n8tA4+Hc8BhowrONkxNZWWG3gAs6NkoGZgTnz31Y0iERC2ZdinrXXBJ8drGUrTp0obeNDw==}
     peerDependencies:
       vue: 3.x
+
+  '@alsi/vue-form-layout-wrapper@1.1.6':
+    resolution: {integrity: sha512-yo46EbiwLeHnvF3s5GRpDDcRaP8lvvBfATwitb06kukpGcEPlshTkspWrW9ju20kAmGKIjyAWsHWfzTpR5pZiw==}
 
   '@alsi/vue-icons@1.0.43':
     resolution: {integrity: sha512-xeBRtyX/r1IZZqHl3C9coz0g8jhi5tKxnFqkYiEBKYXR/gpfZl3o8xToG0+o8IQLZXa1z3zXs4Ab6L0dX/iTfQ==}
@@ -418,8 +427,8 @@ packages:
   '@dual-bundle/import-meta-resolve@4.1.0':
     resolution: {integrity: sha512-+nxncfwHM5SgAtrVzgpzJOI1ol0PkumhVo469KCf9lUi21IGcY90G98VuHm9VRrUypmAzawAHO9bs6hqeADaVg==}
 
-  '@element-plus/icons-vue@2.3.1':
-    resolution: {integrity: sha512-XxVUZv48RZAd87ucGS48jPf6pKu0yV5UCg9f4FFwtrYxXOwWuVJo6wOvSLKEoMQKjv8GsX/mhP6UsC1lRwbUWg==}
+  '@element-plus/icons-vue@2.3.2':
+    resolution: {integrity: sha512-OzIuTaIfC8QXEPmJvB4Y4kw34rSXdCJzxcD1kFStBvr8bK6X1zQAYDo0CNMjojnfTqRQCJ0I7prlErcoRiET2A==}
     peerDependencies:
       vue: ^3.2.0
 
@@ -4599,6 +4608,8 @@ snapshots:
     dependencies:
       vue: 3.5.18(typescript@5.8.3)
 
+  '@alsi/vue-form-layout-wrapper@1.1.6': {}
+
   '@alsi/vue-icons@1.0.43': {}
 
   '@alsi/vue-layout@5.3.2':
@@ -4878,7 +4889,7 @@ snapshots:
 
   '@dual-bundle/import-meta-resolve@4.1.0': {}
 
-  '@element-plus/icons-vue@2.3.1(vue@3.5.18(typescript@5.8.3))':
+  '@element-plus/icons-vue@2.3.2(vue@3.5.18(typescript@5.8.3))':
     dependencies:
       vue: 3.5.18(typescript@5.8.3)
 
@@ -6730,7 +6741,7 @@ snapshots:
   element-plus@2.10.4(vue@3.5.18(typescript@5.8.3)):
     dependencies:
       '@ctrl/tinycolor': 3.6.1
-      '@element-plus/icons-vue': 2.3.1(vue@3.5.18(typescript@5.8.3))
+      '@element-plus/icons-vue': 2.3.2(vue@3.5.18(typescript@5.8.3))
       '@floating-ui/dom': 1.7.2
       '@popperjs/core': '@sxzz/popperjs-es@2.11.7'
       '@types/lodash': 4.17.20

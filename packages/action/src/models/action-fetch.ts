@@ -21,7 +21,7 @@ export class ActionFetch extends Action {
       fetch(request)
         .then(request => request.json())
         .then(data => {
-          this.setReturnData(params, options, data);
+          this.setResultData(params, options, data);
           resolve(data);
         });
     });

@@ -29,20 +29,20 @@ export type ParamContext = {
 };
 export type ParamItem = ParamVariable | ParamValue | ParamContext;
 
-export enum ActionReturnType {
+export enum ActionResultType {
   VARIABLE = 'VARIABLE',
   VARIABLE_VALUE = 'VARIABLE_VALUE'
 };
 
-export type ActionReturnVariable = {
-  type: ActionReturnType.VARIABLE,
+export type ActionResultVariable = {
+  type: ActionResultType.VARIABLE,
   value: Variable
 }
 
-export type ActionReturnVariableValue = {
-  type: ActionReturnType.VARIABLE_VALUE,
+export type ActionResultVariableValue = {
+  type: ActionResultType.VARIABLE_VALUE,
   value: Variable,
   key: string
 }
 
-export type ActionReturn = ActionReturnVariable | ActionReturnVariableValue; 
+export type ActionResult = ActionResultVariable | ActionResultVariableValue; 

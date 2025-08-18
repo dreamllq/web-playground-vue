@@ -16,7 +16,7 @@ export class ActionStructTransform extends Action {
     const result = await jsonata(this.ruleString).evaluate(obj);
     console.log('result', result);
     
-    this.setReturnData(params, options, result);
+    this.setResultData(params, options, result);
     return result;
   }
 }

@@ -1,6 +1,22 @@
-import { Component } from 'l-play-core';
+import { Component, EventValue, PropValue } from 'l-play-core';
 
-export class Dialog extends Component {
+type TRef = InstanceType<typeof import('element-plus').ElDialog>
+
+type TProps = {
+  modelValue: PropValue;
+  'onUpdate:modelValue': EventValue;
+  title: PropValue;
+  class: PropValue;
+  width: PropValue;
+};
+
+type TSlots = {
+  default?: Component<any, any, any>[];
+  header?: Component<any, any, any>[];
+  footer?: Component<any, any, any>[];
+}
+
+export class Dialog extends Component<TRef, TProps, TSlots> {
   name: string = 'dialog';
 
   async getComponent(): Promise<any> {

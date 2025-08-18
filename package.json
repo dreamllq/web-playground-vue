@@ -12,7 +12,9 @@
     "@alsi/auto-pagination": "^3.2.11",
     "@alsi/vue-auto-height-wrapper": "^3.0.4",
     "@alsi/vue-form-grid": "^3.1.14",
+    "@alsi/vue-form-layout-wrapper": "^1.1.6",
     "@alsi/vue-layout": "^5.3.2",
+    "@element-plus/icons-vue": "^2.3.2",
     "eventemitter3": "^5.0.1",
     "jsonata": "^2.1.0",
     "vue-router": "^4.5.1"

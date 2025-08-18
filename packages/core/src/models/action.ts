@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { Variable } from './variable';
-import { ActionReturn, ActionReturnType, IAction, ParamItem, ParamType } from '@core/types/action';
+import { ActionResult, ActionResultType, IAction, ParamItem, ParamType } from '@core/types/action';
 import { Ref } from 'vue';
 import { set } from 'lodash';
 
@@ -8,7 +8,7 @@ export class Action implements IAction {
   id: string = uuidv4();
   name: string;
   params: ParamItem[] = [];
-  returnVariable?: ActionReturn;
+  result?: ActionResult;
   async:boolean = false;
 
   constructor(name: string) {
@@ -30,12 +30,14 @@ export class Action implements IAction {
     return paramValues;
   }
 
-  setReturnData(params: any[], options: { variables: Record<string, Ref>; }, data: any) {
-    if (this.returnVariable) {
-      if (this.returnVariable.type === ActionReturnType.VARIABLE) {
-        options.variables[this.returnVariable.value.id].value = data;
-      } else if (this.returnVariable.type === ActionReturnType.VARIABLE_VALUE) {
-        set(options.variables[this.returnVariable.value.id].value, this.returnVariable.key, data);
+  setResultData(params: any[], options: { variables: Record<string, Ref>; }, data: any) {
+    if (this.result) {
+      if (this.result.type === ActionResultType.VARIABLE) {
+        // console.log(options.variables[this.result.value.id].value, data);
+        
+        options.variables[this.result.value.id].value = data;
+      } else if (this.result.type === ActionResultType.VARIABLE_VALUE) {
+        set(options.variables[this.result.value.id].value, this.result.key, data);
       }
     }
   }

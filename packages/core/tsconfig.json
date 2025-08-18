@@ -29,11 +29,6 @@
     "noImplicitAny": false,
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "src/*",
-        "src/*.vue",
-        "src/*/index.vue"
-      ],
       "@core/*": [
         "src/*",
         "src/*.vue",
