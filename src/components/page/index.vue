@@ -10,7 +10,7 @@ import { AutoPagination } from '@/models/auto-pagination';
 import { FormGrid } from '@/models/form-grid';
 import { FormGridItem } from '@/models/form-grid-item';
 import { Layout } from '@/models/layout';
-import { Playground, PlaygroundRender, PropType, PropValueType, Variable, ParamType, ActionResultType, Action, formatPropsEvent, formatPropsPropFunction, formatPropsPropSlotContext, formatPropsPropValue, formatPropsPropVariable, formatPropsPropVariableValue, formatActionParamContext, formatActionParamValue, formatActionParamVariable, formatActionResultVariable, formatActionResultVariableValue, DirectiveValue, PropValueValue } from 'l-play-core';
+import { Playground, PlaygroundRender, formatPropsEvent, formatPropsPropFunction, formatPropsPropSlotContext, formatPropsPropValue, formatPropsPropVariable, formatPropsPropVariableValue, formatActionParamContext, formatActionParamValue, formatActionParamVariable, formatActionResultVariable, formatActionResultVariableValue, DirectiveValue, PropValueValue } from 'l-play-core';
 import { Div, Text } from 'l-play-dom-component';
 import { Button, Dialog, Form, Input, Table, TableColumn, FormItem, Icon } from 'l-play-element-plus-component';
 import { ActionOperator, ActionFetch, ActionRef, ActionStructTransform } from 'l-play-action';
@@ -18,7 +18,7 @@ import { FormLayoutWrapper } from '@/models/form-layout-wrapper';
 import { VIfElse } from 'l-play-vue-component';
 
 const playground = new Playground();
-const token = 'Bearer eyJraWQiOiJ1YWEtYXV0aG9yaXphdGlvbi1yc2Eta2V5IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiJwYWlwYWkiLCJhdXRvX2xvZ2luIjpmYWxzZSwiaXNzIjoiaHR0cDpcL1wvc2Nwby11YWEtc2VydmljZS50ZXN0LnN2Yy5jbHVzdGVyLmxvY2FsOjMwMDMxXC91YWEiLCJ1c2VySWQiOjY5NDI3OTE1MjM2NDMzOTIxLCJwbGF0Zm9ybSI6IkNPTVBMRVRFX0VESVRJT04iLCJhdXRob3JpdGllcyI6WyI2OTQyNzkxNTQ4NTkxNzE4NCJdLCJhdWQiOiJhcHNfc3lzdGVtIiwibmJmIjoxNzU1NTcyNjI4LCJzY29wZSI6WyJvcGVuaWQiXSwidGVuYW50SWQiOjY5NDI3OTE1MjM2NDMzOTIwLCJleHAiOjE3NTU1NzYyMjgsImlhdCI6MTc1NTU3MjYyOCwic3VwZXJ2aXNvciI6dHJ1ZX0.pQ9W8-HTkBdts6WsAv_VaT7C4uf5qThSyHn0jhOVLgUbZVW3cQc4VeMLPg6B_OgCf86Okr_DBuWgTmbHup-EsT0VOOCRk5TH0rGY703ntYZqn1r7HZ6bZliYdrZJfEgeaMb3DETA1htV9bWo6fuvTE9PbWipFvvig6nyeXd_Y2LJPQE3hcXaOojGE40LlMsJQTEQsdl01T4RzP1u65b5WOHajlapejN2ELO1-HR7uQRmVfovOrHVSb2HsL4ieEMPBTN4locelrMQ6-mAIaVzwd4t9KC011alHkbrywhuR4vn05K0KZ6kW_m9B2U1YOo1tUW-vv38BSpGonQzqvEFjQ';
+const token = 'Bearer eyJraWQiOiJ1YWEtYXV0aG9yaXphdGlvbi1yc2Eta2V5IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiJwYWlwYWkiLCJhdXRvX2xvZ2luIjpmYWxzZSwiaXNzIjoiaHR0cDpcL1wvc2Nwby11YWEtc2VydmljZS50ZXN0LnN2Yy5jbHVzdGVyLmxvY2FsOjMwMDMxXC91YWEiLCJ1c2VySWQiOjY5NDI3OTE1MjM2NDMzOTIxLCJwbGF0Zm9ybSI6IkNPTVBMRVRFX0VESVRJT04iLCJhdXRob3JpdGllcyI6WyI2OTQyNzkxNTQ4NTkxNzE4NCJdLCJhdWQiOiJhcHNfc3lzdGVtIiwibmJmIjoxNzU1NTc4MjExLCJzY29wZSI6WyJvcGVuaWQiXSwidGVuYW50SWQiOjY5NDI3OTE1MjM2NDMzOTIwLCJleHAiOjE3NTU1ODE4MTEsImlhdCI6MTc1NTU3ODIxMSwic3VwZXJ2aXNvciI6dHJ1ZX0.almY1wSeF6mYCrMlIqeW-lUoOmJtNQ1NHmRWklJeEcUD5w0pSP7wHaMZWmRnbM-XM_2yFYpf0XDB3SVRwFLT5Oix8yJ6js_No6OiK5hC_rtGb7vr0PbT7kirU1Rzr0ov2sLC4Zn020ZQJd7FFsw06NjUVTdjxeS9Lpob-HpXv7IaICY7Wk3XpCJVPmRH-Er6IRuX76Y-hlhnMqc0fjPOretSwSDs-DQ_eUyDGi8sYKC7_L56glHTOJU99DK5edKPLCzddbm2YxkcYxnishyexyrwD1h02DE3XY38NyBbUCJpwVdLtrfkozXINKoACiw0o1tAtrKFKrM-DsKheYN3sw';
 // #region components
 const layout = playground.component(Layout);
 const autoPagination = playground.component(AutoPagination);

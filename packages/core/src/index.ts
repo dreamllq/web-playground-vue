@@ -17,6 +17,12 @@ export { PropValueSlotContext } from './models/prop-value-slot-context';
 export { PropValueFunction } from './models/prop-value-function';
 export { DirectiveValue } from './models/directive-value';
 
+export { ParamVariable } from './models/param-variable';
+export { ParamValue } from './models/param-value';
+export { ParamContext } from './models/param-context';
+export { ActionResultVariable } from './models/action-result-variable';
+export { ActionResultVariableValue } from './models/action-result-variable-value';
+
 export * from './types/component';
 export * from './types/action';
 

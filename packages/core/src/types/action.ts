@@ -1,4 +1,8 @@
-import { Variable } from '@core/models/variable';
+import { ActionResultVariable } from '@core/models/action-result-variable';
+import { ActionResultVariableValue } from '@core/models/action-result-variable-value';
+import { ParamContext } from '@core/models/param-context';
+import { ParamValue } from '@core/models/param-value';
+import { ParamVariable } from '@core/models/param-variable';
 import { Ref } from 'vue';
 
 export enum ActionType {
@@ -25,21 +29,6 @@ export enum ParamType {
   CONTEXT='CONTEXT'
 }
 
-export type ParamVariable = {
-  type: ParamType.VARIABLE,
-  value: Variable 
-};
-
-export type ParamValue = {
-  type: ParamType.VALUE,
-  value: string | number | any[] | boolean | Record<string, any>;
-};
-
-// 上下文的参数
-export type ParamContext = {
-  type: ParamType.CONTEXT,
-  value: number
-};
 export type ParamItem = ParamVariable | ParamValue | ParamContext;
 
 export enum ActionResultType {
@@ -47,15 +36,5 @@ export enum ActionResultType {
   VARIABLE_VALUE = 'VARIABLE_VALUE'
 };
 
-export type ActionResultVariable = {
-  type: ActionResultType.VARIABLE,
-  value: Variable
-}
-
-export type ActionResultVariableValue = {
-  type: ActionResultType.VARIABLE_VALUE,
-  value: Variable,
-  key: string
-}
 
 export type ActionResult = ActionResultVariable | ActionResultVariableValue; 
