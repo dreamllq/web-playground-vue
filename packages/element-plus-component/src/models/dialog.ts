@@ -17,6 +17,7 @@ type TSlots = {
 }
 
 export class Dialog extends Component<TRef, TProps, TSlots> {
+  $class = 'ElDialog';
   name: string = 'dialog';
 
   async getComponent(): Promise<any> {

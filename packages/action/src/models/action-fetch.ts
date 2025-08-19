@@ -2,6 +2,7 @@ import { Action } from 'l-play-core';
 import { Ref } from 'vue';
 
 export class ActionFetch extends Action { 
+  $class = 'ActionFetch';
   url?: string;
   method?: string;
   headers?: Record<string, string>;
@@ -25,5 +26,16 @@ export class ActionFetch extends Action {
           resolve(data);
         });
     });
+  }
+
+  toJSON() {
+    const superJSON = super.toJSON();
+    return {
+      ...superJSON,
+      url: this.url,
+      method: this.method,
+      body: this.body,
+      headers: this.headers
+    };
   }
 }

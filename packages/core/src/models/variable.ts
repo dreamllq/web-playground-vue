@@ -1,6 +1,8 @@
+import { VariableJSON } from '@core/types/variable';
 import { v4 as uuidv4 } from 'uuid';
 
 export class Variable {
+  $class = 'Variable';
   id: string = uuidv4();
   name: string;
   value: any; // 初始化值
@@ -10,8 +12,9 @@ export class Variable {
     this.value = value;
   }
 
-  toJSON() {
+  toJSON(): VariableJSON {
     return {
+      $class: this.$class,
       id: this.id,
       name: this.name,
       value: this.value

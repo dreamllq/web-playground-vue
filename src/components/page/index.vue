@@ -2,6 +2,16 @@
   <div style='height: 600px; border: 1px solid;'>
     <playground-render :playground='playground' />
   </div>
+  <div>
+    <el-button @click='toJSON'>
+      toJSON
+    </el-button>
+  </div>
+  <div>
+    <pre>
+      {{ JSON.stringify(json, null, 2) }}
+    </pre>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -16,6 +26,13 @@ import { Button, Dialog, Form, Input, Table, TableColumn, FormItem, Icon } from 
 import { ActionOperator, ActionFetch, ActionRef, ActionStructTransform } from 'l-play-action';
 import { FormLayoutWrapper } from '@/models/form-layout-wrapper';
 import { VIfElse } from 'l-play-vue-component';
+import { ref } from 'vue';
+
+const json = ref({});
+
+const toJSON = () => {
+  json.value = playground.toJSON();
+};
 
 const playground = new Playground();
 const token = 'Bearer eyJraWQiOiJ1YWEtYXV0aG9yaXphdGlvbi1yc2Eta2V5IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiJwYWlwYWkiLCJhdXRvX2xvZ2luIjpmYWxzZSwiaXNzIjoiaHR0cDpcL1wvc2Nwby11YWEtc2VydmljZS50ZXN0LnN2Yy5jbHVzdGVyLmxvY2FsOjMwMDMxXC91YWEiLCJ1c2VySWQiOjY5NDI3OTE1MjM2NDMzOTIxLCJwbGF0Zm9ybSI6IkNPTVBMRVRFX0VESVRJT04iLCJhdXRob3JpdGllcyI6WyI2OTQyNzkxNTQ4NTkxNzE4NCJdLCJhdWQiOiJhcHNfc3lzdGVtIiwibmJmIjoxNzU1NTc4MjExLCJzY29wZSI6WyJvcGVuaWQiXSwidGVuYW50SWQiOjY5NDI3OTE1MjM2NDMzOTIwLCJleHAiOjE3NTU1ODE4MTEsImlhdCI6MTc1NTU3ODIxMSwic3VwZXJ2aXNvciI6dHJ1ZX0.almY1wSeF6mYCrMlIqeW-lUoOmJtNQ1NHmRWklJeEcUD5w0pSP7wHaMZWmRnbM-XM_2yFYpf0XDB3SVRwFLT5Oix8yJ6js_No6OiK5hC_rtGb7vr0PbT7kirU1Rzr0ov2sLC4Zn020ZQJd7FFsw06NjUVTdjxeS9Lpob-HpXv7IaICY7Wk3XpCJVPmRH-Er6IRuX76Y-hlhnMqc0fjPOretSwSDs-DQ_eUyDGi8sYKC7_L56glHTOJU99DK5edKPLCzddbm2YxkcYxnishyexyrwD1h02DE3XY38NyBbUCJpwVdLtrfkozXINKoACiw0o1tAtrKFKrM-DsKheYN3sw';
@@ -169,10 +186,10 @@ layout.slots.filter = [formGrid];
 
 // #region buttons
 
-addIcon.icon = 'Plus';
+addIcon.props.icon = formatPropsPropValue('Plus');
 addIcon.props.class = formatPropsPropValue('el-icon--left');
 
-deleteIcon.icon = 'Delete';
+addIcon.props.icon = formatPropsPropValue('Delete');
 deleteIcon.props.class = formatPropsPropValue('el-icon--left');
 
 createText.props.text = formatPropsPropValue('创建');
@@ -367,6 +384,14 @@ console.log(playground);
 
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+pre {
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 12px;
+        }
 </style>

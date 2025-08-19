@@ -14,6 +14,7 @@ type TSlots = {
 }
 
 export class Table extends Component<TRef, TProps, TSlots> {
+  $class = 'ElTable';
   name: string = 'table';
 
   async getComponent(): Promise<any> {

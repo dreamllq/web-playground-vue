@@ -1,4 +1,4 @@
-import { ParamType } from '@core/types/action';
+import { ParamType, ParamVariableJSON } from '@core/types/action';
 import { Variable } from './variable';
 
 export class ParamVariable {
@@ -7,5 +7,12 @@ export class ParamVariable {
 
   constructor(value: Variable) {
     this.value = value;
+  }
+
+  toJSON(): ParamVariableJSON {
+    return {
+      type: 'VARIABLE',
+      value: { id: this.value.id }
+    };
   }
 }

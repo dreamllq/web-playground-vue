@@ -1,4 +1,4 @@
-import { PropType } from '@core/types/component';
+import { PropType, PropValueJSON } from '@core/types/component';
 import { PropValueVariable } from './prop-value-variable';
 import { PropValueVariableValue } from './prop-value-variable-value';
 import { PropValueValue } from './prop-value-value';
@@ -13,5 +13,12 @@ export class PropValue<TValue = any> {
 
   constructor(value: ValueType<TValue>) {
     this.value = value;
+  }
+
+  toJSON(): PropValueJSON<TValue> {
+    return {
+      type: 'PROP',
+      value: this.value.toJSON()
+    };
   }
 }

@@ -1,3 +1,4 @@
+import { PlaygroundJSON } from '@core/types/playground';
 import { Action } from './action';
 import { Component } from './component';
 import { Variable } from './variable';
@@ -27,5 +28,14 @@ export class Playground {
     const _t = new t();
     this.components.push(_t);
     return _t;
+  }
+
+  toJSON():PlaygroundJSON {
+    return {
+      tree: this.tree.map(item => ({ id: item.id })),
+      components: this.components.map(item => item.toJSON()),
+      actions: this.actions.map(item => item.toJSON()),
+      variables: this.variables.map(item => item.toJSON())
+    };
   }
 }

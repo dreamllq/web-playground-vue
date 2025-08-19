@@ -20,7 +20,7 @@ export type ActionOptions = {
 export interface IAction{
   type: ActionType;
   handle(params: any[], options: ActionOptions): Promise<any> | any;
-  toJSON(): any;
+  toJSON(): ActionJSON;
 }
 
 export enum ParamType {
@@ -38,3 +38,44 @@ export enum ActionResultType {
 
 
 export type ActionResult = ActionResultVariable | ActionResultVariableValue; 
+
+export type ParamValueJSON = {
+  type: 'VALUE',
+  value: any
+}
+
+export type ParamVariableJSON = {
+  type: 'VARIABLE',
+  value: {id: string}
+}
+
+export type ParamContextJSON = {
+  type: 'CONTEXT',
+  value: number
+}
+
+export type ParamItemJSON = ParamValueJSON | ParamVariableJSON | ParamContextJSON;
+
+export type ActionResultVariableJSON = {
+  type:'VARIABLE',
+  value: {id: string},
+}
+
+export type ActionResultVariableValueJSON = {
+  type:'VARIABLE_VALUE',
+  value: {id: string},
+  key: string
+}
+
+export type ActionResultJSON = ActionResultVariableJSON | ActionResultVariableValueJSON;
+
+
+export type ActionJSON = {
+  $class: string,
+  id: string,
+  name: string,
+  type: ActionType,
+  async: boolean,
+  params: ParamItemJSON[],
+  result?: ActionResultJSON
+};

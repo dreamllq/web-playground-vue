@@ -1,4 +1,4 @@
-import { ActionResultType } from '@core/types/action';
+import { ActionResultType, ActionResultVariableJSON } from '@core/types/action';
 import { Variable } from './variable';
 
 export class ActionResultVariable {
@@ -7,5 +7,12 @@ export class ActionResultVariable {
 
   constructor(value: Variable) {
     this.value = value;
+  }
+
+  toJSON(): ActionResultVariableJSON {
+    return {
+      type: 'VARIABLE',
+      value: { id: this.value.id }
+    };
   }
 }

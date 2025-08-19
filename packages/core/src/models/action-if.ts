@@ -2,6 +2,7 @@ import { ActionOptions, ActionType, ParamItem } from '@core/types/action';
 import { Action } from './action';
 
 export class ActionIf extends Action { 
+  $class = 'ActionIf';
   condition: string = '';
   ifActions: Action[] = [];
   elseActions: Action[] = [];
@@ -25,5 +26,15 @@ export class ActionIf extends Action {
   runCondition(paramValues: any[]):boolean {
     const result = paramValues.reduce((acc, item) => acc && item, true);
     return result;
+  }
+
+  toJSON() {
+    const superJSON = super.toJSON();
+    return {
+      ...superJSON,
+      condition: this.condition,
+      ifActions: this.ifActions.map(item => ({ id: item.id })),
+      elseActions: this.elseActions.map(item => ({ id: item.id }))
+    };
   }
 }

@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { Variable } from './variable';
-import { ActionOptions, ActionResult, ActionResultType, ActionType, IAction, ParamItem, ParamType } from '@core/types/action';
+import { ActionJSON, ActionOptions, ActionResult, ActionResultType, ActionType, IAction, ParamItem, ParamType } from '@core/types/action';
 import { Ref } from 'vue';
 import { set } from 'lodash';
 
@@ -11,12 +11,21 @@ export class Action implements IAction {
   params: ParamItem[] = [];
   result?: ActionResult;
   private _async:boolean = false;
+  $class = 'Action';
 
   constructor(name: string) {
     this.name = name;
   }
-  toJSON() {
-    throw new Error('Method not implemented.');
+  toJSON(): ActionJSON {
+    return {
+      $class: this.$class,
+      id: this.id,
+      type: this.type,
+      name: this.name,
+      params: this.params.map(param => param.toJSON()),
+      async: this._async,
+      result: this.result?.toJSON()
+    };
   }
 
   set async(val:boolean) {

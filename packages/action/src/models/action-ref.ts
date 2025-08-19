@@ -2,6 +2,7 @@ import { Action } from 'l-play-core';
 import { Component } from 'l-play-core';
 
 export class ActionRef extends Action {
+  $class = 'ActionRef';
   ref?: Component;
   funcName?: string;
 
@@ -18,5 +19,14 @@ export class ActionRef extends Action {
         this.setResultData(params, options, data);
       }
     }
+  }
+
+  toJSON() {
+    const superJSON = super.toJSON();
+    return {
+      ...superJSON,
+      ref: this.ref ? { id: this.ref.id } : undefined,
+      funcName: this.funcName
+    };
   }
 }

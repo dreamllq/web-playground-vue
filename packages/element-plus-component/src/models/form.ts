@@ -16,6 +16,7 @@ type TSlots = {
 }
 
 export class Form extends Component<TRef, TProps, TSlots> {
+  $class = 'ElForm';
   name: string = 'form';
 
   async getComponent(): Promise<any> {

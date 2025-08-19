@@ -1,6 +1,7 @@
 import { Component } from 'l-play-core';
 
 export class DatePicker extends Component {
+  $class = 'ElDatePicker';
   name: string = 'date-picker';
 
   async getComponent(): Promise<any> {

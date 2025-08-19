@@ -3,6 +3,7 @@ import { Action, ActionReturnType } from 'l-play-core';
 import { set } from 'lodash';
 
 export class ActionOperator extends Action { 
+  $class = 'ActionOperator';
   operator?:string;
 
   handle(params: any[], options:{variables:Record<string, Ref>}): void {
@@ -15,5 +16,13 @@ export class ActionOperator extends Action {
       }
 
     }
+  }
+
+  toJSON() {
+    const superJSON = super.toJSON();
+    return {
+      ...superJSON,
+      operator: this.operator
+    };
   }
 }

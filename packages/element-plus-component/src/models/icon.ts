@@ -7,6 +7,7 @@ type TProps = {
   color?: PropValue<string>;
   size?: PropValue<string | number>;
   class?: PropValue<string>;
+  icon?: PropValue<string>;
 };
 
 type TSlots = {
@@ -14,8 +15,8 @@ type TSlots = {
 }
 
 export class Icon extends Component<TRef, TProps, TSlots> {
+  $class = 'ElIcon';
   name: string = 'icon';
-  icon: string = 'Plus';
   async getComponent(): Promise<any> {
     const ElIcon = (await import('element-plus')).ElIcon;
     const Icons = await import('@element-plus/icons-vue');
@@ -23,7 +24,7 @@ export class Icon extends Component<TRef, TProps, TSlots> {
       color: props.color,
       size: props.size,
       class: props.class
-    }, { default: () => h(Icons[this.icon]) }), {
+    }, { default: () => h(Icons[props.icon]) }), {
       props: {
         color: {
           type: String,
@@ -36,6 +37,10 @@ export class Icon extends Component<TRef, TProps, TSlots> {
         class: {
           type: String,
           default: ''
+        },
+        icon: {
+          type: String,
+          required: true
         }
       }
     });

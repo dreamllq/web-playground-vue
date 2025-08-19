@@ -2,7 +2,9 @@ import { Action, ActionReturnType } from 'l-play-core';
 import jsonata from 'jsonata';
 
 export class ActionStructTransform extends Action { 
+  $class = 'ActionStructTransform';
   ruleString: string = '';
+  $class: string = 'ActionStructTransform';
 
   constructor(name: string) {
     super(name);
@@ -18,5 +20,13 @@ export class ActionStructTransform extends Action {
     
     this.setResultData(params, options, result);
     return result;
+  }
+
+  toJSON() {
+    const superJSON = super.toJSON();
+    return {
+      ...superJSON,
+      ruleString: this.ruleString
+    };
   }
 }
