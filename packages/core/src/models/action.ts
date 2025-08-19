@@ -3,6 +3,12 @@ import { Variable } from './variable';
 import { ActionJSON, ActionOptions, ActionResult, ActionResultType, ActionType, IAction, ParamItem, ParamType } from '@core/types/action';
 import { Ref } from 'vue';
 import { set } from 'lodash';
+import { ParamContext } from './param-context';
+import { ParamVariable } from './param-variable';
+import { ParamValue } from './param-value';
+import { BuildPlaygroundOptions } from '@core/types/register';
+import { ActionResultVariable } from './action-result-variable';
+import { ActionResultVariableValue } from './action-result-variable-value';
 
 export class Action implements IAction {
   type: ActionType = ActionType.FUNCTION;
@@ -26,6 +32,27 @@ export class Action implements IAction {
       async: this._async,
       result: this.result?.toJSON()
     };
+  }
+
+  fromJSON(json: ActionJSON, options: BuildPlaygroundOptions) { 
+    this.async = json.async;
+    this.params = json.params.map(param => {
+      if (param.type === 'CONTEXT') {
+        return ParamContext.fromJSON(param, options);
+      } else if (param.type === 'VARIABLE') {
+        return ParamVariable.fromJSON(param, options);
+      } else {
+        return ParamValue.fromJSON(param, options);
+      }
+    });
+
+    if (json.result) {
+      if (json.result.type === 'VARIABLE') {
+        this.result = ActionResultVariable.fromJSON(json.result, options);
+      } else {
+        this.result = ActionResultVariableValue.fromJSON(json.result, options);
+      }
+    }
   }
 
   set async(val:boolean) {

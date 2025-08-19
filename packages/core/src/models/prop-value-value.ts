@@ -1,4 +1,5 @@
 import { PropValueType, PropValueValueJSON } from '@core/types/component';
+import { BuildPlaygroundOptions } from '@core/types/register';
 
 export class PropValueValue<TValue = any> {
   type: PropValueType.VALUE = PropValueType.VALUE;
@@ -13,5 +14,9 @@ export class PropValueValue<TValue = any> {
       type: 'VALUE',
       value: this.value
     };
+  }
+    
+  static fromJSON(json: PropValueValueJSON<any>, options:BuildPlaygroundOptions): PropValueValue {
+    return new PropValueValue(json.value);
   }
 }

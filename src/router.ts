@@ -13,6 +13,10 @@ const routes = [
   {
     path: '/page',
     component: () => import('@/components/page/index.vue')
+  },
+  {
+    path: '/build',
+    component: () => import('@/components/build/index.vue')
   }
 ];
 

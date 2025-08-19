@@ -13,6 +13,7 @@ type TSlots = {
 }
 
 export class AutoPagination extends Component<TRef, TProps, TSlots> {
+  $class = 'AutoPagination';
   name: string = 'auto-pagination';
 
   async getComponent(): Promise<any> {

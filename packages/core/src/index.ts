@@ -1,5 +1,7 @@
 export { default as PlaygroundRender } from './components/index.vue';
 
+export { Register } from './models/register/index';
+
 export { Playground } from './models/playground';
 export { Component } from './models/component';
 export { Variable } from './models/variable';
@@ -25,6 +27,9 @@ export { ActionResultVariableValue } from './models/action-result-variable-value
 
 export * from './types/component';
 export * from './types/action';
+export * from './types/variable';
+export * from './types/playground';
+export * from './types/register';
 
 // util
 export * from './util/format-props';

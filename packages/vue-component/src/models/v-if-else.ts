@@ -13,6 +13,7 @@ type TSlots = {
 }
 
 export class VIfElse extends Component<TRef, TProps, TSlots> {
+  $class = 'VIfElse';
   name: string = 'v-if-else';
 
   async getComponent(): Promise<any> {

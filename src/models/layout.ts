@@ -15,6 +15,7 @@ type TSlots = {
 }
 
 export class Layout extends Component<TRef, TProps, TSlots> {
+  $class = 'Layout';
   name: string = 'layout';
 
   async getComponent(): Promise<any> {

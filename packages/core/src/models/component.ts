@@ -1,6 +1,9 @@
 import { ComponentJSON, IComponent, PropItem, PropType, PropValueType } from '@core/types/component';
 import { v4 as uuidv4 } from 'uuid';
 import { DirectiveValue } from './directive-value';
+import { PropValue } from './prop-value';
+import { BuildPlaygroundOptions } from '@core/types/register';
+import { EventValue } from './event-value';
 
 export class Component<
   TRef = any, 
@@ -8,6 +11,20 @@ export class Component<
   TSlots extends Record<string, Component<any, any, any>[]> = Record<string, Component<any, any, any>[]>,
   TDirectives extends Record<string, DirectiveValue> = Record<string, DirectiveValue>
 > implements IComponent<TProps> {
+
+  id: string = uuidv4();
+  props: TProps = {} as TProps;
+  directives: TDirectives = {} as TDirectives;
+  name: string = 'component';
+  ref?: TRef;
+  slots: TSlots = {} as TSlots;
+  $class = 'Component';
+
+  constructor(name?:string) {
+    if (name) {
+      this.name = name;
+    }
+  }
 
   toJSON(): ComponentJSON {
     return {
@@ -28,15 +45,31 @@ export class Component<
       }, {})
     };
   }
+
+  fromJson(json:ComponentJSON, options:BuildPlaygroundOptions) {
+    this.name = json.name;
+
+    Object.entries(json.props).forEach(([key, value]) => {
+      if (value.type === PropType.PROP) {
+        (this.props as Record<string, PropItem>)[key] = PropValue.fromJSON(value, options);
+      } else {
+        (this.props as Record<string, PropItem>)[key] = EventValue.fromJSON(value, options);
+      }
+    });
+
+    Object.entries(json.directives).forEach(([key, value]) => {
+      (this.directives as Record<string, DirectiveValue>)[key] = DirectiveValue.fromJSON(value, options);
+    });
+
+    Object.entries(json.slots).forEach(([key, value]) => {
+      (this.slots as Record<string, Component<any, any, any>[]>)[key] = value.map(item => {
+        const component = options.components.find(c => c.id === item.id);
+        if (!component) throw new Error(`Component ${item.id} not found`);
+        return component;
+      });
+    });
+  }
   getComponent(): Promise<any> {
     throw new Error('Method not implemented.');
   }
-
-  id: string = uuidv4();
-  props: TProps = {} as TProps;
-  directives: TDirectives = {} as TDirectives;
-  name: string = 'component';
-  ref?: TRef;
-  slots: TSlots = {} as TSlots;
-  $class = 'Component';
 }

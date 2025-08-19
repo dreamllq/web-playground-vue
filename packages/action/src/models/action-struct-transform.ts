@@ -1,10 +1,9 @@
-import { Action, ActionReturnType } from 'l-play-core';
+import { Action, ActionReturnType, BuildPlaygroundOptions } from 'l-play-core';
 import jsonata from 'jsonata';
 
 export class ActionStructTransform extends Action { 
   $class = 'ActionStructTransform';
   ruleString: string = '';
-  $class: string = 'ActionStructTransform';
 
   constructor(name: string) {
     super(name);
@@ -28,5 +27,10 @@ export class ActionStructTransform extends Action {
       ...superJSON,
       ruleString: this.ruleString
     };
+  }
+      
+  fromJSON(json: ReturnType<typeof ActionStructTransform.prototype['toJSON']>, options: BuildPlaygroundOptions) {
+    super.fromJSON(json, options);
+    this.ruleString = json.ruleString;
   }
 }

@@ -1,5 +1,5 @@
 import { Ref } from 'vue';
-import { Action, ActionReturnType } from 'l-play-core';
+import { Action, ActionReturnType, BuildPlaygroundOptions } from 'l-play-core';
 import { set } from 'lodash';
 
 export class ActionOperator extends Action { 
@@ -24,5 +24,10 @@ export class ActionOperator extends Action {
       ...superJSON,
       operator: this.operator
     };
+  }
+  
+  fromJSON(json: ReturnType<typeof ActionOperator.prototype['toJSON']>, options: BuildPlaygroundOptions) {
+    super.fromJSON(json, options);
+    this.operator = json.operator;
   }
 }

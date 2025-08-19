@@ -1,4 +1,5 @@
 import { ParamType, ParamValueJSON } from '@core/types/action';
+import { BuildPlaygroundOptions } from '@core/types/register';
 
 export class ParamValue {
   type: ParamType.VALUE = ParamType.VALUE;
@@ -13,5 +14,9 @@ export class ParamValue {
       type: 'VALUE',
       value: this.value
     };
+  }
+      
+  static fromJSON(json: ParamValueJSON, options:BuildPlaygroundOptions): ParamValue {
+    return new ParamValue(json.value);
   }
 }

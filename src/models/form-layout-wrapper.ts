@@ -12,6 +12,7 @@ type TSlots = {
 
 
 export class FormLayoutWrapper extends Component<TRef, TProps, TSlots> {
+  $class = 'FormLayoutWrapper';
   name: string = 'form-layout-wrapper';
 
   async getComponent(): Promise<any> {

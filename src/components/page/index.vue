@@ -6,10 +6,13 @@
     <el-button @click='toJSON'>
       toJSON
     </el-button>
+    <el-button @click='onCopy'>
+      copy
+    </el-button>
   </div>
   <div>
     <pre>
-      {{ JSON.stringify(json, null, 2) }}
+      {{ json }}
     </pre>
   </div>
 </template>
@@ -27,15 +30,22 @@ import { ActionOperator, ActionFetch, ActionRef, ActionStructTransform } from 'l
 import { FormLayoutWrapper } from '@/models/form-layout-wrapper';
 import { VIfElse } from 'l-play-vue-component';
 import { ref } from 'vue';
-
-const json = ref({});
+import { useClipboard } from '@vueuse/core';
+const json = ref('');
 
 const toJSON = () => {
-  json.value = playground.toJSON();
+  json.value = JSON.stringify(playground.toJSON(), null, 2);
+};
+const {
+  text, copy, copied, isSupported 
+} = useClipboard({ source: json });
+
+const onCopy = () => {
+  copy(json.value);
 };
 
 const playground = new Playground();
-const token = 'Bearer eyJraWQiOiJ1YWEtYXV0aG9yaXphdGlvbi1yc2Eta2V5IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiJwYWlwYWkiLCJhdXRvX2xvZ2luIjpmYWxzZSwiaXNzIjoiaHR0cDpcL1wvc2Nwby11YWEtc2VydmljZS50ZXN0LnN2Yy5jbHVzdGVyLmxvY2FsOjMwMDMxXC91YWEiLCJ1c2VySWQiOjY5NDI3OTE1MjM2NDMzOTIxLCJwbGF0Zm9ybSI6IkNPTVBMRVRFX0VESVRJT04iLCJhdXRob3JpdGllcyI6WyI2OTQyNzkxNTQ4NTkxNzE4NCJdLCJhdWQiOiJhcHNfc3lzdGVtIiwibmJmIjoxNzU1NTc4MjExLCJzY29wZSI6WyJvcGVuaWQiXSwidGVuYW50SWQiOjY5NDI3OTE1MjM2NDMzOTIwLCJleHAiOjE3NTU1ODE4MTEsImlhdCI6MTc1NTU3ODIxMSwic3VwZXJ2aXNvciI6dHJ1ZX0.almY1wSeF6mYCrMlIqeW-lUoOmJtNQ1NHmRWklJeEcUD5w0pSP7wHaMZWmRnbM-XM_2yFYpf0XDB3SVRwFLT5Oix8yJ6js_No6OiK5hC_rtGb7vr0PbT7kirU1Rzr0ov2sLC4Zn020ZQJd7FFsw06NjUVTdjxeS9Lpob-HpXv7IaICY7Wk3XpCJVPmRH-Er6IRuX76Y-hlhnMqc0fjPOretSwSDs-DQ_eUyDGi8sYKC7_L56glHTOJU99DK5edKPLCzddbm2YxkcYxnishyexyrwD1h02DE3XY38NyBbUCJpwVdLtrfkozXINKoACiw0o1tAtrKFKrM-DsKheYN3sw';
+const token = 'Bearer eyJraWQiOiJ1YWEtYXV0aG9yaXphdGlvbi1yc2Eta2V5IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiJwYWlwYWkiLCJhdXRvX2xvZ2luIjpmYWxzZSwiaXNzIjoiaHR0cDpcL1wvc2Nwby11YWEtc2VydmljZS50ZXN0LnN2Yy5jbHVzdGVyLmxvY2FsOjMwMDMxXC91YWEiLCJ1c2VySWQiOjY5NDI3OTE1MjM2NDMzOTIxLCJwbGF0Zm9ybSI6IkNPTVBMRVRFX0VESVRJT04iLCJhdXRob3JpdGllcyI6WyI2OTQyNzkxNTQ4NTkxNzE4NCJdLCJhdWQiOiJhcHNfc3lzdGVtIiwibmJmIjoxNzU1NTg5MzgyLCJzY29wZSI6WyJvcGVuaWQiXSwidGVuYW50SWQiOjY5NDI3OTE1MjM2NDMzOTIwLCJleHAiOjE3NTU1OTI5ODIsImlhdCI6MTc1NTU4OTM4Miwic3VwZXJ2aXNvciI6dHJ1ZX0.lPHgyoiOkEEMAnAeOplE1zQcS_kb4qhT0tdQ-KIWK5BW9YtZ42uuAt-m9hCwsu1MvsRRIpZCeOPVXCXFJXfMSWyZv8LmeuBgvHeIHzhDFLApSzli7RxIBEy-MY9prN4YG33-PJ83IJHD1CWxGCAH-D2rL-K_VCIauFnEEuUyoXdmWSt557bAZ3Kqvc6tgBO6w4KeizyJYX8tLtOm8T6c5rz8iBgQnYyBqB9JcIJkJoXoIBQhrgAAqj1aB54ABCRk_HZoW4TCAxUS5u7PhY_2qv7wzo4y14dfgb2q1de2y6HmTIdr9E07cTXk9_5MwrYh19uRi5KeGKAnbt9_e0s77Q';
 // #region components
 const layout = playground.component(Layout);
 const autoPagination = playground.component(AutoPagination);
@@ -189,7 +199,7 @@ layout.slots.filter = [formGrid];
 addIcon.props.icon = formatPropsPropValue('Plus');
 addIcon.props.class = formatPropsPropValue('el-icon--left');
 
-addIcon.props.icon = formatPropsPropValue('Delete');
+deleteIcon.props.icon = formatPropsPropValue('Delete');
 deleteIcon.props.class = formatPropsPropValue('el-icon--left');
 
 createText.props.text = formatPropsPropValue('创建');

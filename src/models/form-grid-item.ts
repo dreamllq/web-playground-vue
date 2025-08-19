@@ -13,6 +13,7 @@ type TSlots = {
 }
 
 export class FormGridItem extends Component<TRef, TProps, TSlots> {
+  $class = 'FormGridItem';
   name: string = 'form-grid-item';
 
   async getComponent(): Promise<any> {

@@ -1,4 +1,4 @@
-import { Action } from 'l-play-core';
+import { Action, BuildPlaygroundOptions } from 'l-play-core';
 import { Ref } from 'vue';
 
 export class ActionFetch extends Action { 
@@ -37,5 +37,13 @@ export class ActionFetch extends Action {
       body: this.body,
       headers: this.headers
     };
+  }
+
+  fromJSON(json: ReturnType<typeof ActionFetch.prototype['toJSON']>, options: BuildPlaygroundOptions) {
+    super.fromJSON(json, options);
+    this.url = json.url;
+    this.method = json.method;
+    this.body = json.body;
+    this.headers = json.headers;
   }
 }

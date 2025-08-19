@@ -1,4 +1,5 @@
 import { ParamContextJSON, ParamType } from '@core/types/action';
+import { BuildPlaygroundOptions } from '@core/types/register';
 
 export class ParamContext {
   type: ParamType.CONTEXT = ParamType.CONTEXT;
@@ -13,5 +14,9 @@ export class ParamContext {
       type: 'CONTEXT',
       value: this.value
     };
+  }
+    
+  static fromJSON(json: ParamContextJSON, options:BuildPlaygroundOptions): ParamContext {
+    return new ParamContext(json.value);
   }
 }
