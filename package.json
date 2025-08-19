@@ -36,6 +36,7 @@
     "l-play-core": "workspace:*",
     "l-play-dom-component": "workspace:*",
     "l-play-element-plus-component": "workspace:*",
+    "l-play-vue-component": "workspace:*",
     "lerna": "^8.2.3",
     "lint-staged": "^13.2.2",
     "llqm-eslint": "^1.0.0-alpha.34",

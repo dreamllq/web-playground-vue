@@ -84,6 +84,9 @@ importers:
       l-play-element-plus-component:
         specifier: workspace:*
         version: link:packages/element-plus-component
+      l-play-vue-component:
+        specifier: workspace:*
+        version: link:packages/vue-component
       lerna:
         specifier: ^8.2.3
         version: 8.2.3(encoding@0.1.13)
@@ -163,6 +166,12 @@ importers:
         version: link:../core
 
   packages/element-plus-component:
+    dependencies:
+      l-play-core:
+        specifier: workspace:*
+        version: link:../core
+
+  packages/vue-component:
     dependencies:
       l-play-core:
         specifier: workspace:*

@@ -9,12 +9,11 @@ export enum ComponentType {
 
 export interface IComponent<TProps>{
   getComponent(): Promise<any>;
-  getProps(): TProps;
 }
 
 export type ActionDefine = {
   value: Action[] | Action;
-  return?: Action;  
+  return?: Variable;  
 }
 
 export type ComponentId = string;
@@ -71,3 +70,9 @@ export type EventValue = {
 } & ActionDefine
 
 export type PropItem = PropValue<any> | EventValue;
+
+export type DirectiveValue<TValue = string | number | any[] | boolean | Record<string, any>> = {
+  value: PropValueVariable | PropValueVariableValue | PropValueValue<TValue> | PropValueSlotContext | PropValueFunction,
+  arg?: string,
+  modifiers?: Record<string, boolean>
+}

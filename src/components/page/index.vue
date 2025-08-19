@@ -15,27 +15,140 @@ import { Div, Text } from 'l-play-dom-component';
 import { Button, Dialog, Form, Input, Table, TableColumn, FormItem, Icon } from 'l-play-element-plus-component';
 import { ActionOperator, ActionFetch, ActionRef, ActionStructTransform } from 'l-play-action';
 import { FormLayoutWrapper } from '@/models/form-layout-wrapper';
+import { VIfElse } from 'l-play-vue-component';
 
 const playground = new Playground();
-const layout = new Layout();
-const autoPagination = new AutoPagination();
+const token = 'Bearer eyJraWQiOiJ1YWEtYXV0aG9yaXphdGlvbi1yc2Eta2V5IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiJwYWlwYWkiLCJhdXRvX2xvZ2luIjpmYWxzZSwiaXNzIjoiaHR0cDpcL1wvc2Nwby11YWEtc2VydmljZS50ZXN0LnN2Yy5jbHVzdGVyLmxvY2FsOjMwMDMxXC91YWEiLCJ1c2VySWQiOjY5NDI3OTE1MjM2NDMzOTIxLCJwbGF0Zm9ybSI6IkNPTVBMRVRFX0VESVRJT04iLCJhdXRob3JpdGllcyI6WyI2OTQyNzkxNTQ4NTkxNzE4NCJdLCJhdWQiOiJhcHNfc3lzdGVtIiwibmJmIjoxNzU1NTY4MDM4LCJzY29wZSI6WyJvcGVuaWQiXSwidGVuYW50SWQiOjY5NDI3OTE1MjM2NDMzOTIwLCJleHAiOjE3NTU1NzE2MzgsImlhdCI6MTc1NTU2ODAzOCwic3VwZXJ2aXNvciI6dHJ1ZX0.FYfssFyW_XwNye60K1s4mBkKF7Ci6ZdtbqO799l2XaIIKU7VqKLrWsARqcftaJAebZ6rImsoKvFpGx_X8BQ8ic_62LajzhZFHVv-5F34wThYgqjOTpfMZiR0bcg4t2tVWRQtzF9yGtea_Yxjn6Zgz7cr2OSbXLLzdpAZXv3aWGird0x6XyPRFi4ZGNxjJgAtX9wwHtkds3DbnamKuSH6eyRydljBizBrtIb81QPdv6rxEL2N8IcXGoEVxV_R3UYM_aHKmKUpz6d344ziYo0DqMOvMojq-G6EUPAPG6tSuee1lR6kTCa-HPuRXsc26U5LZ7ldMT8061XRP0wWLo7uag';
+// #region components
+const layout = playground.component(Layout);
+const autoPagination = playground.component(AutoPagination);
+const formGrid = playground.component(FormGrid);
+const formGridItem = playground.component(FormGridItem);
+const input = playground.component(Input);
+const createButton = playground.component(Button);
+const createText = playground.component(Text);
+const addIcon = playground.component(Icon);
+const deleteIcon = playground.component(Icon);
+const batchDeleteButton = playground.component(Button);
+const batchDeleteText = playground.component(Text);
+const autoHeightWrapper = playground.component(AutoHeightWrapper);
+const table = playground.component(Table);
+const column1 = playground.component(TableColumn);
+const operateColumn = playground.component(TableColumn);
+const editButton = playground.component(Button);
+const editButtonText = playground.component(Text);
+const editInitLoadingDiv = playground.component(Div);
+
+// #region  add dialog
+const addDialog = playground.component(Dialog);
+const addForm = playground.component(Form);
+const addFormLayoutWrapper = playground.component(FormLayoutWrapper);
+const addFormItemName = playground.component(FormItem);
+const addFormItemNameInput = playground.component(Input);
+const footer = playground.component(Div);
+const cancelConfirmButton = playground.component(Button);
+const cancelConfirmButtonText = playground.component(Text);
+const addConfirmButton = playground.component(Button);
+const addConfirmButtonText = playground.component(Text);
+
+// #endregion
+
+// #region  edit dialog
+const editDialog = playground.component(Dialog);
+const editForm = playground.component(Form);
+const editFormLayoutWrapper = playground.component(FormLayoutWrapper);
+const editFormItemName = playground.component(FormItem);
+const editFormItemNameInput = playground.component(Input);
+const initVIfElse = playground.component(VIfElse);
+const editFooter = playground.component(Div);
+editFooter.props.class = formatPropsPropValue('dialog-footer');
+const editCancelConfirmButton = playground.component(Button);
+const editCancelConfirmButtonText = playground.component(Text);
+editCancelConfirmButton.slots.default = [editCancelConfirmButtonText];
+editCancelConfirmButtonText.props.text = formatPropsPropValue('取消');
+const editAddConfirmButton = playground.component(Button);
+editAddConfirmButton.props.type = formatPropsPropValue('primary');
+const editAddConfirmButtonText = playground.component(Text);
+editAddConfirmButton.slots.default = [editAddConfirmButtonText];
+editAddConfirmButtonText.props.text = formatPropsPropValue('确认');
+editFooter.slots.default = [editCancelConfirmButton, editAddConfirmButton];
+
+// #endregion
+
+
+// #endregion
+
+// #region vars
+const filter = playground.var('filter', { name: '111' });
+const fetchRes = playground.var('fetchRes', []);
+const tableReturnData = playground.var('tableReturnData', {});
+
+const visible = playground.var('visible', false);
+const addFormVar = playground.var('addForm', { name: '' });
+const addConfirmButtonLoading = playground.var('addConfirmButtonLoading', false);
+
+const editVisible = playground.var('visible', false);
+const editFormVar = playground.var('addForm', { name: '' });
+const editInitLoading = playground.var('editInitLoading', false);
+const editConfirmButtonLoading = playground.var('editConfirmButtonLoading', false);
+
+// #endregion
+
+// #region actions
+const aAction = playground.action(ActionOperator, 'aAction');
+const tableFetch = playground.action(ActionRef, 'tableFetch');
+const fetchDataAction = playground.action(ActionFetch, 'fetchDataAction');
+const resTransform = playground.action(ActionStructTransform, 'resTransform');
+const visibleUpdate = playground.action(ActionOperator, 'visibleUpdate');
+const createButtonAction = playground.action(ActionOperator, 'createButtonAction');
+const addFormItemNameInputUpdate = playground.action(ActionOperator, 'addFormItemNameInputUpdate');
+const cancelConfirmButtonAction = playground.action(ActionOperator, 'addConfirmButtonAction');
+
+const addConfirmButtonLoadingTrueAction = playground.action<ActionOperator>(ActionOperator, 'addConfirmButtonLoadingTrueAction');
+addConfirmButtonLoadingTrueAction.params.push(formatActionParamValue(true));
+addConfirmButtonLoadingTrueAction.result = formatActionResultVariable(addConfirmButtonLoading);
+
+const addConfirmButtonLoadingFalseAction = playground.action<ActionOperator>(ActionOperator, 'addConfirmButtonLoadingFalseAction');
+addConfirmButtonLoadingFalseAction.params.push(formatActionParamValue(false));
+addConfirmButtonLoadingFalseAction.result = formatActionResultVariable(addConfirmButtonLoading);
+
+const editVisibleUpdate = playground.action(ActionOperator, 'editVisibleUpdate');
+const showEditDialog = playground.action(ActionOperator, 'showEditDialog');
+showEditDialog.params.push(formatActionParamValue(true));
+showEditDialog.result = formatActionResultVariable(editVisible);
+const getEditData = playground.action(ActionOperator, 'addFormItemNameInputUpdate');
+getEditData.params.push(formatActionParamValue('1112'));
+getEditData.result = formatActionResultVariableValue(editFormVar, 'name');
+const setEditInitLoadingTrue = playground.action(ActionOperator, 'setEditInitLoadingTrue');
+setEditInitLoadingTrue.params.push(formatActionParamValue(true));
+setEditInitLoadingTrue.result = formatActionResultVariable(editInitLoading);
+const setEditInitLoadingFalse = playground.action(ActionOperator, 'setEditInitLoadingTrue');
+setEditInitLoadingFalse.params.push(formatActionParamValue(false));
+setEditInitLoadingFalse.result = formatActionResultVariable(editInitLoading);
+const editFormItemNameInputUpdate = playground.action(ActionOperator, 'editFormItemNameInputUpdate');
+
+const setEditVisibleFalse = playground.action(ActionOperator, 'setEditVisibleFalse');
+setEditVisibleFalse.params.push(formatActionParamValue(false));
+setEditVisibleFalse.result = formatActionResultVariable(editVisible);
+
+const setEditConfirmButtonLoadingTrue = playground.action(ActionOperator, 'setEditConfirmButtonLoadingTrue');
+setEditConfirmButtonLoadingTrue.params.push(formatActionParamValue(true));
+setEditConfirmButtonLoadingTrue.result = formatActionResultVariable(editConfirmButtonLoading);
+const setEditConfirmButtonLoadingFalse = playground.action(ActionOperator, 'setEditConfirmButtonLoadingFalse');
+setEditConfirmButtonLoadingFalse.params.push(formatActionParamValue(false));
+setEditConfirmButtonLoadingFalse.result = formatActionResultVariable(editConfirmButtonLoading);
+
+// #endregion
 
 // #region filter
-const filter = playground.var('filter', { name: '111' });
 
-const formGrid = new FormGrid();
 formGrid.props.model = formatPropsPropVariable(filter);
 
-const formGridItem = new FormGridItem();
 formGridItem.props.label = formatPropsPropValue('名称');
 formGridItem.props.prop = formatPropsPropValue('name');
 
-
-const input = new Input();
-
 input.props.modelValue = formatPropsPropVariableValue(filter, 'name');
 
-const aAction = playground.action(ActionOperator, 'aAction');
 
 aAction.params.push(formatActionParamContext(0));
 aAction.result = formatActionResultVariableValue(filter, 'name');
@@ -43,8 +156,6 @@ aAction.result = formatActionResultVariableValue(filter, 'name');
 input.props['onUpdate:modelValue'] = formatPropsEvent([aAction]);
 
 formGridItem.slots.default = [input];
-
-const tableFetch = playground.action(ActionRef, 'tableFetch');
 
 tableFetch.ref = autoPagination;
 tableFetch.funcName = 'goFirstPage';
@@ -57,14 +168,10 @@ layout.slots.filter = [formGrid];
 // #endregion
 
 // #region buttons
-const createButton = new Button();
-const createText = new Text();
 
-const addIcon = new Icon();
 addIcon.icon = 'Plus';
 addIcon.props.class = formatPropsPropValue('el-icon--left');
 
-const deleteIcon = new Icon();
 deleteIcon.icon = 'Delete';
 deleteIcon.props.class = formatPropsPropValue('el-icon--left');
 
@@ -75,8 +182,6 @@ createButton.props.plain = formatPropsPropValue(true);
 
 createButton.slots.default = [addIcon, createText];
 
-const batchDeleteButton = new Button();
-const batchDeleteText = new Text();
 batchDeleteText.props.text = formatPropsPropValue('批量删除');
 
 batchDeleteButton.slots.default = [deleteIcon, batchDeleteText];
@@ -88,52 +193,48 @@ batchDeleteButton.props.plain = formatPropsPropValue(true);
 layout.slots.buttonGroup = [createButton, batchDeleteButton];
 // #endregion
 
-
-
 // #region table
-const fetchDataAction = playground.action(ActionFetch, 'fetchDataAction');
-const fetchRes = playground.var('fetchRes', []);
 fetchDataAction.result = formatActionResultVariable(fetchRes);
 fetchDataAction.url = 'https://api.sit.alsi.cn/iam/user-management/users?name=&roleIds=&mobile=&enabled=&pageNo=1&pageSize=20&orderItems%5B0%5D.column=create_time&orderItems%5B0%5D.asc=false';
 fetchDataAction.method = 'get';
 fetchDataAction.headers = {
   'Content-Type': 'application/json',
-  'authorization': 'Bearer eyJraWQiOiJ1YWEtYXV0aG9yaXphdGlvbi1yc2Eta2V5IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiJwYWlwYWkiLCJhdXRvX2xvZ2luIjpmYWxzZSwiaXNzIjoiaHR0cDpcL1wvc2Nwby11YWEtc2VydmljZS50ZXN0LnN2Yy5jbHVzdGVyLmxvY2FsOjMwMDMxXC91YWEiLCJ1c2VySWQiOjY5NDI3OTE1MjM2NDMzOTIxLCJwbGF0Zm9ybSI6IkNPTVBMRVRFX0VESVRJT04iLCJhdXRob3JpdGllcyI6WyI2OTQyNzkxNTQ4NTkxNzE4NCJdLCJhdWQiOiJhcHNfc3lzdGVtIiwibmJmIjoxNzU1NDgwOTg5LCJzY29wZSI6WyJvcGVuaWQiXSwidGVuYW50SWQiOjY5NDI3OTE1MjM2NDMzOTIwLCJleHAiOjE3NTU0ODQ1ODksImlhdCI6MTc1NTQ4MDk4OSwic3VwZXJ2aXNvciI6dHJ1ZX0.O4Y5xrygFVry9O5qlk0OBIqLeipmR--sSYSSzq2e0a5bH2wpGEcJtXBUTDIZR96pbHq-cfl3BLd9TRB4lTuXcOO11PBxnGwnEFjr3WCWJi6Kb6ESDOJudH4YEvQ3o9g-sNRDu34pjLlD2l2mLBIi94qaiAYWg3Fg-t9_3hNkWskq44M72H43eJUAY2aDlwAl-IDV3ovyLh3CKF3FiPCHCkQcm2UJohpDbjcdTIDIbx5oufxD6CjrHt2lcfbzUbo2c53jJAX2qo1MY2iTl-IggXAPE3qkhzUC3tCD3z40miO-rEqGalfBknFO-7REaiW2Rv_HnVZStIKf-FtbRHzdWA',
+  'authorization': token,
   'siteid': '72794563987042304'
 };
-const resTransform = playground.action(ActionStructTransform, 'resTransform');
 resTransform.ruleString = 'data';
 resTransform.params.push(formatActionParamVariable(fetchRes));
+resTransform.result = formatActionResultVariable(tableReturnData);
 
-autoPagination.props.fetchData = formatPropsPropFunction([fetchDataAction], resTransform);
+autoPagination.props.fetchData = formatPropsPropFunction([fetchDataAction, resTransform], tableReturnData);
 autoPagination.props.autoInit = formatPropsPropValue(true);
 
-const autoHeightWrapper = new AutoHeightWrapper();
 autoPagination.slots.default = [autoHeightWrapper];
-
-const table = new Table();
-
 
 table.props.height = formatPropsPropSlotContext(autoHeightWrapper.id, 'size.height');
 table.props.border = formatPropsPropValue(true);
 table.props.data = formatPropsPropSlotContext(autoPagination.id, 'data');
 
-const column1 = new TableColumn();
 column1.props.label = formatPropsPropValue('名称');
 column1.props.prop = formatPropsPropValue('name');
 
-const operateColumn = new TableColumn();
 operateColumn.props.label = formatPropsPropValue('操作');
 operateColumn.props.width = formatPropsPropValue(200);
 
-const editButton = new Button();
 editButton.props.link = formatPropsPropValue(true);
 editButton.props.type = formatPropsPropValue('primary');
-const editButtonText = new Text();
 editButtonText.props.text = formatPropsPropValue('编辑');
 editButton.slots.default = [editButtonText];
 operateColumn.slots.default = [editButton];
 
+
+editButton.props.onClick = formatPropsEvent([
+  setEditInitLoadingTrue,
+  showEditDialog,
+  fetchDataAction,
+  getEditData,
+  setEditInitLoadingFalse
+]);
 
 table.slots.default = [column1, operateColumn];
 
@@ -143,16 +244,10 @@ layout.slots.dataTable = [autoPagination];
 // #endregion
 
 // #region add dialog 
-const addDialog = new Dialog();
-playground.tree.push(addDialog);
-const visible = new Variable('visible', false);
-playground.variables.push(visible);
 
 addDialog.props.modelValue = formatPropsPropVariable(visible);
 
 addDialog.props.title = formatPropsPropValue('新建');
-
-const visibleUpdate = playground.action(ActionOperator, 'visibleUpdate');
 
 visibleUpdate.params.push(formatActionParamContext(0));
 
@@ -160,38 +255,23 @@ visibleUpdate.result = formatActionResultVariable(visible);
 
 addDialog.props['onUpdate:modelValue'] = formatPropsEvent(visibleUpdate);
 
-
-const createButtonAction = playground.action(ActionOperator, 'createButtonAction');
 createButtonAction.params.push(formatActionParamValue(true));
 
 createButtonAction.result = formatActionResultVariable(visible);
 createButton.props.onClick = formatPropsEvent(createButtonAction);
 
-
-const addForm = new Form();
-const addFormVar = new Variable('addForm', { name: '' });
-playground.variables.push(addFormVar);
-
 addForm.props.model = formatPropsPropVariable(addFormVar);
 addForm.props.labelPosition = formatPropsPropValue('top');
 
-const addFormLayoutWrapper = new FormLayoutWrapper();
 addFormLayoutWrapper.props.col = formatPropsPropValue(2);
 
 addForm.slots.default = [addFormLayoutWrapper];
 
-const addFormItemName = new FormItem();
 addFormItemName.props.label = formatPropsPropValue('姓名');
 addFormItemName.props.prop = formatPropsPropValue('name');
-
-const addFormItemNameInput = new Input();
 addFormItemNameInput.props.modelValue = formatPropsPropVariableValue(addFormVar, 'name');
-
-const addFormItemNameInputUpdate = playground.action(ActionOperator, 'addFormItemNameInputUpdate');
 addFormItemNameInputUpdate.params.push(formatActionParamContext(0));
-
 addFormItemNameInputUpdate.result = formatActionResultVariableValue(addFormVar, 'name');
-
 addFormItemNameInput.props['onUpdate:modelValue'] = formatPropsEvent(addFormItemNameInputUpdate);
 
 addFormItemName.slots.default = [addFormItemNameInput];
@@ -200,39 +280,25 @@ addFormLayoutWrapper.slots.default = [addFormItemName];
 
 
 // #region footer
-const footer = new Div();
 addDialog.slots.footer = [footer];
 footer.props.class = formatPropsPropValue('dialog-footer');
 
-const cancelConfirmButton = new Button();
-const cancelConfirmButtonText = new Text();
+
 cancelConfirmButtonText.props.text = formatPropsPropValue('取消');
 cancelConfirmButton.slots.default = [cancelConfirmButtonText];
 
-const cancelConfirmButtonAction = playground.action(ActionOperator, 'addConfirmButtonAction');
 cancelConfirmButtonAction.params.push(formatActionParamValue(false));
 
 cancelConfirmButtonAction.result = formatActionResultVariable(visible);
 
 cancelConfirmButton.props.onClick = formatPropsEvent(cancelConfirmButtonAction);
 
-const addConfirmButton = new Button();
 addConfirmButton.props.type = formatPropsPropValue('primary');
 
-const addConfirmButtonText = new Text();
 addConfirmButtonText.props.text = formatPropsPropValue('确定');
 
-const addConfirmButtonLoading = playground.var('addConfirmButtonLoading', false);
 addConfirmButton.props.loading = formatPropsPropVariable(addConfirmButtonLoading);
 
-const addConfirmButtonLoadingTrueAction = playground.action<ActionOperator>(ActionOperator, 'addConfirmButtonLoadingTrueAction');
-addConfirmButtonLoadingTrueAction.params.push(formatActionParamValue(true));
-
-addConfirmButtonLoadingTrueAction.result = formatActionResultVariable(addConfirmButtonLoading);
-const addConfirmButtonLoadingFalseAction = playground.action<ActionOperator>(ActionOperator, 'addConfirmButtonLoadingFalseAction');
-addConfirmButtonLoadingFalseAction.params.push(formatActionParamValue(false));
-
-addConfirmButtonLoadingFalseAction.result = formatActionResultVariable(addConfirmButtonLoading);
 addConfirmButton.props.onClick = formatPropsEvent([
   addConfirmButtonLoadingTrueAction,
   fetchDataAction,
@@ -250,7 +316,58 @@ addDialog.slots.default = [addForm];
 
 // #endregion
 
+// #region edit dialog
+editVisibleUpdate.params.push(formatActionParamContext(0));
+editVisibleUpdate.result = formatActionResultVariable(editVisible);
+
+editDialog.props.title = formatPropsPropValue('编辑');
+editDialog.props.modelValue = formatPropsPropVariable(editVisible);
+editDialog.props['onUpdate:modelValue'] = formatPropsEvent(editVisibleUpdate);
+editDialog.slots.default = [initVIfElse];
+
+editInitLoadingDiv.props.style = formatPropsPropValue('height: 100px;');
+editInitLoadingDiv.directives.loading = {
+  value: {
+    type: PropValueType.VALUE,
+    value: true
+  }
+};
+
+initVIfElse.props.condition = formatPropsPropVariable(editInitLoading);
+initVIfElse.slots.default = [editInitLoadingDiv];
+initVIfElse.slots.else = [editForm];
+
+editForm.slots.default = [editFormLayoutWrapper];
+editForm.props.labelPosition = formatPropsPropValue('top');
+
+editFormLayoutWrapper.slots.default = [editFormItemName];
+
+editFormItemName.slots.default = [editFormItemNameInput];
+editFormItemName.props.label = formatPropsPropValue('姓名');
+editFormItemName.props.prop = formatPropsPropValue('name');
+editFormItemNameInput.props.modelValue = formatPropsPropVariableValue(editFormVar, 'name');
+editFormItemNameInputUpdate.params.push(formatActionParamContext(0));
+editFormItemNameInputUpdate.result = formatActionResultVariableValue(editFormVar, 'name');
+editFormItemNameInput.props['onUpdate:modelValue'] = formatPropsEvent(editFormItemNameInputUpdate);
+
+editFormItemNameInput.props.modelValue = formatPropsPropVariableValue(editFormVar, 'name');
+
+editDialog.slots.footer = [editFooter];
+
+editCancelConfirmButton.props.onClick = formatPropsEvent(setEditVisibleFalse);
+
+editAddConfirmButton.props.loading = formatPropsPropVariable(editConfirmButtonLoading);
+editAddConfirmButton.props.onClick = formatPropsEvent([
+  setEditConfirmButtonLoadingTrue,
+  fetchDataAction,
+  setEditConfirmButtonLoadingFalse,
+  setEditVisibleFalse,
+  tableFetch
+]);
+// #endregion
 playground.tree.push(layout);
+playground.tree.push(addDialog);
+playground.tree.push(editDialog);
 console.log(playground);
 
 </script>

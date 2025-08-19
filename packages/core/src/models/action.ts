@@ -1,23 +1,34 @@
 import { v4 as uuidv4 } from 'uuid';
 import { Variable } from './variable';
-import { ActionResult, ActionResultType, IAction, ParamItem, ParamType } from '@core/types/action';
+import { ActionOptions, ActionResult, ActionResultType, ActionType, IAction, ParamItem, ParamType } from '@core/types/action';
 import { Ref } from 'vue';
 import { set } from 'lodash';
 
 export class Action implements IAction {
+  type: ActionType = ActionType.FUNCTION;
   id: string = uuidv4();
   name: string;
   params: ParamItem[] = [];
   result?: ActionResult;
-  async:boolean = false;
+  private _async:boolean = false;
 
   constructor(name: string) {
     this.name = name;
   }
-  handle(params: any[], options: { variables: Record<string, Ref>; refs: Record<string, Ref>; }): Promise<void> | void {
+
+  set async(val:boolean) {
+    this._async = val;
+  }
+
+  get async():boolean {
+    return this._async;
+  }
+
+
+  handle(params: any[], options: ActionOptions): Promise<any> | any {
     throw new Error('Method not implemented.');
   }
-  transformParams(params: any[], options: { variables: Record<string, Ref>; }): any[] {
+  protected transformParams(params: any[], options: ActionOptions): any[] {
     const paramValues = this.params.map((param, index) => {
       if (param.type === ParamType.VALUE) {
         return param.value;
@@ -30,7 +41,7 @@ export class Action implements IAction {
     return paramValues;
   }
 
-  setResultData(params: any[], options: { variables: Record<string, Ref>; }, data: any) {
+  protected setResultData(params: any[], options: ActionOptions, data: any) {
     if (this.result) {
       if (this.result.type === ActionResultType.VARIABLE) {
         // console.log(options.variables[this.result.value.id].value, data);

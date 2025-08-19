@@ -1,9 +1,21 @@
 import { Variable } from '@core/models/variable';
 import { Ref } from 'vue';
 
+export enum ActionType {
+  FUNCTION='FUNCTION',
+  IF='IF',
+  FOR='FOR',
+  TRY='TRY',
+}
+
+
+export type ActionOptions = {
+  variables:Record<string, Ref>,
+  refs: Record<string, Ref>
+}
 export interface IAction{
-  handle(params: any[], options:{variables:Record<string, Ref>, refs: Record<string, Ref>}): Promise<any> | any;
-  transformParams(params: any[], options:{variables:Record<string, Ref>}): any[];
+  type: ActionType;
+  handle(params: any[], options: ActionOptions): Promise<any> | any;
 }
 
 export enum ParamType {

@@ -38,17 +38,17 @@ export const formatPropsPropSlotContext = <T>(componentId: string, key: string):
   }
 });
 
-export const formatPropsPropFunction = <T>(value: (Action[] | Action), returnAction?: Action): PropValue<T> => ({
+export const formatPropsPropFunction = <T>(value: (Action[] | Action), returnVariable?: Variable): PropValue<T> => ({
   type: PropType.PROP,
   value: {
     type: PropValueType.FUNCTION,
     value: value,
-    return: returnAction
+    return: returnVariable
   }
 });
 
-export const formatPropsEvent = (value: (Action[] | Action), returnAction?: Action): EventValue => ({
+export const formatPropsEvent = (value: (Action[] | Action), returnVariable?: Variable): EventValue => ({
   type: PropType.EVENT,
   value: value,
-  return: returnAction
+  return: returnVariable
 });
