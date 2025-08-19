@@ -1,54 +1,22 @@
 import { Action } from '@core/models/action';
+import { Component } from '@core/models/component';
+import { EventValue } from '@core/models/event-value';
+import { PropValue } from '@core/models/prop-value';
+import { PropValueFunction } from '@core/models/prop-value-function';
+import { PropValueSlotContext } from '@core/models/prop-value-slot-context';
+import { PropValueValue } from '@core/models/prop-value-value';
+import { PropValueVariable } from '@core/models/prop-value-variable';
+import { PropValueVariableValue } from '@core/models/prop-value-variable-value';
 import { Variable } from '@core/models/variable';
-import { EventValue, PropType, PropValue, PropValueType, PropValueVariable } from '@core/types/component';
 
-export const formatPropsPropVariable = <T>(variable: Variable): PropValue<T> => ({
-  type: PropType.PROP,
-  value: {
-    type: PropValueType.VARIABLE,
-    value: variable
-  }
-});
+export const formatPropsPropVariable = <T>(variable: Variable): PropValue<T> => (new PropValue<T>(new PropValueVariable(variable)));
 
-export const formatPropsPropVariableValue = <T>(variable: Variable, key: string): PropValue<T> => ({
-  type: PropType.PROP,
-  value: {
-    type: PropValueType.VARIABLE_VALUE,
-    value: variable,
-    key
-  }
-});
+export const formatPropsPropVariableValue = <T>(variable: Variable, key: string): PropValue<T> => (new PropValue<T>(new PropValueVariableValue(variable, key)));
 
-export const formatPropsPropValue = <TValue>(value: TValue): PropValue<TValue> => ({
-  type: PropType.PROP,
-  value: {
-    type: PropValueType.VALUE,
-    value
-  }
-});
+export const formatPropsPropValue = <TValue>(value: TValue): PropValue<TValue> => (new PropValue<TValue>(new PropValueValue<TValue>(value)));
 
-export const formatPropsPropSlotContext = <T>(componentId: string, key: string): PropValue<T> => ({
-  type: PropType.PROP,
-  value: {
-    type: PropValueType.SLOT_CONTEXT,
-    value: {
-      componentId,
-      key
-    }
-  }
-});
+export const formatPropsPropSlotContext = <T>(component: Component, key: string): PropValue<T> => (new PropValue<T>(new PropValueSlotContext(component, key)));
 
-export const formatPropsPropFunction = <T>(value: (Action[] | Action), returnVariable?: Variable): PropValue<T> => ({
-  type: PropType.PROP,
-  value: {
-    type: PropValueType.FUNCTION,
-    value: value,
-    return: returnVariable
-  }
-});
+export const formatPropsPropFunction = <T>(value: (Action[] | Action), returnVariable?: Variable): PropValue<T> => (new PropValue<T>(new PropValueFunction(value, returnVariable)));
 
-export const formatPropsEvent = (value: (Action[] | Action), returnVariable?: Variable): EventValue => ({
-  type: PropType.EVENT,
-  value: value,
-  return: returnVariable
-});
+export const formatPropsEvent = (value: (Action[] | Action), returnVariable?: Variable): EventValue => (new EventValue(value, returnVariable));

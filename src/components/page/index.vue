@@ -10,7 +10,7 @@ import { AutoPagination } from '@/models/auto-pagination';
 import { FormGrid } from '@/models/form-grid';
 import { FormGridItem } from '@/models/form-grid-item';
 import { Layout } from '@/models/layout';
-import { Playground, PlaygroundRender, PropType, PropValueType, Variable, ParamType, ActionResultType, Action, formatPropsEvent, formatPropsPropFunction, formatPropsPropSlotContext, formatPropsPropValue, formatPropsPropVariable, formatPropsPropVariableValue, formatActionParamContext, formatActionParamValue, formatActionParamVariable, formatActionResultVariable, formatActionResultVariableValue } from 'l-play-core';
+import { Playground, PlaygroundRender, PropType, PropValueType, Variable, ParamType, ActionResultType, Action, formatPropsEvent, formatPropsPropFunction, formatPropsPropSlotContext, formatPropsPropValue, formatPropsPropVariable, formatPropsPropVariableValue, formatActionParamContext, formatActionParamValue, formatActionParamVariable, formatActionResultVariable, formatActionResultVariableValue, DirectiveValue, PropValueValue } from 'l-play-core';
 import { Div, Text } from 'l-play-dom-component';
 import { Button, Dialog, Form, Input, Table, TableColumn, FormItem, Icon } from 'l-play-element-plus-component';
 import { ActionOperator, ActionFetch, ActionRef, ActionStructTransform } from 'l-play-action';
@@ -18,7 +18,7 @@ import { FormLayoutWrapper } from '@/models/form-layout-wrapper';
 import { VIfElse } from 'l-play-vue-component';
 
 const playground = new Playground();
-const token = 'Bearer eyJraWQiOiJ1YWEtYXV0aG9yaXphdGlvbi1yc2Eta2V5IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiJwYWlwYWkiLCJhdXRvX2xvZ2luIjpmYWxzZSwiaXNzIjoiaHR0cDpcL1wvc2Nwby11YWEtc2VydmljZS50ZXN0LnN2Yy5jbHVzdGVyLmxvY2FsOjMwMDMxXC91YWEiLCJ1c2VySWQiOjY5NDI3OTE1MjM2NDMzOTIxLCJwbGF0Zm9ybSI6IkNPTVBMRVRFX0VESVRJT04iLCJhdXRob3JpdGllcyI6WyI2OTQyNzkxNTQ4NTkxNzE4NCJdLCJhdWQiOiJhcHNfc3lzdGVtIiwibmJmIjoxNzU1NTY4MDM4LCJzY29wZSI6WyJvcGVuaWQiXSwidGVuYW50SWQiOjY5NDI3OTE1MjM2NDMzOTIwLCJleHAiOjE3NTU1NzE2MzgsImlhdCI6MTc1NTU2ODAzOCwic3VwZXJ2aXNvciI6dHJ1ZX0.FYfssFyW_XwNye60K1s4mBkKF7Ci6ZdtbqO799l2XaIIKU7VqKLrWsARqcftaJAebZ6rImsoKvFpGx_X8BQ8ic_62LajzhZFHVv-5F34wThYgqjOTpfMZiR0bcg4t2tVWRQtzF9yGtea_Yxjn6Zgz7cr2OSbXLLzdpAZXv3aWGird0x6XyPRFi4ZGNxjJgAtX9wwHtkds3DbnamKuSH6eyRydljBizBrtIb81QPdv6rxEL2N8IcXGoEVxV_R3UYM_aHKmKUpz6d344ziYo0DqMOvMojq-G6EUPAPG6tSuee1lR6kTCa-HPuRXsc26U5LZ7ldMT8061XRP0wWLo7uag';
+const token = 'Bearer eyJraWQiOiJ1YWEtYXV0aG9yaXphdGlvbi1yc2Eta2V5IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiJwYWlwYWkiLCJhdXRvX2xvZ2luIjpmYWxzZSwiaXNzIjoiaHR0cDpcL1wvc2Nwby11YWEtc2VydmljZS50ZXN0LnN2Yy5jbHVzdGVyLmxvY2FsOjMwMDMxXC91YWEiLCJ1c2VySWQiOjY5NDI3OTE1MjM2NDMzOTIxLCJwbGF0Zm9ybSI6IkNPTVBMRVRFX0VESVRJT04iLCJhdXRob3JpdGllcyI6WyI2OTQyNzkxNTQ4NTkxNzE4NCJdLCJhdWQiOiJhcHNfc3lzdGVtIiwibmJmIjoxNzU1NTcyNjI4LCJzY29wZSI6WyJvcGVuaWQiXSwidGVuYW50SWQiOjY5NDI3OTE1MjM2NDMzOTIwLCJleHAiOjE3NTU1NzYyMjgsImlhdCI6MTc1NTU3MjYyOCwic3VwZXJ2aXNvciI6dHJ1ZX0.pQ9W8-HTkBdts6WsAv_VaT7C4uf5qThSyHn0jhOVLgUbZVW3cQc4VeMLPg6B_OgCf86Okr_DBuWgTmbHup-EsT0VOOCRk5TH0rGY703ntYZqn1r7HZ6bZliYdrZJfEgeaMb3DETA1htV9bWo6fuvTE9PbWipFvvig6nyeXd_Y2LJPQE3hcXaOojGE40LlMsJQTEQsdl01T4RzP1u65b5WOHajlapejN2ELO1-HR7uQRmVfovOrHVSb2HsL4ieEMPBTN4locelrMQ6-mAIaVzwd4t9KC011alHkbrywhuR4vn05K0KZ6kW_m9B2U1YOo1tUW-vv38BSpGonQzqvEFjQ';
 // #region components
 const layout = playground.component(Layout);
 const autoPagination = playground.component(AutoPagination);
@@ -211,9 +211,9 @@ autoPagination.props.autoInit = formatPropsPropValue(true);
 
 autoPagination.slots.default = [autoHeightWrapper];
 
-table.props.height = formatPropsPropSlotContext(autoHeightWrapper.id, 'size.height');
+table.props.height = formatPropsPropSlotContext(autoHeightWrapper, 'size.height');
 table.props.border = formatPropsPropValue(true);
-table.props.data = formatPropsPropSlotContext(autoPagination.id, 'data');
+table.props.data = formatPropsPropSlotContext(autoPagination, 'data');
 
 column1.props.label = formatPropsPropValue('名称');
 column1.props.prop = formatPropsPropValue('name');
@@ -326,12 +326,7 @@ editDialog.props['onUpdate:modelValue'] = formatPropsEvent(editVisibleUpdate);
 editDialog.slots.default = [initVIfElse];
 
 editInitLoadingDiv.props.style = formatPropsPropValue('height: 100px;');
-editInitLoadingDiv.directives.loading = {
-  value: {
-    type: PropValueType.VALUE,
-    value: true
-  }
-};
+editInitLoadingDiv.directives.loading = new DirectiveValue(new PropValueValue(true));
 
 initVIfElse.props.condition = formatPropsPropVariable(editInitLoading);
 initVIfElse.slots.default = [editInitLoadingDiv];

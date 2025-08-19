@@ -15,6 +15,9 @@ export class Action implements IAction {
   constructor(name: string) {
     this.name = name;
   }
+  toJSON() {
+    throw new Error('Method not implemented.');
+  }
 
   set async(val:boolean) {
     this._async = val;

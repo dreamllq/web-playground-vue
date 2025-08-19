@@ -1,6 +1,5 @@
-import { Component } from '@core/models/component';
-import { Action } from '@core/models/action';
-import { Variable } from '@core/models/variable';
+import { PropValue } from '@core/models/prop-value';
+import { EventValue } from '@core/models/event-value';
 
 export enum ComponentType {
   COMPONENT='COMPONENT',
@@ -9,14 +8,8 @@ export enum ComponentType {
 
 export interface IComponent<TProps>{
   getComponent(): Promise<any>;
+  toJSON(): any;
 }
-
-export type ActionDefine = {
-  value: Action[] | Action;
-  return?: Variable;  
-}
-
-export type ComponentId = string;
 
 export enum PropType {
   PROP = 'PROP',
@@ -31,48 +24,4 @@ export enum PropValueType {
   FUNCTION = 'FUNCTION',
 }
 
-export type PropValueVariable = {
-  type: PropValueType.VARIABLE,
-  value: Variable
-};
-
-export type PropValueVariableValue = {
-  type: PropValueType.VARIABLE_VALUE,
-  value: Variable,
-  key: string
-};
-
-export type PropValueValue<TValue> = {
-  type: PropValueType.VALUE,
-  value: TValue;
-};
-
-export type PropValueSlotContext = {
-  type: PropValueType.SLOT_CONTEXT,
-  value: {
-    componentId: string,
-    key: string
-  };
-};
-
-export type PropValueFunction = {
-  type: PropValueType.FUNCTION
-} & ActionDefine
-
-
-export type PropValue<TValue = string | number | any[] | boolean | Record<string, any>> = {
-  type: PropType.PROP,
-  value: PropValueVariable | PropValueVariableValue | PropValueValue<TValue> | PropValueSlotContext | PropValueFunction;
-}
-
-export type EventValue = {
-  type: PropType.EVENT
-} & ActionDefine
-
 export type PropItem = PropValue<any> | EventValue;
-
-export type DirectiveValue<TValue = string | number | any[] | boolean | Record<string, any>> = {
-  value: PropValueVariable | PropValueVariableValue | PropValueValue<TValue> | PropValueSlotContext | PropValueFunction,
-  arg?: string,
-  modifiers?: Record<string, boolean>
-}

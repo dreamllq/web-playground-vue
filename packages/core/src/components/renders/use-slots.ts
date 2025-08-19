@@ -1,9 +1,5 @@
 import { Component } from '@core/models/component';
-import { PropItem } from '@core/types/component';
 import { h, ref } from 'vue';
-import { PropType as ComponentPropType, PropValueFunction, PropValueType } from '@core/types/component';
-import { Variable } from '@core/models/variable';
-import { get } from 'lodash';
 import { useStore } from '../store';
 import ComponentRender from './component-render';
 

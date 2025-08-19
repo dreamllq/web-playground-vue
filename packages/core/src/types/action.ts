@@ -16,6 +16,7 @@ export type ActionOptions = {
 export interface IAction{
   type: ActionType;
   handle(params: any[], options: ActionOptions): Promise<any> | any;
+  toJSON(): any;
 }
 
 export enum ParamType {

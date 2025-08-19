@@ -4,6 +4,18 @@ export { Playground } from './models/playground';
 export { Component } from './models/component';
 export { Variable } from './models/variable';
 export { Action } from './models/action';
+export { ActionIf } from './models/action-if';
+export { ActionTry } from './models/action-try';
+export { ActionFor } from './models/action-for';
+
+export { PropValue } from './models/prop-value';
+export { EventValue } from './models/event-value';
+export { PropValueVariable } from './models/prop-value-variable';
+export { PropValueVariableValue } from './models/prop-value-variable-value';
+export { PropValueValue } from './models/prop-value-value';
+export { PropValueSlotContext } from './models/prop-value-slot-context';
+export { PropValueFunction } from './models/prop-value-function';
+export { DirectiveValue } from './models/directive-value';
 
 export * from './types/component';
 export * from './types/action';
