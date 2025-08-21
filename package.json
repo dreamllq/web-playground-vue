@@ -17,6 +17,7 @@
     "@element-plus/icons-vue": "^2.3.2",
     "eventemitter3": "^5.0.1",
     "jsonata": "^2.1.0",
+    "normalize.css": "^8.0.1",
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
@@ -35,6 +36,7 @@
     "l-play-action": "workspace:*",
     "l-play-core": "workspace:*",
     "l-play-dom-component": "workspace:*",
+    "l-play-editor": "workspace:*",
     "l-play-element-plus-component": "workspace:*",
     "l-play-vue-component": "workspace:*",
     "lerna": "^8.2.3",

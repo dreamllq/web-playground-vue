@@ -9,8 +9,11 @@ import { ParamValue } from './param-value';
 import { BuildPlaygroundOptions } from '@core/types/register';
 import { ActionResultVariable } from './action-result-variable';
 import { ActionResultVariableValue } from './action-result-variable-value';
+import { ActionConfig } from '@core/types/action-config';
 
 export class Action implements IAction {
+  static config: ActionConfig = { name: 'action' };
+
   type: ActionType = ActionType.FUNCTION;
   id: string = uuidv4();
   name: string;

@@ -32,6 +32,9 @@ importers:
       jsonata:
         specifier: ^2.1.0
         version: 2.1.0
+      normalize.css:
+        specifier: ^8.0.1
+        version: 8.0.1
       vue-router:
         specifier: ^4.5.1
         version: 4.5.1(vue@3.5.18(typescript@5.8.3))
@@ -81,6 +84,9 @@ importers:
       l-play-dom-component:
         specifier: workspace:*
         version: link:packages/dom-component
+      l-play-editor:
+        specifier: workspace:*
+        version: link:packages/editor
       l-play-element-plus-component:
         specifier: workspace:*
         version: link:packages/element-plus-component
@@ -160,6 +166,12 @@ importers:
   packages/core: {}
 
   packages/dom-component:
+    dependencies:
+      l-play-core:
+        specifier: workspace:*
+        version: link:../core
+
+  packages/editor:
     dependencies:
       l-play-core:
         specifier: workspace:*
@@ -3415,6 +3427,9 @@ packages:
 
   normalize-wheel-es@1.2.0:
     resolution: {integrity: sha512-Wj7+EJQ8mSuXr2iWfnujrimU35R2W4FAErEyTmJoJ7ucwTn2hOUSsRehMb5RSYkxXGTM7Y9QpvPmp++w5ftoJw==}
+
+  normalize.css@8.0.1:
+    resolution: {integrity: sha512-qizSNPO93t1YUuUhP22btGOo3chcvDFqFaj2TRybP0DMxkHOCTYwp3n34fel4a31ORXy4m1Xq0Gyqpb5m33qIg==}
 
   npm-bundled@3.0.1:
     resolution: {integrity: sha512-+AvaheE/ww1JEwRHOrn4WHNzOxGtVp+adrg2AeZS/7KuxGUYFuBta98wYpfHBbJp6Tg6j1NKSEVHNcfZzJHQwQ==}
@@ -8413,6 +8428,8 @@ snapshots:
   normalize-path@3.0.0: {}
 
   normalize-wheel-es@1.2.0: {}
+
+  normalize.css@8.0.1: {}
 
   npm-bundled@3.0.1:
     dependencies:

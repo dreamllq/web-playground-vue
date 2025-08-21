@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { ActionReturnType, Playground } from 'l-play-core';
+import { Playground } from 'l-play-core';
 import { PlaygroundRender } from 'l-play-core';
 import { Input } from 'l-play-element-plus-component';
 import { Variable } from 'l-play-core';

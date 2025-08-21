@@ -7,8 +7,10 @@ export class Register {
   actionRegister = new ActionRegister();
   componentRegister = new ComponentRegister();
 
-  fromJSON(json: PlaygroundJSON) {
+  fromJSON(json: PlaygroundJSON | undefined) {
     const playground = new Playground();
+    
+    if (!json) return playground;
 
     json.variables.forEach(item => {
       const variable = playground.var(item.name, item.value);

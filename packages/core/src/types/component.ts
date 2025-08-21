@@ -3,10 +3,6 @@ import { EventValue } from '@core/models/event-value';
 import { ActionJSON } from './action';
 import { VariableJSON } from './variable';
 
-export interface IComponent<TProps>{
-  getComponent(): Promise<any>;
-  toJSON(): any;
-}
 
 export enum PropType {
   PROP = 'PROP',
@@ -20,6 +16,13 @@ export enum PropValueType {
   SLOT_CONTEXT = 'SLOT_CONTEXT',
   FUNCTION = 'FUNCTION',
 }
+
+
+export interface IComponent<TProps>{
+  getComponent(): Promise<any>;
+  toJSON(): any;
+}
+
 
 export interface IPropItem {
   toJSON(): any;

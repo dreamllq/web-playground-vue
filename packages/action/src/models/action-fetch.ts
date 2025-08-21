@@ -2,6 +2,35 @@ import { Action, BuildPlaygroundOptions } from 'l-play-core';
 import { Ref } from 'vue';
 
 export class ActionFetch extends Action { 
+  static customConfig = {
+    type: 'object',
+    properties: {
+      url: { type: 'string' },
+      method: { type: 'string' },
+      headers: {
+        type: 'object',
+        additionalProperties: { type: 'string' }
+      },
+      body: {
+        type: 'object',
+        additionalProperties: {
+          type: 'object',
+          properties: {
+            type: {
+              type: 'string',
+              enum: ['value', 'variable']
+            },
+            value: { type: 'string' },
+            variable: {
+              type: 'string',
+              component: 'variable-selector' 
+            }
+          }
+        }
+      }
+    }
+  };
+
   $class = 'ActionFetch';
   url?: string;
   method?: string;

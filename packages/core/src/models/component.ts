@@ -4,6 +4,7 @@ import { DirectiveValue } from './directive-value';
 import { PropValue } from './prop-value';
 import { BuildPlaygroundOptions } from '@core/types/register';
 import { EventValue } from './event-value';
+import { ComponentConfig } from '@core/types/compoennt-config';
 
 export class Component<
   TRef = any, 
@@ -11,6 +12,7 @@ export class Component<
   TSlots extends Record<string, Component<any, any, any>[]> = Record<string, Component<any, any, any>[]>,
   TDirectives extends Record<string, DirectiveValue> = Record<string, DirectiveValue>
 > implements IComponent<TProps> {
+  static config: ComponentConfig = { name: 'component' };
 
   id: string = uuidv4();
   props: TProps = {} as TProps;
@@ -19,6 +21,7 @@ export class Component<
   ref?: TRef;
   slots: TSlots = {} as TSlots;
   $class = 'Component';
+
 
   constructor(name?:string) {
     if (name) {

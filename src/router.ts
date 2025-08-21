@@ -1,6 +1,5 @@
 import { createMemoryHistory, createRouter, createWebHistory } from 'vue-router';
 
-
 const routes = [
   {
     path: '/',
@@ -17,6 +16,10 @@ const routes = [
   {
     path: '/build',
     component: () => import('@/components/build/index.vue')
+  },
+  {
+    path: '/editor',
+    component: () => import('@/components/editor/index.vue')
   }
 ];
 

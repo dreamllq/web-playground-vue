@@ -24,8 +24,8 @@ export class Playground {
     return _t;
   }
 
-  component<T extends Component>(t: Constructor<T>): T {
-    const _t = new t();
+  component<T extends Component>(t: Constructor<T>, name?:string): T {
+    const _t = new t(name);
     this.components.push(_t);
     return _t;
   }
