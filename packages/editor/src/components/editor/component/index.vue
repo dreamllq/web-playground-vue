@@ -21,11 +21,13 @@
                 <el-dropdown-item @click='onEdit(item)'>
                   基本信息
                 </el-dropdown-item>
-                <el-dropdown-item @click='onPropEdit(item)'>
+                <el-dropdown-item @click='onPropsEdit(item)'>
                   参数
                 </el-dropdown-item>
                 <el-dropdown-item>指令</el-dropdown-item>
-                <el-dropdown-item>插槽</el-dropdown-item>
+                <el-dropdown-item @click='onSlotsEdit(item)'>
+                  插槽
+                </el-dropdown-item>
               </el-dropdown-menu>
             </template>
           </el-dropdown>
@@ -39,7 +41,8 @@
   </area-layout>
   <add-dialog ref='addDialogRef' @success='refresh' />
   <edit-dialog ref='editDialogRef' @success='refresh' />
-  <edit-props-dialog ref='editPropsDialogRef' @success='refresh' />
+  <edit-props-dialog ref='editPropsDialogRef' />
+  <edit-slots-dialog ref='editSlotsDialogRef' />
 </template>
 
 <script setup lang="ts">
@@ -51,12 +54,14 @@ import { onMounted, ref } from 'vue';
 import { useStore } from '../../store';
 import ItemLayout from '../layout/item-layout.vue';
 import EditPropsDialog from './props/index.vue';
+import EditSlotsDialog from './slots/index.vue';
 
 const { playground } = useStore()!;
 
 const addDialogRef = ref<InstanceType<typeof AddDialog>>();
 const editDialogRef = ref<InstanceType<typeof EditDialog>>();
 const editPropsDialogRef = ref<InstanceType<typeof EditPropsDialog>>();
+const editSlotsDialogRef = ref<InstanceType<typeof EditSlotsDialog>>();
 
 const list = ref<{id: string, name: string}[]>([]);
 
@@ -72,8 +77,12 @@ const onEdit = (item) => {
   editDialogRef.value!.show(item);
 };
 
-const onPropEdit = (item) => {
+const onPropsEdit = (item) => {
   editPropsDialogRef.value!.show(item);
+};
+
+const onSlotsEdit = (item) => {
+  editSlotsDialogRef.value!.show(item);
 };
 
 const onDelete = () => {

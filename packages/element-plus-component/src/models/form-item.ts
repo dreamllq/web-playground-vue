@@ -14,7 +14,6 @@ type TSlots = {
 
 export class FormItem extends Component<TRef, TProps, TSlots> {
   $class = 'ElFormItem';
-  name: string = 'form-item';
 
   async getComponent(): Promise<any> {
     const ElementPlus = await import('element-plus');

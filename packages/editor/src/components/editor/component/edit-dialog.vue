@@ -39,7 +39,7 @@ const formRef = ref<InstanceType<typeof BizForm>>();
 
 const onSubmit = async () => {
   const data = await formRef.value!.getData();
-  const component = playground.components.find(v => v.id === data.id);
+  const component = playground.components.find(v => v.id === id);
   if (!component) throw new Error('组件不存在');
   
   component.name = data.name;

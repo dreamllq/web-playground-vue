@@ -15,7 +15,6 @@ type TProps = {
 
 export class Button extends Component<TRef, TProps> {
   $class = 'ElButton';
-  name: string = 'button';
   async getComponent(): Promise<any> {
     const ElementPlus = await import('element-plus');
     return ElementPlus.ElButton;

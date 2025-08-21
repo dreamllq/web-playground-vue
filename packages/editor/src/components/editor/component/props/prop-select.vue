@@ -63,7 +63,7 @@
 import { ref, watch } from 'vue';
 import PropTypeSelect from './prop-type-select.vue';
 import { PropType, PropValueType } from 'l-play-core';
-import ActionSelect from '../../common/action-select.vue';
+import ActionSelect from '../../common/action-select/index.vue';
 import VariableSelect from '../../common/variable-select.vue';
 import PropValueTypeSelect from './prop-value-type-select.vue';
 import ComponentSelect from '../../common/component-select.vue';

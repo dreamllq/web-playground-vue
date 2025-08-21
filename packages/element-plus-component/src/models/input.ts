@@ -10,7 +10,6 @@ type TProps = {
 
 export class Input extends Component<TRef, TProps> {
   $class = 'ElInput';
-  name: string = 'input';
 
   async getComponent(): Promise<any> {
     const ElementPlus = await import('element-plus');

@@ -2,7 +2,7 @@
   <el-dialog
     v-model='dialogVisible'
     title='编辑组件参数'
-    width='900'
+    width='1000'
     append-to-body
   >
     <biz-form v-if='dialogVisible' ref='formRef' :default-data='defaultData' />

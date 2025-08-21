@@ -33,8 +33,8 @@ export class ActionRef extends Action {
   fromJSON(json: ReturnType<typeof ActionRef.prototype['toJSON']>, options: BuildPlaygroundOptions) {
     super.fromJSON(json, options);
     this.funcName = json.funcName;
-    const component = options.components.find(c => c.id === json.ref!.id);
-    if (!component) throw new Error(`Component ${json.ref!.id} not found`);
+    const component = options.components.find(c => c.id === json.ref?.id);
+    if (!component) throw new Error(`Component ${json.ref?.id} not found`);
     this.ref = component;
   }
 }

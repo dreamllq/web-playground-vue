@@ -16,7 +16,6 @@ type TSlots = {
 
 export class Icon extends Component<TRef, TProps, TSlots> {
   $class = 'ElIcon';
-  name: string = 'icon';
   async getComponent(): Promise<any> {
     const ElIcon = (await import('element-plus')).ElIcon;
     const Icons = await import('@element-plus/icons-vue');

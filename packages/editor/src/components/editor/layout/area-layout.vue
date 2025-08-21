@@ -36,6 +36,9 @@
     .header-title{
       flex: 1;
       overflow: hidden;
+      font-size: 14px;
+      font-weight: bold;
+      color: #333
     }
 
     .header-operator{

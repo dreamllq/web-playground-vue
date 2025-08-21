@@ -17,7 +17,6 @@ type TSlots = {
 
 export class TableColumn extends Component<TRef, TProps, TSlots> {
   $class = 'ElTableColumn';
-  name: string = 'table-column';
 
   async getComponent(): Promise<any> {
     const ElementPlus = await import('element-plus');
