@@ -19,6 +19,9 @@
         <template v-else-if="valueType === 'object'">
           <object-render v-model='value' placeholder='value' />
         </template>
+        <template v-else-if="valueType === 'array'">
+          <array-render v-model='value' placeholder='value' />
+        </template>
         <template v-else>
           <span>暂不支持</span>
         </template>
@@ -34,6 +37,8 @@ import ObjectRender from './index.vue'; ;
 import NumberRender from '../number-render.vue';
 import BoolRender from '../bool-render.vue';
 import { ValueType } from '../type';
+import { getValueType } from '../utils/get-value-type';
+import ArrayRender from '../array-render/index.vue';
 
 type ObjectItem = {
   key: string;
@@ -49,12 +54,12 @@ const model = defineModel<ObjectItem>({
 
 const key = ref<string>(model.value.key || '');
 const value = ref<any>(model.value.value || '');
-const valueType = ref<ValueType>(typeof value.value as ValueType);
+const valueType = ref<ValueType>(getValueType(value.value) as ValueType);
 
 watch(model, () => {
   key.value = model.value.key;
   value.value = model.value.value;
-  valueType.value = typeof value.value;
+  valueType.value = getValueType(value.value) as ValueType;
 }, { deep: true });
 
 watch(key, () => {

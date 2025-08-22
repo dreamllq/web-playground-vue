@@ -2,7 +2,7 @@
   <el-dialog
     v-model='dialogVisible'
     title='编辑行为'
-    width='500'
+    width='1000'
     append-to-body
   >
     <biz-form
@@ -42,20 +42,7 @@ const onSubmit = async () => {
   const data = await formRef.value!.getData();
   const action = playground.actions.find(action => action.id === id);
   if (!action) throw new Error('动作不存在');
-
   action.async = data.async;
-
-  action.params = [];
-
-  if (data.result?.type) {
-    const variable = playground.variables.find(v => v.id === data.result!.variable);
-    if (!variable) throw new Error(`Variable ${data.result.variable} not found`);
-    if (data.result.type === ActionResultType.VARIABLE) {
-      action.result = formatActionResultVariable(variable);
-    } else {
-      action.result = formatActionResultVariableValue(variable, data.result.key!);
-    }
-  }
 
   dialogVisible.value = false;
   emits('success');
@@ -66,26 +53,9 @@ const show = (data: {id: string}) => {
   const action = playground.actions.find(v => v.id === data.id);
   if (!action) throw new Error('操作不存在');
 
-  let result;
-  if (action.result) {
-    if (action.result.type === ActionResultType.VARIABLE) {
-      result = {
-        type: ActionResultType.VARIABLE,
-        variable: action.result.value.id
-      };
-    } else {
-      result = {
-        type: ActionResultType.VARIABLE_VALUE,
-        variable: action.result.value.id,
-        key: action.result.key
-      };
-    }
-  }
-
   defaultData.value = {
     action: action.$class,
     name: action.name,
-    result,
     async: action.async
   };
 

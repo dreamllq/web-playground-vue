@@ -16,6 +16,5 @@ export type ActionFormResult = {
 export type ActionForm = {
     action: string,
     name: string,
-    result?: ActionFormResult 
     async: boolean
 }

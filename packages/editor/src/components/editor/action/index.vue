@@ -25,10 +25,7 @@
                   基本信息
                 </el-dropdown-item>
                 <el-dropdown-item @click='onEditParams(item)'>
-                  参数
-                </el-dropdown-item>
-                <el-dropdown-item @click='onEditResult(item)'>
-                  结果
+                  参数&结果
                 </el-dropdown-item>
                 <el-dropdown-item @click='onEditExtension(item)'>
                   扩展参数
@@ -46,7 +43,6 @@
   <add-dialog ref='addDialogRef' @success='refresh' />
   <edit-dialog ref='editDialogRef' @success='refresh' />
   <edit-params-dialog ref='editParamsDialogRef' />
-  <edit-result-dialog ref='editResultDialogRef' />
   <edit-extension-dialog ref='editExtensionDialogRef' />
 </template>
 
@@ -59,7 +55,6 @@ import { onMounted, ref } from 'vue';
 import { useStore } from '../../store';
 import ItemLayout from '../layout/item-layout.vue';
 import EditParamsDialog from './params/index.vue';
-import EditResultDialog from './result/index.vue';
 import EditExtensionDialog from './extension/index.vue';
 
 const { playground } = useStore()!;
@@ -67,7 +62,6 @@ const { playground } = useStore()!;
 const addDialogRef = ref<InstanceType<typeof AddDialog>>();
 const editDialogRef = ref<InstanceType<typeof EditDialog>>();
 const editParamsDialogRef = ref<InstanceType<typeof EditParamsDialog>>();
-const editResultDialogRef = ref<InstanceType<typeof EditResultDialog>>();
 const editExtensionDialogRef = ref<InstanceType<typeof EditExtensionDialog>>();
 
 type ListItem = {id: string, name: string}
@@ -88,10 +82,6 @@ const onEdit = (item) => {
 
 const onEditParams = (item) => {
   editParamsDialogRef.value!.show(item);
-};
-
-const onEditResult = (item) => {
-  editResultDialogRef.value!.show(item);
 };
 
 const onEditExtension = (item) => {

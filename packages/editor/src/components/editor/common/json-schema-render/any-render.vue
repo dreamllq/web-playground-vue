@@ -20,6 +20,9 @@
           <template v-else-if="valueType === 'object'">
             <object-render v-model='model' placeholder='value' />
           </template>
+          <template v-else-if="valueType === 'array'">
+            <array-render v-model='model' placeholder='value' />
+          </template>
           <template v-else>
             <span>暂不支持</span>
           </template>
@@ -37,17 +40,16 @@ import StringRender from './string-render.vue';
 import ObjectRender from './object-render/index.vue';
 import NumberRender from './number-render.vue';
 import BoolRender from './bool-render.vue';
+import ArrayRender from './array-render/index.vue';
+import { getValueType } from './utils/get-value-type';
 
 
 const model = defineModel<any>({ default: '' });
-console.log(model.value);
-console.log(model.value);
 
-
-const valueType = ref<ValueType>(typeof model.value as ValueType);
+const valueType = ref<ValueType>(getValueType(model.value) as ValueType);
 
 watch(model, () => {
-  valueType.value = typeof model.value as ValueType;
+  valueType.value = getValueType(model.value) as ValueType;
 });
 
 watch(valueType, () => {

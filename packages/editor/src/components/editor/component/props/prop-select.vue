@@ -1,61 +1,70 @@
 <template>
   <div class='prop-select'>
-    <el-input v-model='name' placeholder='参数名称' style='width: 150px;' />
-    <prop-type-select v-model='propType' style='width: 150px; margin-left: 8px;' />
+    <el-form label-width='100px' style='width: 100%'>
+      <el-form-item label='参数名称'>
+        <el-input v-model='name' placeholder='参数名称' />
+      </el-form-item>
+      <el-form-item label='参数类型'>
+        <prop-type-select v-model='propType' />
+      </el-form-item>
 
-    <template v-if='propType === PropType.PROP'>
-      <prop-value-type-select v-model='propValueType' style='width: 150px; margin-left: 8px;' />
-      <el-input
-        v-if='propValueType === PropValueType.VALUE'
-        v-model='value'
-        style='width: 150px; margin-left: 8px;'
-        placeholder='值' 
-      />
+      <template v-if='propType === PropType.PROP'> 
+        <el-form-item label='prop值类型'>
+          <prop-value-type-select v-model='propValueType' />
+        </el-form-item>
+        
+        <el-form-item v-if='propValueType === PropValueType.VALUE' label='值'>
+          <div style='flex: 1'>
+            <any-render v-model='value' />
+          </div>
+        </el-form-item>
 
-      <variable-select 
-        v-if='propValueType === PropValueType.VARIABLE || propValueType === PropValueType.VARIABLE_VALUE'
-        v-model='variable'
-        style='width: 150px; margin-left: 8px;' />
+        <el-form-item v-if='propValueType === PropValueType.VARIABLE || propValueType === PropValueType.VARIABLE_VALUE' label='变量'>
+          <variable-select 
+            v-model='variable'
+          />
+        </el-form-item>
 
-      <el-input 
-        v-if='propValueType === PropValueType.VARIABLE_VALUE'
-        v-model='variableKey'
-        placeholder='键'
-        style='width: 150px; margin-left: 8px;' /> 
+        <el-form-item v-if='propValueType === PropValueType.VARIABLE_VALUE' label='变量-键'>
+          <el-input 
+            v-model='variableKey'
+            placeholder='键'
+          /> 
+        </el-form-item>
+        
+        <el-form-item v-if='propValueType === PropValueType.SLOT_CONTEXT' label='父组件'>
+          <component-select 
+            v-model='component'
+          />
+        </el-form-item>
 
-      <component-select 
-        v-if='propValueType === PropValueType.SLOT_CONTEXT'
-        v-model='component'
-        style='width: 150px; margin-left: 8px;' />
-      
-      <el-input 
-        v-if='propValueType === PropValueType.SLOT_CONTEXT'
-        v-model='slotKey'
-        placeholder='slot 键'
-        style='width: 150px; margin-left: 8px;' />
+        <el-form-item v-if='propValueType === PropValueType.SLOT_CONTEXT' label='slot 键'>
+          <el-input 
+            v-model='slotKey'
+            placeholder='slot 键'
+          />
+        </el-form-item>
 
+        <el-form-item v-if='propValueType === PropValueType.FUNCTION' label='方法行为集'>
+          <action-select
+            v-model='funcActions'
+            multiple />
+        </el-form-item>
 
-      <action-select
-        v-if='propValueType === PropValueType.FUNCTION'
-        v-model='funcActions'
-        style='width: 200px; margin-left: 8px;'
-        multiple
-        collapse-tags
-        collapse-tags-tooltip />
-      <variable-select 
-        v-if='propValueType === PropValueType.FUNCTION' 
-        v-model='funcReturn'
-        style='width: 150px; margin-left: 8px;' />
-    </template>
-
-    <template v-if='propType === PropType.EVENT'>
-      <action-select
-        v-model='EventActions'
-        style='width: 200px; margin-left: 8px;'
-        multiple
-        collapse-tags
-        collapse-tags-tooltip />
-    </template>
+        <el-form-item v-if='propValueType === PropValueType.FUNCTION' label='方法返回变量'>
+          <variable-select 
+            v-model='funcReturn'
+          />
+        </el-form-item>
+      </template>
+      <template v-if='propType === PropType.EVENT'>
+        <el-form-item label='事件行为集'>
+          <action-select
+            v-model='EventActions'
+            multiple />
+        </el-form-item>
+      </template>
+    </el-form>
   </div>
 </template>
 
@@ -68,13 +77,14 @@ import VariableSelect from '../../common/variable-select.vue';
 import PropValueTypeSelect from './prop-value-type-select.vue';
 import ComponentSelect from '../../common/component-select.vue';
 import { PropsPropItem } from './type';
+import AnyRender from '../../common/json-schema-render/any-render.vue';
 
 const model = defineModel<PropsPropItem>({ default: () => ({}) });
 
 const name = ref<string>(model.value.name || '');
 const propType = ref<PropType | undefined>(model.value.propType);
 const propValueType = ref<PropValueType | undefined>(model.value.propValueType);
-const value = ref<string | undefined>(model.value.value || '');
+const value = ref<string | undefined>(model.value.value);
 const variable = ref<string | undefined>(model.value.variable || '');
 const variableKey = ref<string | undefined>(model.value.variableKey || '');
 const component = ref<string | undefined>(model.value.component || '');

@@ -5,7 +5,9 @@
     :rules='rules'
     label-position='top'>
     <el-form-item label='参数' prop='props'>
-      <props-select v-model='form.props' />
+      <div style='flex: 1;'>
+        <props-select v-model='form.props' />
+      </div>
     </el-form-item>
   </el-form>
 </template>

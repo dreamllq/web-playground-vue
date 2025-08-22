@@ -1,8 +1,8 @@
 <template>
   <el-dialog
     v-model='dialogVisible'
-    title='编辑行为参数'
-    width='500'
+    title='编辑行为参数&结果'
+    width='1000'
     append-to-body
   >
     <biz-form
@@ -27,13 +27,13 @@
 import { useStore } from '../../../store';
 import { ref } from 'vue';
 import BizForm from './form.vue';
-import { ActionForm, ActionFormParam } from '../type';
+import { ActionForm, ActionFormParam, ActionFormResult } from '../type';
 import { ActionResultType, formatActionParamContext, formatActionParamValue, formatActionParamVariable, formatActionResultVariable, formatActionResultVariableValue, ParamType } from 'l-play-core';
 
 const emits = defineEmits(['success']);
 const { playground } = useStore()!;
 const dialogVisible = ref(false);
-const defaultData = ref<{params: ActionFormParam[]}>();
+const defaultData = ref<{params: ActionFormParam[], result: ActionFormResult}>();
 let id:string = '';
 const formRef = ref<InstanceType<typeof BizForm>>();
 
@@ -55,6 +55,16 @@ const onSubmit = async () => {
       action.params.push(formatActionParamValue(param.value!));
     }
   });
+
+  if (data.result?.type) {
+    const variable = playground.variables.find(v => v.id === data.result!.variable);
+    if (!variable) throw new Error(`Variable ${data.result.variable} not found`);
+    if (data.result.type === ActionResultType.VARIABLE) {
+      action.result = formatActionResultVariable(variable);
+    } else {
+      action.result = formatActionResultVariableValue(variable, data.result.key!);
+    }
+  }
 
   dialogVisible.value = false;
   emits('success');
@@ -84,9 +94,28 @@ const show = (data: {id: string}) => {
     }
   });
 
+  let result: ActionFormResult = {};
+  if (action.result) {
+    if (action.result.type === ActionResultType.VARIABLE) {
+      result = {
+        type: ActionResultType.VARIABLE,
+        variable: action.result.value.id
+      };
+    } else {
+      result = {
+        type: ActionResultType.VARIABLE_VALUE,
+        variable: action.result.value.id,
+        key: action.result.key
+      };
+    }
+  } 
+
   
 
-  defaultData.value = { params };
+  defaultData.value = {
+    params,
+    result 
+  };
 
   dialogVisible.value = true;
 };

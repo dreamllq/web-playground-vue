@@ -8,7 +8,9 @@
         <el-icon><delete /></el-icon>
       </el-button>
       <el-button
-        v-if='showAdd'
+        :style='{
+          visibility: showAdd ? "visible" : "hidden"
+        }'
         type='primary'
         link
         @click='onAdd'>
@@ -56,10 +58,11 @@ const onDelete = () => {
 .param-item{
   display: flex;
   width: 100%;
-  padding: 4px 0;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--el-border-color);
 
   .select{
-    flex: none;
+    flex: 1;
   }
 
   .operator{

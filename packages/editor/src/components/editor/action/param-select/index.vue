@@ -1,22 +1,29 @@
 <template>
   <div class='param-select'>
-    <param-type-select v-model='type' style='width: 100px;' />
+    <el-form label-width='80px' style='width: 100%'>
+      <el-form-item label='参数类型'>
+        <param-type-select v-model='type' />
+      </el-form-item>
 
-    <variable-select 
-      v-if='type === ParamType.VARIABLE'
-      v-model='variable'
-      style='width: 150px; margin-left: 8px;' />
+      <el-form-item v-if='type === ParamType.VARIABLE' label='变量'>
+        <variable-select 
+          v-model='variable'
+        />
+      </el-form-item>
 
-    <el-input 
-      v-if='type === ParamType.VALUE'
-      v-model='value'
-      style='width: 150px; margin-left: 8px;' />
+      <el-form-item v-if='type === ParamType.VALUE' label='值'>
+        <div style='flex: 1;'>
+          <any-render v-model='value' />
+        </div>
+      </el-form-item>
 
-    <el-input
-      v-if='type === ParamType.CONTEXT'
-      v-model='context'
-      type='number'
-      style='width: 150px; margin-left: 8px;' />
+      <el-form-item v-if='type === ParamType.CONTEXT' label='入参索引'>
+        <el-input
+          v-model='context'
+          type='number'
+        />
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 
@@ -26,6 +33,7 @@ import ParamTypeSelect from '../param-type-select/index.vue';
 import { ParamType } from 'l-play-core';
 import VariableSelect from '../../common/variable-select.vue';
 import { ActionFormParam } from '../type';
+import AnyRender from '../../common/json-schema-render/any-render.vue';
 
 const model = defineModel<ActionFormParam>({ default: () => ({ type: ParamType.VARIABLE }) });
 

@@ -2,7 +2,7 @@
   <el-dialog
     v-model='dialogVisible'
     title='编辑组件'
-    width='500'
+    width='1000'
     append-to-body
   >
     <biz-form
