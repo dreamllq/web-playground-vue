@@ -34,7 +34,7 @@ import TreeArea from './tree/index.vue';
 
   .edit-area-item{
     flex: none;
-    width: 33.33%;
+    width: 25%;
     border-right: 1px solid #ddd;
     overflow: hidden;
 
