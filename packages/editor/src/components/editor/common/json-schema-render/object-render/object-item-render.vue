@@ -1,13 +1,4 @@
 <template>
-  <!-- <div style='display: inline-block;'>
-    <el-input v-model='key' style='width: 150px;' placeholder='key' />
-    <template v-if="valueType === 'string'">
-      <string-render v-model='value' style='width: 150px;padding-left: 8px;' placeholder='value' />
-    </template>
-    <template v-else>
-      <span>暂不支持</span>
-    </template>
-  </div> -->
   <el-form label-width='80px'>
     <el-form-item label='key'>
       <div style='flex: 1'>
@@ -19,8 +10,14 @@
         <template v-if="valueType === 'string'">
           <string-render v-model='value' placeholder='value' />
         </template>
+        <template v-else-if="valueType === 'number'">
+          <number-render v-model='value' placeholder='value' />
+        </template>
+        <template v-else-if="valueType === 'boolean'">
+          <bool-render v-model='value' placeholder='value' />
+        </template>
         <template v-else-if="valueType === 'object'">
-          <any-object-render v-model='value' placeholder='value' />
+          <object-render v-model='value' placeholder='value' />
         </template>
         <template v-else>
           <span>暂不支持</span>
@@ -33,7 +30,10 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 import StringRender from '../string-render.vue';
-import AnyObjectRender from './any-object-render/index.vue';
+import ObjectRender from './index.vue'; ;
+import NumberRender from '../number-render.vue';
+import BoolRender from '../bool-render.vue';
+import { ValueType } from '../type';
 
 type ObjectItem = {
   key: string;
@@ -49,7 +49,7 @@ const model = defineModel<ObjectItem>({
 
 const key = ref<string>(model.value.key || '');
 const value = ref<any>(model.value.value || '');
-const valueType = ref<string>(typeof value.value);
+const valueType = ref<ValueType>(typeof value.value as ValueType);
 
 watch(model, () => {
   key.value = model.value.key;

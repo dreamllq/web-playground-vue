@@ -8,7 +8,10 @@
       <el-input v-model='form.name' />
     </el-form-item>
     <el-form-item label='初始值' prop='value'>
-      <el-input v-model='form.value' />
+      <!-- <el-input v-model='form.value' /> -->
+      <div style='flex: 1'>
+        <any-render v-model='form.value' />
+      </div>
     </el-form-item>
   </el-form>
 </template>
@@ -17,6 +20,7 @@
 import { PropType, ref } from 'vue';
 import type { FormInstance } from 'element-plus';
 import { cloneDeep } from 'lodash';
+import anyRender from '../common/json-schema-render/any-render.vue';
 
 const props = defineProps({
   defaultData: {
