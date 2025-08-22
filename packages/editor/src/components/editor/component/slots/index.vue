@@ -40,12 +40,10 @@ const onSubmit = async () => {
   const component = playground.components.find(v => v.id === id);
   if (!component) throw new Error('组件不存在');
 
-  const slots = groupBy(data.slots, 'name');
   component.slots = {};
-  console.log(slots);
-  Object.entries(slots).forEach(([name, item]) => {
-    component.slots[name] = item.map(item => {
-      const component = playground.components.find(v => v.id === item.component);
+  data.slots.forEach(({ name, components }) => {
+    component.slots[name!] = components!.map(id => {
+      const component = playground.components.find(v => v.id === id);
       if (!component) throw new Error('组件不存在');
       return component;
     });
@@ -64,11 +62,9 @@ const show = (data: {id: string}) => {
   const slots: SlotItem[] = [];
 
   Object.entries(component.slots).forEach(([name, components]) => {
-    components.forEach(component => {
-      slots.push({
-        name,
-        component: component.id
-      });
+    slots.push({
+      name,
+      components: components.map(c => c.id)
     });
   });
 

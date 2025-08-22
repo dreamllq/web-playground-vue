@@ -14,7 +14,7 @@
 import { PropType, ref } from 'vue';
 import type { FormInstance } from 'element-plus';
 import { cloneDeep } from 'lodash';
-import ComponentSelect from '../common/component-select.vue';
+import ComponentSelect from '../common/component-select/index.vue';
 
 const formRef = ref<FormInstance>();
 

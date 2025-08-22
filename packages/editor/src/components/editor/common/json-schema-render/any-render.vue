@@ -12,7 +12,7 @@
             <string-render v-model='model' placeholder='value' />
           </template>
           <template v-else-if="valueType === 'number'">
-            <number-render v-model='model' placeholder='value' />
+            <number-render v-model='number' placeholder='value' />
           </template>
           <template v-else-if="valueType === 'boolean'">
             <bool-render v-model='model' placeholder='value' />
@@ -47,6 +47,7 @@ import { getValueType } from './utils/get-value-type';
 const model = defineModel<any>({ default: '' });
 
 const valueType = ref<ValueType>(getValueType(model.value) as ValueType);
+const number = ref<number>(model.value);
 
 watch(model, () => {
   valueType.value = getValueType(model.value) as ValueType;

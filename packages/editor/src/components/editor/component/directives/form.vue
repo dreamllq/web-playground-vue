@@ -2,33 +2,37 @@
   <el-form
     ref='formRef'
     :model='form'
-    :rules='rules'
+    :rules='rules' 
     label-position='top'>
-    <el-form-item label='插槽' prop='slots'>
+    <el-form-item label='指令' prop='directives'>
       <div style='flex: 1'>
-        <slots-select v-model='form.slots' />
+        <directives-select v-model='form.directives' />
       </div>
     </el-form-item>
   </el-form>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { PropType, ref } from 'vue';
 import type { FormInstance } from 'element-plus';
 import { cloneDeep } from 'lodash';
-import { SlotItem } from './type';
-import SlotsSelect from './slots-select.vue';
+import { DirectiveItem } from '../type';
+import DirectivesSelect from './directives-select.vue';
 
 const props = defineProps({
   defaultData: {
-    type: Object,
+    type: Object as PropType<{directives: DirectiveItem[]}>,
     default: () => ({})
+  },
+  disabledProps: {
+    type: Array,
+    default: () => []
   }
 });
 
 const formRef = ref<FormInstance>();
 
-const form = ref<{slots: SlotItem[]}>({ slots: props.defaultData.slots || [] });
+const form = ref({ directives: props.defaultData.directives || [] });
 
 const rules = ref({});
 

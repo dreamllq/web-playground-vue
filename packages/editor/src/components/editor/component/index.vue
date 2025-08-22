@@ -24,7 +24,9 @@
                 <el-dropdown-item @click='onPropsEdit(item)'>
                   参数
                 </el-dropdown-item>
-                <el-dropdown-item>指令</el-dropdown-item>
+                <el-dropdown-item @click='onDirectivesEdit(item)'>
+                  指令
+                </el-dropdown-item>
                 <el-dropdown-item @click='onSlotsEdit(item)'>
                   插槽
                 </el-dropdown-item>
@@ -43,6 +45,7 @@
   <edit-dialog ref='editDialogRef' @success='refresh' />
   <edit-props-dialog ref='editPropsDialogRef' />
   <edit-slots-dialog ref='editSlotsDialogRef' />
+  <edit-directives-dialog ref='editDirectivesDialogRef' />
 </template>
 
 <script setup lang="ts">
@@ -55,6 +58,7 @@ import { useStore } from '../../store';
 import ItemLayout from '../layout/item-layout.vue';
 import EditPropsDialog from './props/index.vue';
 import EditSlotsDialog from './slots/index.vue';
+import EditDirectivesDialog from './directives/index.vue';
 
 const { playground } = useStore()!;
 
@@ -62,6 +66,7 @@ const addDialogRef = ref<InstanceType<typeof AddDialog>>();
 const editDialogRef = ref<InstanceType<typeof EditDialog>>();
 const editPropsDialogRef = ref<InstanceType<typeof EditPropsDialog>>();
 const editSlotsDialogRef = ref<InstanceType<typeof EditSlotsDialog>>();
+const editDirectivesDialogRef = ref<InstanceType<typeof EditDirectivesDialog>>();
 
 const list = ref<{id: string, name: string}[]>([]);
 
@@ -83,6 +88,10 @@ const onPropsEdit = (item) => {
 
 const onSlotsEdit = (item) => {
   editSlotsDialogRef.value!.show(item);
+};
+
+const onDirectivesEdit = (item) => {
+  editDirectivesDialogRef.value!.show(item);
 };
 
 const onDelete = () => {

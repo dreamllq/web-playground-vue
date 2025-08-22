@@ -115,7 +115,7 @@ const show = (data: {id: string}) => {
       } else if (item.value.type === PropValueType.SLOT_CONTEXT) {
         return {
           name,
-          type: item.type,
+          propType: item.type,
           propValueType: item.value.type,
           component: item.value.component.id,
           slotKey: item.value.key
