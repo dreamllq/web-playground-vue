@@ -1,0 +1,167 @@
+{
+  "tree": [
+    {
+      "id": "06edd8e7-3a3c-41df-a39c-820453d18241"
+    },
+    {
+      "id": "c6b144b6-d1d3-4d67-a057-fc5698f9a7ee"
+    }
+  ],
+  "components": [
+    {
+      "$class": "Div",
+      "id": "06edd8e7-3a3c-41df-a39c-820453d18241",
+      "name": "div",
+      "props": {
+        "innerHTML": {
+          "type": "PROP",
+          "value": {
+            "type": "VARIABLE",
+            "value": {
+              "id": "6748123c-152d-4cc2-b48f-658c5d05796a"
+            }
+          }
+        }
+      },
+      "directives": {},
+      "slots": {}
+    },
+    {
+      "$class": "ElButton",
+      "id": "c6b144b6-d1d3-4d67-a057-fc5698f9a7ee",
+      "name": "button",
+      "props": {
+        "onClick": {
+          "type": "EVENT",
+          "value": [
+            {
+              "id": "0f86e12a-72b8-4fbe-9013-5c20ba9c4c63"
+            }
+          ]
+        },
+        "type": {
+          "type": "PROP",
+          "value": {
+            "type": "VALUE",
+            "value": "primary"
+          }
+        }
+      },
+      "directives": {},
+      "slots": {
+        "default": [
+          {
+            "id": "9ea313d1-c493-4bcd-b997-4e554f8dbed6"
+          }
+        ]
+      }
+    },
+    {
+      "$class": "Text",
+      "id": "9ea313d1-c493-4bcd-b997-4e554f8dbed6",
+      "name": "确认",
+      "props": {
+        "text": {
+          "type": "PROP",
+          "value": {
+            "type": "VALUE",
+            "value": "确认"
+          }
+        }
+      },
+      "directives": {},
+      "slots": {}
+    },
+    {
+      "$class": "Div",
+      "id": "225142db-3680-45c7-9f1c-609beeda5f84",
+      "name": "div",
+      "props": {
+        "aaa": {
+          "type": "PROP",
+          "value": {
+            "type": "FUNCTION",
+            "value": [
+              {
+                "id": "0f86e12a-72b8-4fbe-9013-5c20ba9c4c63"
+              },
+              {
+                "id": "866040f4-4f2c-4fe7-a6fe-48737a22ecf2"
+              }
+            ],
+            "return": {
+              "id": "452efc35-b253-402b-8014-b5df86eca00e"
+            }
+          }
+        },
+        "sss": {
+          "type": "EVENT",
+          "value": [
+            {
+              "id": "866040f4-4f2c-4fe7-a6fe-48737a22ecf2"
+            },
+            {
+              "id": "0f86e12a-72b8-4fbe-9013-5c20ba9c4c63"
+            }
+          ]
+        }
+      },
+      "directives": {},
+      "slots": {}
+    }
+  ],
+  "actions": [
+    {
+      "$class": "ActionOperator",
+      "id": "0f86e12a-72b8-4fbe-9013-5c20ba9c4c63",
+      "type": "FUNCTION",
+      "name": "aaa",
+      "params": [
+        {
+          "type": "VALUE",
+          "value": "112322aa"
+        }
+      ],
+      "async": false,
+      "result": {
+        "type": "VARIABLE",
+        "value": {
+          "id": "6748123c-152d-4cc2-b48f-658c5d05796a"
+        }
+      }
+    },
+    {
+      "$class": "ActionOperator",
+      "id": "866040f4-4f2c-4fe7-a6fe-48737a22ecf2",
+      "type": "FUNCTION",
+      "name": "bbb",
+      "params": [
+        {
+          "type": "VALUE",
+          "value": "111"
+        }
+      ],
+      "async": false
+    }
+  ],
+  "variables": [
+    {
+      "$class": "Variable",
+      "id": "452efc35-b253-402b-8014-b5df86eca00e",
+      "name": "aa",
+      "value": "bb"
+    },
+    {
+      "$class": "Variable",
+      "id": "6748123c-152d-4cc2-b48f-658c5d05796a",
+      "name": "b",
+      "value": "c"
+    },
+    {
+      "$class": "Variable",
+      "id": "4ce8d831-c7a4-4161-b432-331a6831add3",
+      "name": "d",
+      "value": "d"
+    }
+  ]
+}

@@ -38,18 +38,6 @@ const onSubmit = async () => {
   const action = playground.action(ActionT, data.name);
   action.async = data.async;
 
-  data.params.forEach(param => {
-    if (param.type === ParamType.VARIABLE) {
-      const variable = playground.variables.find(v => v.id === param.variable);
-      if (!variable) throw new Error(`Variable ${param.variable} not found`);
-      action.params.push(formatActionParamVariable(variable));
-    } else if (param.type === ParamType.CONTEXT) {
-      action.params.push(formatActionParamContext(param.context!));
-    } else {
-      action.params.push(formatActionParamValue(param.value!));
-    }
-  });
-
   if (data.result?.type) {
     const variable = playground.variables.find(v => v.id === data.result!.variable);
     if (!variable) throw new Error(`Variable ${data.result.variable} not found`);

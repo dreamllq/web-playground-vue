@@ -5,6 +5,6 @@ import { VariableJSON } from './variable';
 export type PlaygroundJSON = {
   tree: {id: string}[],
   components: ComponentJSON[],
-  actions: ActionJSON[],
+  actions: ActionJSON<any>[],
   variables: VariableJSON[]
 }

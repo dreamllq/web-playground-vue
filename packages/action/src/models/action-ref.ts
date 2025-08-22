@@ -1,40 +1,26 @@
-import { Action, BuildPlaygroundOptions } from 'l-play-core';
-import { Component } from 'l-play-core';
+import { Action, ActionOptions } from 'l-play-core';
 
-export class ActionRef extends Action {
-  $class = 'ActionRef';
-  ref?: Component;
+type ComponentId = string;
+
+type TExtension = {
+  ref?: ComponentId;
   funcName?: string;
+}
+export class ActionRef extends Action<TExtension> {
+  $class = 'ActionRef';
 
-  handle(params: any[], options): Promise<void> | void {
-    if (this.ref && this.funcName) {
+  handle(params: any[], options:ActionOptions): Promise<void> | void {
+    if (this.extension.ref && this.extension.funcName) {
       const paramValues = this.transformParams(params, options);
       if (this.async) {
         return (async () => {
-          const data = await options.refs[this.ref!.id].value[this.funcName!](...paramValues);
+          const data = await options.refs[this.extension.ref!].value[this.extension.funcName!](...paramValues);
           this.setResultData(params, options, data);
         })();
       } else {
-        const data = options.refs[this.ref!.id].value[this.funcName!](...paramValues);
+        const data = options.refs[this.extension.ref!].value[this.extension.funcName!](...paramValues);
         this.setResultData(params, options, data);
       }
     }
-  }
-
-  toJSON() {
-    const superJSON = super.toJSON();
-    return {
-      ...superJSON,
-      ref: this.ref ? { id: this.ref.id } : undefined,
-      funcName: this.funcName
-    };
-  }
-    
-  fromJSON(json: ReturnType<typeof ActionRef.prototype['toJSON']>, options: BuildPlaygroundOptions) {
-    super.fromJSON(json, options);
-    this.funcName = json.funcName;
-    const component = options.components.find(c => c.id === json.ref?.id);
-    if (!component) throw new Error(`Component ${json.ref?.id} not found`);
-    this.ref = component;
   }
 }

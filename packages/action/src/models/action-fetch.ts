@@ -1,52 +1,25 @@
-import { Action, BuildPlaygroundOptions } from 'l-play-core';
-import { Ref } from 'vue';
+import { Action, ActionOptions } from 'l-play-core';
 
-export class ActionFetch extends Action { 
-  static customConfig = {
-    type: 'object',
-    properties: {
-      url: { type: 'string' },
-      method: { type: 'string' },
-      headers: {
-        type: 'object',
-        additionalProperties: { type: 'string' }
-      },
-      body: {
-        type: 'object',
-        additionalProperties: {
-          type: 'object',
-          properties: {
-            type: {
-              type: 'string',
-              enum: ['value', 'variable']
-            },
-            value: { type: 'string' },
-            variable: {
-              type: 'string',
-              component: 'variable-selector' 
-            }
-          }
-        }
-      }
-    }
-  };
+type TExtension = {
+  url?:string,
+  method?:string,
+  headers?:Record<string, string>
+  body?:any
+}
 
+export class ActionFetch extends Action<TExtension> { 
   $class = 'ActionFetch';
-  url?: string;
-  method?: string;
-  headers?: Record<string, string>;
-  body?:any;
   constructor(name: string) {
     super(name);
     this.async = true;
   }
 
-  handle(params: any[], options: { variables: Record<string, Ref>; }): Promise<void> {
+  handle(params: any[], options: ActionOptions): Promise<void> {
     return new Promise((resolve, reject) => { 
-      const request = new Request(this.url!, {
-        method: this.method || 'GET',
-        body: this.body || undefined,
-        headers: this.headers || {}
+      const request = new Request(this.extension.url!, {
+        method: this.extension.method || 'GET',
+        body: this.extension.body || undefined,
+        headers: this.extension.headers || {}
       });
       fetch(request)
         .then(request => request.json())
@@ -55,24 +28,5 @@ export class ActionFetch extends Action {
           resolve(data);
         });
     });
-  }
-
-  toJSON() {
-    const superJSON = super.toJSON();
-    return {
-      ...superJSON,
-      url: this.url,
-      method: this.method,
-      body: this.body,
-      headers: this.headers
-    };
-  }
-
-  fromJSON(json: ReturnType<typeof ActionFetch.prototype['toJSON']>, options: BuildPlaygroundOptions) {
-    super.fromJSON(json, options);
-    this.url = json.url;
-    this.method = json.method;
-    this.body = json.body;
-    this.headers = json.headers;
   }
 }

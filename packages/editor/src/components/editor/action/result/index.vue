@@ -1,15 +1,14 @@
 <template>
   <el-dialog
     v-model='dialogVisible'
-    title='编辑行为'
+    title='编辑行为结果'
     width='500'
     append-to-body
   >
     <biz-form
       v-if='dialogVisible'
       ref='formRef'
-      :default-data='defaultData' 
-      :disabled-props='["action"]' />
+      :default-data='defaultData' />
 
     <template #footer>
       <div class='dialog-footer'>
@@ -25,16 +24,16 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from '../../store';
+import { useStore } from '../../../store';
 import { ref } from 'vue';
 import BizForm from './form.vue';
-import { ActionForm } from './type';
+import { ActionForm, ActionFormResult } from '../type';
 import { ActionResultType, formatActionParamContext, formatActionParamValue, formatActionParamVariable, formatActionResultVariable, formatActionResultVariableValue, ParamType } from 'l-play-core';
 
 const emits = defineEmits(['success']);
 const { playground } = useStore()!;
 const dialogVisible = ref(false);
-const defaultData = ref<ActionForm>();
+const defaultData = ref<{result: ActionFormResult}>();
 let id:string = '';
 const formRef = ref<InstanceType<typeof BizForm>>();
 
@@ -42,10 +41,6 @@ const onSubmit = async () => {
   const data = await formRef.value!.getData();
   const action = playground.actions.find(action => action.id === id);
   if (!action) throw new Error('动作不存在');
-
-  action.async = data.async;
-
-  action.params = [];
 
   if (data.result?.type) {
     const variable = playground.variables.find(v => v.id === data.result!.variable);
@@ -66,7 +61,7 @@ const show = (data: {id: string}) => {
   const action = playground.actions.find(v => v.id === data.id);
   if (!action) throw new Error('操作不存在');
 
-  let result;
+  let result: ActionFormResult = {};
   if (action.result) {
     if (action.result.type === ActionResultType.VARIABLE) {
       result = {
@@ -80,14 +75,9 @@ const show = (data: {id: string}) => {
         key: action.result.key
       };
     }
-  }
+  } 
 
-  defaultData.value = {
-    action: action.$class,
-    name: action.name,
-    result,
-    async: action.async
-  };
+  defaultData.value = { result };
 
   dialogVisible.value = true;
 };

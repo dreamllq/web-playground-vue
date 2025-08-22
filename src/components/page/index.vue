@@ -45,7 +45,7 @@ const onCopy = () => {
 };
 
 const playground = new Playground();
-const token = 'Bearer eyJraWQiOiJ1YWEtYXV0aG9yaXphdGlvbi1yc2Eta2V5IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiJwYWlwYWkiLCJhdXRvX2xvZ2luIjpmYWxzZSwiaXNzIjoiaHR0cDpcL1wvc2Nwby11YWEtc2VydmljZS50ZXN0LnN2Yy5jbHVzdGVyLmxvY2FsOjMwMDMxXC91YWEiLCJ1c2VySWQiOjY5NDI3OTE1MjM2NDMzOTIxLCJwbGF0Zm9ybSI6IkNPTVBMRVRFX0VESVRJT04iLCJhdXRob3JpdGllcyI6WyI2OTQyNzkxNTQ4NTkxNzE4NCJdLCJhdWQiOiJhcHNfc3lzdGVtIiwibmJmIjoxNzU1NTg5MzgyLCJzY29wZSI6WyJvcGVuaWQiXSwidGVuYW50SWQiOjY5NDI3OTE1MjM2NDMzOTIwLCJleHAiOjE3NTU1OTI5ODIsImlhdCI6MTc1NTU4OTM4Miwic3VwZXJ2aXNvciI6dHJ1ZX0.lPHgyoiOkEEMAnAeOplE1zQcS_kb4qhT0tdQ-KIWK5BW9YtZ42uuAt-m9hCwsu1MvsRRIpZCeOPVXCXFJXfMSWyZv8LmeuBgvHeIHzhDFLApSzli7RxIBEy-MY9prN4YG33-PJ83IJHD1CWxGCAH-D2rL-K_VCIauFnEEuUyoXdmWSt557bAZ3Kqvc6tgBO6w4KeizyJYX8tLtOm8T6c5rz8iBgQnYyBqB9JcIJkJoXoIBQhrgAAqj1aB54ABCRk_HZoW4TCAxUS5u7PhY_2qv7wzo4y14dfgb2q1de2y6HmTIdr9E07cTXk9_5MwrYh19uRi5KeGKAnbt9_e0s77Q';
+const token = 'Bearer eyJraWQiOiJ1YWEtYXV0aG9yaXphdGlvbi1yc2Eta2V5IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiJwYWlwYWkiLCJhdXRvX2xvZ2luIjpmYWxzZSwiaXNzIjoiaHR0cDpcL1wvc2Nwby11YWEtc2VydmljZS50ZXN0LnN2Yy5jbHVzdGVyLmxvY2FsOjMwMDMxXC91YWEiLCJ1c2VySWQiOjY5NDI3OTE1MjM2NDMzOTIxLCJwbGF0Zm9ybSI6IkNPTVBMRVRFX0VESVRJT04iLCJhdXRob3JpdGllcyI6WyI2OTQyNzkxNTQ4NTkxNzE4NCJdLCJhdWQiOiJhcHNfc3lzdGVtIiwibmJmIjoxNzU1ODI2MzQ5LCJzY29wZSI6WyJvcGVuaWQiXSwidGVuYW50SWQiOjY5NDI3OTE1MjM2NDMzOTIwLCJleHAiOjE3NTU4Mjk5NDksImlhdCI6MTc1NTgyNjM0OSwic3VwZXJ2aXNvciI6dHJ1ZX0.I0WTHZ-cnyTlpnRUBch_KTn8mQYdfTphaYTkm8CRvheAEAW9t_7eNC7fS2ow2jctdgsFdePiXVCdOWt-GgaZdcVLqKvvfBmuIMhNvCk9yGLVyG9tV5kRsFSKV2ZroOI6qVTQKZ50M1FWZptFO1Z5pJkYUNrWyER0L5pPXwnwf_qKd0AbQAW9Qv9XR5yTPBfwpsKth6DyQ2w62ieV1xn_NvGl0HyZtkp5ogVWwCpi4X24TGa4JSBbKC_u5l0lLE5Hm-OE4Z9P3xU6LuBpx6ISjHJ86tparKykpsbAzBMT7xxxvW6-T5JS0VdErlRqc9OIQ7Gw0tKIszBYLYNOg5FM4g';
 // #region components
 const layout = playground.component(Layout);
 const autoPagination = playground.component(AutoPagination);
@@ -184,8 +184,8 @@ input.props['onUpdate:modelValue'] = formatPropsEvent([aAction]);
 
 formGridItem.slots.default = [input];
 
-tableFetch.ref = autoPagination;
-tableFetch.funcName = 'goFirstPage';
+tableFetch.extension.ref = autoPagination.id;
+tableFetch.extension.funcName = 'goFirstPage';
 
 formGrid.props.onSearch = formatPropsEvent(tableFetch);
 
@@ -222,14 +222,14 @@ layout.slots.buttonGroup = [createButton, batchDeleteButton];
 
 // #region table
 fetchDataAction.result = formatActionResultVariable(fetchRes);
-fetchDataAction.url = 'https://api.sit.alsi.cn/iam/user-management/users?name=&roleIds=&mobile=&enabled=&pageNo=1&pageSize=20&orderItems%5B0%5D.column=create_time&orderItems%5B0%5D.asc=false';
-fetchDataAction.method = 'get';
-fetchDataAction.headers = {
+fetchDataAction.extension.url = 'https://api.sit.alsi.cn/iam/user-management/users?name=&roleIds=&mobile=&enabled=&pageNo=1&pageSize=20&orderItems%5B0%5D.column=create_time&orderItems%5B0%5D.asc=false';
+fetchDataAction.extension.method = 'get';
+fetchDataAction.extension.headers = {
   'Content-Type': 'application/json',
   'authorization': token,
   'siteid': '72794563987042304'
 };
-resTransform.ruleString = 'data';
+resTransform.extension.ruleString = 'data';
 resTransform.params.push(formatActionParamVariable(fetchRes));
 resTransform.result = formatActionResultVariable(tableReturnData);
 

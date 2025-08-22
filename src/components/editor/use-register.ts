@@ -38,6 +38,7 @@ export const useRegister = () => {
         ElTableColumn: TableColumn,
         ElSwitch: Switch,
         ElDatePicker: DatePicker,
+        ElIcon: Icon,
         VIfElse: VIfElse,
         Layout: Layout,
         FormLayoutWrapper: FormLayoutWrapper,

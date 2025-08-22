@@ -12,7 +12,7 @@
     <template v-for='item in list' :key='item.id'>
       <item-layout :name='item.name'>
         <template #operator>
-          <el-dropdown size='mini'>
+          <el-dropdown size='mini' trigger='click'>
             <el-button type='primary' link>
               <el-icon><edit /></el-icon>
             </el-button>

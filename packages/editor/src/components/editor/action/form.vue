@@ -10,9 +10,6 @@
     <el-form-item label='行为选择' prop='action'>
       <register-action-select v-model='form.action' :disabled='disabledProps.includes("action")' />
     </el-form-item>
-    <el-form-item label='参数' prop='params'>
-      <params-select v-model='form.params' />
-    </el-form-item>
     <el-form-item label='结果' prop='result'>
       <result-select v-model='form.result' />
     </el-form-item>
@@ -27,7 +24,6 @@ import { PropType, ref } from 'vue';
 import type { FormInstance } from 'element-plus';
 import { cloneDeep } from 'lodash';
 import RegisterActionSelect from './register-action-select.vue';
-import ParamsSelect from './params-select/index.vue';
 import ResultSelect from './result-select/index.vue';
 import { ActionForm } from './type';
 
@@ -47,7 +43,6 @@ const formRef = ref<FormInstance>();
 const form = ref<ActionForm>({
   action: props.defaultData.action || '',
   name: props.defaultData.name || '',
-  params: props.defaultData.params || [],
   result: props.defaultData.result || {},
   async: props.defaultData.async || false
 });

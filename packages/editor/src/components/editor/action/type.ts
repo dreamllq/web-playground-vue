@@ -16,7 +16,6 @@ export type ActionFormResult = {
 export type ActionForm = {
     action: string,
     name: string,
-    params: ActionFormParam[],
     result?: ActionFormResult 
     async: boolean
 }

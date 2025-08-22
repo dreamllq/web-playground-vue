@@ -1,33 +1,21 @@
-import { Ref } from 'vue';
-import { Action, ActionReturnType, BuildPlaygroundOptions } from 'l-play-core';
-import { set } from 'lodash';
+import { Action, ActionOptions } from 'l-play-core';
 
-export class ActionOperator extends Action { 
-  $class = 'ActionOperator';
+type TExtension = {
   operator?:string;
+}
 
-  handle(params: any[], options:{variables:Record<string, Ref>}): void {
+export class ActionOperator extends Action<TExtension> { 
+  $class = 'ActionOperator';
+
+  handle(params: any[], options:ActionOptions): void {
     if (this.result && this.params.length > 0) {
       const paramValues = this.transformParams(params, options);
-      if (this.operator) {
+      if (this.extension.operator) {
 
       } else {
         this.setResultData(params, options, paramValues[0]);
       }
 
     }
-  }
-
-  toJSON() {
-    const superJSON = super.toJSON();
-    return {
-      ...superJSON,
-      operator: this.operator
-    };
-  }
-  
-  fromJSON(json: ReturnType<typeof ActionOperator.prototype['toJSON']>, options: BuildPlaygroundOptions) {
-    super.fromJSON(json, options);
-    this.operator = json.operator;
   }
 }

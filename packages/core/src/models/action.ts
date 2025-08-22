@@ -11,7 +11,7 @@ import { ActionResultVariable } from './action-result-variable';
 import { ActionResultVariableValue } from './action-result-variable-value';
 import { ActionConfig } from '@core/types/action-config';
 
-export class Action implements IAction {
+export class Action<TExtension extends Record<string, any> = Record<string, any>> implements IAction {
   static config: ActionConfig = { name: 'action' };
 
   type: ActionType = ActionType.FUNCTION;
@@ -21,11 +21,12 @@ export class Action implements IAction {
   result?: ActionResult;
   private _async:boolean = false;
   $class = 'Action';
+  extension: TExtension = {} as TExtension;
 
   constructor(name: string) {
     this.name = name;
   }
-  toJSON(): ActionJSON {
+  toJSON(): ActionJSON<TExtension> {
     return {
       $class: this.$class,
       id: this.id,
@@ -33,11 +34,12 @@ export class Action implements IAction {
       name: this.name,
       params: this.params.map(param => param.toJSON()),
       async: this._async,
-      result: this.result?.toJSON()
+      result: this.result?.toJSON(),
+      extension: this.extension
     };
   }
 
-  fromJSON(json: ActionJSON, options: BuildPlaygroundOptions) { 
+  fromJSON(json: ActionJSON<TExtension>, options: BuildPlaygroundOptions) { 
     this.async = json.async;
     this.params = json.params.map(param => {
       if (param.type === 'CONTEXT') {
@@ -56,6 +58,8 @@ export class Action implements IAction {
         this.result = ActionResultVariableValue.fromJSON(json.result, options);
       }
     }
+
+    this.extension = json.extension;
   }
 
   set async(val:boolean) {
