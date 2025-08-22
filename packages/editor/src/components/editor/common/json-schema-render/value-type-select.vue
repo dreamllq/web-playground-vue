@@ -1,5 +1,5 @@
 <template>
-  <el-select-v2 v-model='model' :options='options' />
+  <el-select-v2 v-model='model' :options='options' @change='onChange' />
 </template>
 
 <script setup lang="ts">
@@ -7,6 +7,12 @@ const model = defineModel<'string'|'number'|'boolean'|'object'|'array'>();
 if (!model.value) {
   model.value = 'string';
 }
+
+const emit = defineEmits(['change']);
+
+const onChange = () => {
+  emit('change', model.value);
+};
 
 const options = [
   {
