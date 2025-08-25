@@ -63,6 +63,7 @@
     </div>
   </area-layout>
   <add-dialog ref='addDialogRef' @success='refresh' />
+  <sort-dialog ref='sortDialogRef' @success='refresh' />
 </template>
 
 <script setup lang="ts">
@@ -74,6 +75,7 @@ import { useStore } from '../../store';
 import { useTree } from './use-tree';
 import { useElementSize } from '@vueuse/core';
 import { ElMessageBox } from 'element-plus';
+import SortDialog from './sort/index.vue';
 
 const wrapperRef = ref();
 const { width, height } = useElementSize(wrapperRef);
@@ -81,6 +83,7 @@ const { playground } = useStore()!;
 const { calculateComponent } = useTree();
 
 const addDialogRef = ref<InstanceType<typeof AddDialog>>();
+const sortDialogRef = ref<InstanceType<typeof sortDialogRef>>();
 
 const list = ref<{id: string, name: string}[]>([]);
 const tree = ref(playground.tree.map(item => calculateComponent(item)));
@@ -105,7 +108,7 @@ const refresh = () => {
 };
 
 const onSort = () => {
-  
+  sortDialogRef.value.show();
 };
 </script>
 
