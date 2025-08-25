@@ -37,6 +37,7 @@ defineExpose({ api: () => ({ toJSON: () => playground.toJSON() }) });
   .preview{
     flex: 1;
     height: 100%;
+    overflow: hidden;
   }
 }
 </style>
