@@ -3,10 +3,12 @@ import { ActionResultVariableValue } from '../models/action-result-variable-valu
 import { ParamContext } from '../models/param-context';
 import { ParamValue } from '../models/param-value';
 import { ParamVariable } from '../models/param-variable';
+import { ParamVariableValue } from '../models/param-variable-value';
 import { Variable } from '../models/variable';
 import { ActionResult, ParamItem } from '../types/action';
 
 export const formatActionParamVariable = (value: Variable): ParamItem => (new ParamVariable(value));
+export const formatActionParamVariableValue = (value: Variable, key: string): ParamItem => (new ParamVariableValue(value, key));
 
 export const formatActionParamValue = (value: any): ParamItem => (new ParamValue(value));
 

@@ -3,6 +3,7 @@ import { ActionResultType, ParamType } from 'l-play-core';
 export type ActionFormParam = {
   type: ParamType;
   variable?:string;
+  key?: string;
   value?: string;
   context?: number;
 }

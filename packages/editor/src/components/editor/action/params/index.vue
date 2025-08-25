@@ -28,7 +28,7 @@ import { useStore } from '../../../store';
 import { ref } from 'vue';
 import BizForm from './form.vue';
 import { ActionForm, ActionFormParam, ActionFormResult } from '../type';
-import { ActionResultType, formatActionParamContext, formatActionParamValue, formatActionParamVariable, formatActionResultVariable, formatActionResultVariableValue, ParamType } from 'l-play-core';
+import { ActionResultType, formatActionParamContext, formatActionParamValue, formatActionParamVariable, formatActionParamVariableValue, formatActionResultVariable, formatActionResultVariableValue, ParamType } from 'l-play-core';
 
 const emits = defineEmits(['success']);
 const { playground } = useStore()!;
@@ -50,6 +50,10 @@ const onSubmit = async () => {
       const variable = playground.variables.find(v => v.id === param.variable);
       if (!variable) throw new Error(`Variable ${param.variable} not found`);
       action.params.push(formatActionParamVariable(variable));
+    } else if (param.type === ParamType.VARIABLE_VALUE) {
+      const variable = playground.variables.find(v => v.id === param.variable);
+      if (!variable) throw new Error(`Variable ${param.variable} not found`);
+      action.params.push(formatActionParamVariableValue(variable, param.key!));
     } else if (param.type === ParamType.CONTEXT) {
       action.params.push(formatActionParamContext(param.context!));
     } else {
@@ -83,6 +87,12 @@ const show = (data: {id: string}) => {
       return {
         type: ParamType.VARIABLE,
         variable: param.value.id
+      };
+    } else if (param.type === ParamType.VARIABLE_VALUE) {
+      return {
+        type: ParamType.VARIABLE_VALUE,
+        variable: param.value.id,
+        key: param.key
       };
     } else if (param.type === ParamType.CONTEXT) {
       return {

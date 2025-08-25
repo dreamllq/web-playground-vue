@@ -6,6 +6,10 @@ export const ParamTypeList = [
     label: '变量'
   },
   {
+    value: ParamType.VARIABLE_VALUE,
+    label: '变量-键'
+  },
+  {
     value: ParamType.VALUE,
     label: '值'
   },

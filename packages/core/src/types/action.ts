@@ -4,6 +4,7 @@ import { ParamValue } from '../models/param-value';
 import { ParamVariable } from '../models/param-variable';
 import { Ref } from 'vue';
 import { ActionResultVariable } from '../models/action-result-variable';
+import { ParamVariableValue } from '../models/param-variable-value';
 
 export enum ActionType {
   FUNCTION='FUNCTION',
@@ -25,11 +26,12 @@ export interface IAction{
 
 export enum ParamType {
   VARIABLE = 'VARIABLE',
+  VARIABLE_VALUE='VARIABLE_VALUE',
   VALUE = 'VALUE',
   CONTEXT='CONTEXT'
 }
 
-export type ParamItem = ParamVariable | ParamValue | ParamContext;
+export type ParamItem = ParamVariable | ParamVariableValue | ParamValue | ParamContext;
 
 export enum ActionResultType {
   VARIABLE = 'VARIABLE',
@@ -49,12 +51,18 @@ export type ParamVariableJSON = {
   value: {id: string}
 }
 
+export type ParamVariableValueJSON = {
+  type: 'VARIABLE_VALUE',
+  value: {id: string},
+  key: string
+}
+
 export type ParamContextJSON = {
   type: 'CONTEXT',
   value: number
 }
 
-export type ParamItemJSON = ParamValueJSON | ParamVariableJSON | ParamContextJSON;
+export type ParamItemJSON = ParamValueJSON | ParamVariableJSON | ParamVariableValueJSON | ParamContextJSON;
 
 export type ActionResultVariableJSON = {
   type:'VARIABLE',

@@ -5,9 +5,16 @@
         <param-type-select v-model='type' />
       </el-form-item>
 
-      <el-form-item v-if='type === ParamType.VARIABLE' label='变量'>
+      <el-form-item v-if='type === ParamType.VARIABLE || type === ParamType.VARIABLE_VALUE' label='变量'>
         <variable-select 
           v-model='variable'
+        />
+      </el-form-item>
+
+      <el-form-item v-if='type === ParamType.VARIABLE_VALUE' label='键'>
+        <el-input
+          v-model='key'
+          placeholder='键'
         />
       </el-form-item>
 
@@ -39,12 +46,14 @@ const model = defineModel<ActionFormParam>({ default: () => ({ type: ParamType.V
 
 const type = ref<ParamType>(model.value.type);
 const variable = ref<string | undefined>(model.value.variable);
+const key = ref<string | undefined>(model.value.key);
 const value = ref<string | undefined>(model.value.value);
 const context = ref<number | undefined>(model.value.context);
 
 watch(model, () => {
   type.value = model.value.type;
   variable.value = model.value.variable;
+  key.value = model.value.key;
   value.value = model.value.value;
   context.value = model.value.context;
 });
@@ -56,6 +65,10 @@ watch(type, () => {
 
 watch(variable, () => {
   model.value.variable = variable.value;
+});
+
+watch(key, () => {
+  model.value.key = key.value;
 });
 
 watch(value, () => {
