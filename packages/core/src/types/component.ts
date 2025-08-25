@@ -1,8 +1,5 @@
-import { PropValue } from '@core/models/prop-value';
-import { EventValue } from '@core/models/event-value';
-import { ActionJSON } from './action';
-import { VariableJSON } from './variable';
-
+import { EventValue } from '../models/event-value';
+import { PropValue } from '../models/prop-value';
 
 export enum PropType {
   PROP = 'PROP',

@@ -27,19 +27,6 @@
     "noFallthroughCasesInSwitch": true,
     "allowJs": true,
     "noImplicitAny": false,
-    "baseUrl": ".",
-    "paths": {
-      "@/*": [
-        "src/*",
-        "src/*.vue",
-        "src/*/index.vue"
-      ],
-      "@action/*": [
-        "src/*",
-        "src/*.vue",
-        "src/*/index.vue"
-      ]
-    },
     "typeRoots": [
       "./node_modules/@types"
     ],

@@ -8,7 +8,7 @@
 import { PropType } from 'vue';
 import Root from './root.vue';
 import Wrapper from './wrapper.vue';
-import { Playground } from '@core/models/playground.ts';
+import { Playground } from '../models/playground';
 
 defineProps({
   playground: {

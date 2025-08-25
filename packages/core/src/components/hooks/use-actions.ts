@@ -1,9 +1,9 @@
-import { Action } from '@core/models/action';
-import { ActionIf } from '@core/models/action-if';
-import { ActionTry } from '@core/models/action-try';
-import { Playground } from '@core/models/playground';
-import { ActionType, ParamType } from '@core/types/action';
 import { Ref } from 'vue';
+import { Action } from '../../models/action';
+import { Playground } from '../../models/playground';
+import { ActionType, ParamType } from '../../types/action';
+import { ActionIf } from '../../models/action-if';
+import { ActionTry } from '../../models/action-try';
 
 export const useActions = (playground: Playground, options: {variables: Record<string, Ref>, refs: Record<string, Ref>}) => {
   const actions: Record<string, (...args: any[])=> Promise<any> | any> = {};

@@ -1,6 +1,6 @@
-import { Action } from '@core/models/action';
-import { Component } from '@core/models/component';
-import { Variable } from '@core/models/variable';
+import { Action } from '../models/action';
+import { Component } from '../models/component';
+import { Variable } from '../models/variable';
 
 export type BuildPlaygroundOptions = {
  actions:Action[], 

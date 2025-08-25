@@ -1,13 +1,14 @@
-import { Action } from '@core/models/action';
-import { Component } from '@core/models/component';
-import { EventValue } from '@core/models/event-value';
-import { PropValue } from '@core/models/prop-value';
-import { PropValueFunction } from '@core/models/prop-value-function';
-import { PropValueSlotContext } from '@core/models/prop-value-slot-context';
-import { PropValueValue } from '@core/models/prop-value-value';
-import { PropValueVariable } from '@core/models/prop-value-variable';
-import { PropValueVariableValue } from '@core/models/prop-value-variable-value';
-import { Variable } from '@core/models/variable';
+import { Action } from '../models/action';
+import { Component } from '../models/component';
+import { EventValue } from '../models/event-value';
+import { PropValue } from '../models/prop-value';
+import { PropValueFunction } from '../models/prop-value-function';
+import { PropValueSlotContext } from '../models/prop-value-slot-context';
+import { PropValueValue } from '../models/prop-value-value';
+import { PropValueVariable } from '../models/prop-value-variable';
+import { PropValueVariableValue } from '../models/prop-value-variable-value';
+import { Variable } from '../models/variable';
+
 
 export const formatPropsPropVariable = <T>(variable: Variable): PropValue<T> => (new PropValue<T>(new PropValueVariable(variable)));
 

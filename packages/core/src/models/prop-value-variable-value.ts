@@ -1,6 +1,6 @@
-import { PropValueType, PropValueVariableValueJSON } from '@core/types/component';
+import { PropValueType, PropValueVariableValueJSON } from '../types/component';
+import { BuildPlaygroundOptions } from '../types/register';
 import { Variable } from './variable';
-import { BuildPlaygroundOptions } from '@core/types/register';
 
 export class PropValueVariableValue {
   type: PropValueType.VARIABLE_VALUE = PropValueType.VARIABLE_VALUE;

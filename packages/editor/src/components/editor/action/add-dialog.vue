@@ -23,7 +23,6 @@
 import { ref } from 'vue';
 import BizForm from './form.vue';
 import { useStore } from '../../store';
-import { ActionResultType, formatActionParamContext, formatActionParamValue, formatActionParamVariable, formatActionResultVariable, formatActionResultVariableValue, ParamType } from 'l-play-core';
 
 const { playground, register } = useStore()!;
 const dialogVisible = ref(false);
@@ -38,16 +37,6 @@ const onSubmit = async () => {
   const action = playground.action(ActionT, data.name);
   action.async = data.async;
 
-  if (data.result?.type) {
-    const variable = playground.variables.find(v => v.id === data.result!.variable);
-    if (!variable) throw new Error(`Variable ${data.result.variable} not found`);
-    if (data.result.type === ActionResultType.VARIABLE) {
-      action.result = formatActionResultVariable(variable);
-    } else {
-      action.result = formatActionResultVariableValue(variable, data.result.key!);
-    }
-  }
-  
   dialogVisible.value = false;
   emits('success');
 };

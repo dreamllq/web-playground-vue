@@ -6,7 +6,8 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": "lerna exec -- npm run build"
+    "build": "lerna exec -- npm run build",
+    "link": "lerna exec  -- npm link"
   },
   "dependencies": {
     "@alsi/auto-pagination": "^3.2.11",

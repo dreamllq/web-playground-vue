@@ -1,10 +1,10 @@
-import { PropType, PropValueJSON } from '@core/types/component';
 import { PropValueVariable } from './prop-value-variable';
 import { PropValueVariableValue } from './prop-value-variable-value';
 import { PropValueValue } from './prop-value-value';
 import { PropValueSlotContext } from './prop-value-slot-context';
 import { PropValueFunction } from './prop-value-function';
-import { BuildPlaygroundOptions } from '@core/types/register';
+import { PropType, PropValueJSON } from '../types/component';
+import { BuildPlaygroundOptions } from '../types/register';
 
 type ValueType<TValue> = PropValueVariable | PropValueVariableValue | PropValueValue<TValue> | PropValueSlotContext | PropValueFunction;
 

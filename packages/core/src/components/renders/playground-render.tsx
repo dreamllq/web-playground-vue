@@ -1,6 +1,6 @@
 import { defineComponent, PropType, h } from 'vue';
-import { Playground } from '@core/models/playground';
 import ComponentRender from './component-render.tsx';
+import { Playground } from '../../models/playground.ts';
 
 export default defineComponent((props) => () => props.playground.tree.map(component => h(ComponentRender, {
   component: component,

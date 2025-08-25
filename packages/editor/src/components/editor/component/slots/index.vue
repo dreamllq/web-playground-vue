@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     v-model='dialogVisible'
-    title='编辑组件参数'
+    :title='title'
     width='900'
     append-to-body
   >
@@ -24,8 +24,6 @@
 import { useStore } from '../../../store';
 import { ref } from 'vue';
 import BizForm from './form.vue';
-import { formatPropsEvent, formatPropsPropFunction, formatPropsPropSlotContext, formatPropsPropValue, formatPropsPropVariable, formatPropsPropVariableValue, PropType, PropValueType } from 'l-play-core';
-import { groupBy } from 'lodash';
 import { SlotItem } from './type';
 
 const emits = defineEmits(['success']);
@@ -34,6 +32,7 @@ const dialogVisible = ref(false);
 const defaultData = ref<{slots: SlotItem[]}>();
 let id:string = '';
 const formRef = ref<InstanceType<typeof BizForm>>();
+const title = ref('');
 
 const onSubmit = async () => {
   const data = await formRef.value!.getData();
@@ -58,6 +57,8 @@ const show = (data: {id: string}) => {
   id = data.id;
   const component = playground.components.find(v => v.id === id);
   if (!component) throw new Error('组件不存在');
+
+  title.value = `编辑组件插槽-${component.name}`;
 
   const slots: SlotItem[] = [];
 

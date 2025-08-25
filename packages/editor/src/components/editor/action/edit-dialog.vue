@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     v-model='dialogVisible'
-    title='编辑行为'
+    :title='title'
     width='1000'
     append-to-body
   >
@@ -29,7 +29,6 @@ import { useStore } from '../../store';
 import { ref } from 'vue';
 import BizForm from './form.vue';
 import { ActionForm } from './type';
-import { ActionResultType, formatActionParamContext, formatActionParamValue, formatActionParamVariable, formatActionResultVariable, formatActionResultVariableValue, ParamType } from 'l-play-core';
 
 const emits = defineEmits(['success']);
 const { playground } = useStore()!;
@@ -37,6 +36,8 @@ const dialogVisible = ref(false);
 const defaultData = ref<ActionForm>();
 let id:string = '';
 const formRef = ref<InstanceType<typeof BizForm>>();
+
+const title = ref('');
 
 const onSubmit = async () => {
   const data = await formRef.value!.getData();
@@ -52,6 +53,8 @@ const show = (data: {id: string}) => {
   id = data.id;
   const action = playground.actions.find(v => v.id === data.id);
   if (!action) throw new Error('操作不存在');
+
+  title.value = `编辑行为-${action.name}`;
 
   defaultData.value = {
     action: action.$class,

@@ -1,15 +1,15 @@
 import { v4 as uuidv4 } from 'uuid';
 import { Variable } from './variable';
-import { ActionJSON, ActionOptions, ActionResult, ActionResultType, ActionType, IAction, ParamItem, ParamType } from '@core/types/action';
+import { ActionJSON, ActionOptions, ActionResult, ActionResultType, ActionType, IAction, ParamItem, ParamType } from '../types/action';
 import { Ref } from 'vue';
 import { set } from 'lodash';
 import { ParamContext } from './param-context';
 import { ParamVariable } from './param-variable';
 import { ParamValue } from './param-value';
-import { BuildPlaygroundOptions } from '@core/types/register';
+import { BuildPlaygroundOptions } from '../types/register';
 import { ActionResultVariable } from './action-result-variable';
 import { ActionResultVariableValue } from './action-result-variable-value';
-import { ActionConfig } from '@core/types/action-config';
+import { ActionConfig } from '../types/action-config';
 
 export class Action<TExtension extends Record<string, any> = Record<string, any>> implements IAction {
   static config: ActionConfig = { name: 'action' };

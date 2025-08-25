@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     v-model='dialogVisible'
-    title='编辑行为参数&结果'
+    :title='title'
     width='1000'
     append-to-body
   >
@@ -37,11 +37,12 @@ const defaultData = ref<{params: ActionFormParam[], result: ActionFormResult}>()
 let id:string = '';
 const formRef = ref<InstanceType<typeof BizForm>>();
 
+const title = ref('');
+
 const onSubmit = async () => {
   const data = await formRef.value!.getData();
   const action = playground.actions.find(action => action.id === id);
   if (!action) throw new Error('动作不存在');
-
 
   action.params = [];
   data.params.forEach(param => {
@@ -74,6 +75,8 @@ const show = (data: {id: string}) => {
   id = data.id;
   const action = playground.actions.find(v => v.id === data.id);
   if (!action) throw new Error('操作不存在');
+  
+  title.value = `编辑行为参数&结果-${action.name}`;
 
   const params = action.params.map(param => {
     if (param.type === ParamType.VARIABLE) {

@@ -1,9 +1,9 @@
-import { ActionResultVariable } from '@core/models/action-result-variable';
-import { ActionResultVariableValue } from '@core/models/action-result-variable-value';
-import { ParamContext } from '@core/models/param-context';
-import { ParamValue } from '@core/models/param-value';
-import { ParamVariable } from '@core/models/param-variable';
+import { ActionResultVariableValue } from '../models/action-result-variable-value';
+import { ParamContext } from '../models/param-context';
+import { ParamValue } from '../models/param-value';
+import { ParamVariable } from '../models/param-variable';
 import { Ref } from 'vue';
+import { ActionResultVariable } from '../models/action-result-variable';
 
 export enum ActionType {
   FUNCTION='FUNCTION',

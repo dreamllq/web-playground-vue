@@ -1,10 +1,10 @@
-import { ComponentJSON, IComponent, PropItem, PropType, PropValueType } from '@core/types/component';
+import { ComponentJSON, IComponent, PropItem, PropType, PropValueType } from '../types/component';
 import { v4 as uuidv4 } from 'uuid';
 import { DirectiveValue } from './directive-value';
 import { PropValue } from './prop-value';
-import { BuildPlaygroundOptions } from '@core/types/register';
+import { BuildPlaygroundOptions } from '../types/register';
 import { EventValue } from './event-value';
-import { ComponentConfig } from '@core/types/component-config';
+import { ComponentConfig } from '../types/component-config';
 
 export class Component<
   TRef = any, 

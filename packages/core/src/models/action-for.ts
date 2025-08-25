@@ -1,4 +1,4 @@
-import { ActionType } from '@core/types/action';
+import { ActionType } from '../types/action';
 import { Action } from './action';
 
 export class ActionFor extends Action {

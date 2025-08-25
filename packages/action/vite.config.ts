@@ -12,12 +12,7 @@ export default defineConfig({
     vueJsx(),
     cssInjectedByJsPlugin()
   ],
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-      '@action': path.resolve(__dirname, './src') 
-    } 
-  },
+  resolve: {},
   esbuild: { drop: ['console', 'debugger'] },
   build: {
     lib: {

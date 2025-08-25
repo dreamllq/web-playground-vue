@@ -24,7 +24,7 @@
         <template #default='{ data, node }'>
           <div style='width: 100%; display: flex;'>
             <div style='flex: 1; overflow: hidden;'>
-              {{ data.label }}{{ console.log(node) }}
+              {{ data.label }}
             </div>
             <div v-if='data.data.type === "component"' style='flex: none; padding: 0 8px;'>
               <el-dropdown size='mini' trigger='click'>

@@ -1,5 +1,5 @@
-import { ProvideRegisterOptions } from '@/types/editor';
 import { Register } from 'l-play-core';
+import { ProvideRegisterOptions } from '../../types/editor';
 
 export const useRegister = (options: ProvideRegisterOptions = {}) => {
   const register = new Register();

@@ -1,7 +1,7 @@
-import { Component } from '@core/models/component';
 import { h, ref } from 'vue';
 import { useStore } from '../store';
 import ComponentRender from './component-render';
+import { Component } from '../../models/component';
 
 export const useSlots = (props: {component: Component, scopeSlot: any}) => { 
   const {

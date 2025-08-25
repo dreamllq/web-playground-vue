@@ -1,6 +1,6 @@
-import { ParamType, ParamVariableJSON } from '@core/types/action';
+import { ParamType, ParamVariableJSON } from '../types/action';
 import { Variable } from './variable';
-import { BuildPlaygroundOptions } from '@core/types/register';
+import { BuildPlaygroundOptions } from '../types/register';
 
 export class ParamVariable {
   type: ParamType.VARIABLE = ParamType.VARIABLE;

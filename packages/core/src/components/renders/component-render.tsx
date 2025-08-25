@@ -1,8 +1,8 @@
-import { Component } from '@core/models/component';
 import { defineAsyncComponent, defineComponent, h, PropType, withDirectives } from 'vue';
 import { useProps } from './use-props';
 import { useDirectives } from './use-directives';
 import { useSlots } from './use-slots';
+import { Component } from '../../models/component';
 
 const ComponentRender = defineComponent((props) => {
   const component = defineAsyncComponent(() => props.component.getComponent());

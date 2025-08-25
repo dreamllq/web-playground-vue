@@ -1,11 +1,10 @@
-import { ActionResultVariable } from '@core/models/action-result-variable';
-import { ActionResultVariableValue } from '@core/models/action-result-variable-value';
-import { ParamContext } from '@core/models/param-context';
-import { ParamValue } from '@core/models/param-value';
-import { ParamVariable } from '@core/models/param-variable';
-import { Variable } from '@core/models/variable';
-import { ActionResult, ActionResultType, ParamItem, ParamType } from '@core/types/action';
-
+import { ActionResultVariable } from '../models/action-result-variable';
+import { ActionResultVariableValue } from '../models/action-result-variable-value';
+import { ParamContext } from '../models/param-context';
+import { ParamValue } from '../models/param-value';
+import { ParamVariable } from '../models/param-variable';
+import { Variable } from '../models/variable';
+import { ActionResult, ParamItem } from '../types/action';
 
 export const formatActionParamVariable = (value: Variable): ParamItem => (new ParamVariable(value));
 

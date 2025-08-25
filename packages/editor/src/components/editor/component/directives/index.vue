@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     v-model='dialogVisible'
-    title='编辑组件指令'
+    :title='title'
     width='1000'
     append-to-body
   >
@@ -34,6 +34,7 @@ const dialogVisible = ref(false);
 const defaultData = ref<{directives: DirectiveItem[]}>();
 let id:string = '';
 const formRef = ref<InstanceType<typeof BizForm>>();
+const title = ref('');
 
 const onSubmit = async () => {
   const data = await formRef.value!.getData();
@@ -51,6 +52,8 @@ const show = (data: {id: string}) => {
   id = data.id;
   const component = playground.components.find(v => v.id === id);
   if (!component) throw new Error('组件不存在');
+
+  title.value = `编辑组件指令-${component.name}`;
 
   const directives: DirectiveItem[] = [];
   Object.entries(component.directives).forEach(([name, directive]) => {

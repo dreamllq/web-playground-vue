@@ -1,7 +1,7 @@
-import { PropValueFunctionJSON, PropValueType } from '@core/types/component';
+import { PropValueFunctionJSON, PropValueType } from '../types/component';
 import { Action } from './action';
 import { Variable } from './variable';
-import { BuildPlaygroundOptions } from '@core/types/register';
+import { BuildPlaygroundOptions } from '../types/register';
 
 export class PropValueFunction {
   type: PropValueType.FUNCTION = PropValueType.FUNCTION;

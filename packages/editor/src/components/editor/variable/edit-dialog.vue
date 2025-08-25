@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     v-model='dialogVisible'
-    title='编辑变量'
+    :title='title'
     width='1000'
     append-to-body
   >
@@ -34,6 +34,7 @@ const defaultData = ref<{name: string, value: string}>({
 });
 let id:string = '';
 const formRef = ref<InstanceType<typeof BizForm>>();
+const title = ref('');
 
 const onSubmit = async () => {
   const data = await formRef.value!.getData();
@@ -50,6 +51,9 @@ const show = (data: {id: string}) => {
   id = data.id;
   const variable = playground.variables.find(v => v.id === data.id);
   if (!variable) throw new Error('变量不存在');
+
+  title.value = `编辑变量-${variable.name}`;
+
   defaultData.value.name = variable.name;
   defaultData.value.value = variable.value;
   dialogVisible.value = true;

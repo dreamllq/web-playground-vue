@@ -1,7 +1,7 @@
-import { EventValueJSON, PropType } from '@core/types/component';
+import { EventValueJSON, PropType } from '../types/component';
+import { BuildPlaygroundOptions } from '../types/register';
 import { Action } from './action';
 import { Variable } from './variable';
-import { BuildPlaygroundOptions } from '@core/types/register';
 
 export class EventValue {
   type: PropType.EVENT = PropType.EVENT;

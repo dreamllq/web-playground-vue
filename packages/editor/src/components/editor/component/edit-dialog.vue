@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     v-model='dialogVisible'
-    title='编辑组件'
+    :title='title'
     width='1000'
     append-to-body
   >
@@ -36,6 +36,7 @@ const dialogVisible = ref(false);
 const defaultData = ref<ComponentForm>();
 let id:string = '';
 const formRef = ref<InstanceType<typeof BizForm>>();
+const title = ref('');
 
 const onSubmit = async () => {
   const data = await formRef.value!.getData();
@@ -51,6 +52,9 @@ const show = (data: {id: string}) => {
   id = data.id;
   const component = playground.components.find(v => v.id === data.id);
   if (!component) throw new Error('组件不存在');
+
+  title.value = `编辑组件-${component.name}`;
+
   defaultData.value = {
     name: component.name,
     component: component.$class

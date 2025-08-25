@@ -6,7 +6,7 @@
 import { PropType } from 'vue';
 import { useProvideStore } from './store';
 import { PlaygroundJSON } from 'l-play-core';
-import { ProvideOptions } from '@/types/editor';
+import { ProvideOptions } from '../types/editor';
 
 const props = defineProps({
   json: {

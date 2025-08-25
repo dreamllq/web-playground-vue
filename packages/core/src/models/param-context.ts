@@ -1,5 +1,5 @@
-import { ParamContextJSON, ParamType } from '@core/types/action';
-import { BuildPlaygroundOptions } from '@core/types/register';
+import { ParamContextJSON, ParamType } from '../types/action';
+import { BuildPlaygroundOptions } from '../types/register';
 
 export class ParamContext {
   type: ParamType.CONTEXT = ParamType.CONTEXT;

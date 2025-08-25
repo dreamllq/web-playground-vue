@@ -1,12 +1,10 @@
-import { Component } from '@core/models/component';
 import { ref } from 'vue';
-import { PropType as ComponentPropType, PropValueType } from '@core/types/component';
-import { Variable } from '@core/models/variable';
 import { get } from 'lodash';
 import { useStore } from '../store';
-import { PropValueValue } from '@core/models/prop-value-value';
-import { PropValueSlotContext } from '@core/models/prop-value-slot-context';
-import { PropValueFunction } from '@core/models/prop-value-function';
+import { Component } from '../../models/component';
+import { PropValueType, PropType as ComponentPropType } from '../../types/component';
+import { Variable } from '../../models/variable';
+import { PropValueFunction } from '../../models/prop-value-function';
 
 export const useProps = (props: {component: Component, scopeSlot: any}) => { 
   const {

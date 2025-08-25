@@ -3,8 +3,8 @@ import { PropValueVariableValue } from './prop-value-variable-value';
 import { PropValueValue } from './prop-value-value';
 import { PropValueSlotContext } from './prop-value-slot-context';
 import { PropValueFunction } from './prop-value-function';
-import { DirectiveValueJSON } from '@core/types/component';
-import { BuildPlaygroundOptions } from '@core/types/register';
+import { DirectiveValueJSON } from '../types/component';
+import { BuildPlaygroundOptions } from '../types/register';
 
 type ValueType<TValue> = PropValueVariable | PropValueVariableValue | PropValueValue<TValue> | PropValueSlotContext | PropValueFunction;
 

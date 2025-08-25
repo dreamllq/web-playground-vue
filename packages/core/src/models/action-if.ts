@@ -1,4 +1,4 @@
-import { ActionOptions, ActionType, ParamItem } from '@core/types/action';
+import { ActionOptions, ActionType } from '../types/action';
 import { Action } from './action';
 
 export class ActionIf extends Action { 

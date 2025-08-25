@@ -1,4 +1,4 @@
-import { VariableJSON } from '@core/types/variable';
+import { VariableJSON } from '../types/variable';
 import { v4 as uuidv4 } from 'uuid';
 
 export class Variable {

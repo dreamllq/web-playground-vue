@@ -1,4 +1,4 @@
-import { PlaygroundJSON } from '@core/types/playground';
+import { PlaygroundJSON } from '../types/playground';
 import { Action } from './action';
 import { Component } from './component';
 import { Variable } from './variable';

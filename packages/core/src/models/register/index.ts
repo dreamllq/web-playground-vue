@@ -1,7 +1,7 @@
-import { PlaygroundJSON } from '@core/types/playground';
 import { ActionRegister } from './action';
 import { ComponentRegister } from './component';
 import { Playground } from '../playground';
+import { PlaygroundJSON } from '../../types/playground';
 
 export class Register {
   actionRegister = new ActionRegister();

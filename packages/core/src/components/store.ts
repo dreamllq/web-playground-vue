@@ -1,9 +1,8 @@
-import { Playground } from '@core/models/playground';
-import { ParamType } from '@core/types/action';
 import { createInjectionState } from '@vueuse/core';
 import { ref } from 'vue';
 import EventEmitter from 'eventemitter3';
 import { useActions } from './hooks/use-actions';
+import { Playground } from '../models/playground';
 
 
 const [useProvideStore, useStore] = createInjectionState((playground: Playground) => {

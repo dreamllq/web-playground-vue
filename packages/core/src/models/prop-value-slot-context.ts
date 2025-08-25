@@ -1,6 +1,6 @@
-import { PropValueSlotContextJSON, PropValueType } from '@core/types/component';
+import { PropValueSlotContextJSON, PropValueType } from '../types/component';
 import { Component } from './component';
-import { BuildPlaygroundOptions } from '@core/types/register';
+import { BuildPlaygroundOptions } from '../types/register';
 
 export class PropValueSlotContext {
   type: PropValueType.SLOT_CONTEXT = PropValueType.SLOT_CONTEXT;

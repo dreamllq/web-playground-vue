@@ -1,5 +1,5 @@
-import { PropValueType, PropValueValueJSON } from '@core/types/component';
-import { BuildPlaygroundOptions } from '@core/types/register';
+import { PropValueType, PropValueValueJSON } from '../types/component';
+import { BuildPlaygroundOptions } from '../types/register';
 
 export class PropValueValue<TValue = any> {
   type: PropValueType.VALUE = PropValueType.VALUE;

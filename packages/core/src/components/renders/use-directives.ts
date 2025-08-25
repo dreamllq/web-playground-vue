@@ -1,10 +1,9 @@
-import { Component } from '@core/models/component';
-import { PropItem } from '@core/types/component';
 import { ref, resolveDirective } from 'vue';
-import { PropType as ComponentPropType, PropValueType } from '@core/types/component';
-import { Variable } from '@core/models/variable';
 import { get } from 'lodash';
 import { useStore } from '../store';
+import { Component } from '../../models/component';
+import { PropValueType } from '../../types/component';
+import { Variable } from '../../models/variable';
 
 export const useDirectives = (props: {component: Component, scopeSlot: any}) => { 
   const {

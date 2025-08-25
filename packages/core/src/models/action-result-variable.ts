@@ -1,6 +1,6 @@
-import { ActionResultType, ActionResultVariableJSON } from '@core/types/action';
+import { ActionResultType, ActionResultVariableJSON } from '../types/action';
+import { BuildPlaygroundOptions } from '../types/register';
 import { Variable } from './variable';
-import { BuildPlaygroundOptions } from '@core/types/register';
 
 export class ActionResultVariable {
   type: ActionResultType.VARIABLE = ActionResultType.VARIABLE;

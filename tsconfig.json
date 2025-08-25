@@ -27,12 +27,11 @@
     "noFallthroughCasesInSwitch": true,
     "allowJs": true,
     "noImplicitAny": false,
-    "baseUrl": ".",
     "paths": {
       "@/*": [
-        "src/*",
-        "src/*.vue",
-        "src/*/index.vue"
+        "./src/*",
+        "./src/*.vue",
+        "./src/*/index.vue"
       ]
     },
     "typeRoots": [
