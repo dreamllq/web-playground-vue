@@ -44,6 +44,7 @@ const onSubmit = async () => {
   const action = playground.actions.find(action => action.id === id);
   if (!action) throw new Error('动作不存在');
   action.async = data.async;
+  action.name = data.name;
 
   dialogVisible.value = false;
   emits('success');

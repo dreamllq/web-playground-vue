@@ -10,7 +10,7 @@ import { FormGrid } from '@/models/form-grid';
 import { FormGridItem } from '@/models/form-grid-item';
 import { AutoPagination } from '@/models/auto-pagination';
 import { AutoHeightWrapper } from '@/models/auto-height-wrapper';
-import { ProvideOptions } from 'packages/editor/src';
+import { ProvideOptions } from 'l-play-editor';
 
 export const useRegister = () => {
 
