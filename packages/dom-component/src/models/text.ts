@@ -12,10 +12,14 @@ export class Text extends Component<TRef, TProps> {
   $class = 'Text';
 
   async getComponent(): Promise<any> {
-    return defineComponent((props) => () => props.text, {
+    return defineComponent((props) => () => String(props.text), {
       props: {
         text: {
-          type: String,
+          type: [
+            String,
+            Number,
+            Boolean
+          ],
           default: ''
         }
       }

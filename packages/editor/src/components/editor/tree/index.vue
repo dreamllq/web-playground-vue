@@ -7,6 +7,12 @@
       <el-button type='primary' link @click='onAdd'>
         <el-icon><plus /></el-icon>
       </el-button>
+      <el-button type='primary' link @click='onSort'>
+        <el-icon><sort /></el-icon>
+      </el-button>
+      <el-button type='primary' link @click='refresh'>
+        <el-icon><refresh-icon /></el-icon>
+      </el-button>
     </template>
 
     <div ref='wrapperRef' style='width: 100%; height: 100%; overflow: hidden;'>
@@ -15,10 +21,10 @@
         :data='tree'
         :height='height'
       >
-        <template #default='{ data }'>
+        <template #default='{ data, node }'>
           <div style='width: 100%; display: flex;'>
             <div style='flex: 1; overflow: hidden;'>
-              {{ data.label }}
+              {{ data.label }}{{ console.log(node) }}
             </div>
             <div v-if='data.data.type === "component"' style='flex: none; padding: 0 8px;'>
               <el-dropdown size='mini' trigger='click'>
@@ -42,33 +48,32 @@
                   </el-dropdown-menu>
                 </template>
               </el-dropdown>
+
+              <el-button
+                v-if='node.level === 1'
+                type='danger'
+                link
+                @click.prevent.stop='onDelete(data)'>
+                <el-icon><delete /></el-icon>
+              </el-button>
             </div>
           </div>
         </template>
       </el-tree-v2>
     </div>
-    <!-- <component-item :component='item' /> -->
-    <!-- <item-layout :name='item.name'>
-        <template #operator>
-          <el-button type='danger' link @click='onDelete'>
-            <el-icon><delete /></el-icon>
-          </el-button>
-        </template>
-      </item-layout> -->
   </area-layout>
   <add-dialog ref='addDialogRef' @success='refresh' />
 </template>
 
 <script setup lang="ts">
 import AreaLayout from '../layout/area-layout.vue';
-import { Plus, Edit, Delete } from '@element-plus/icons-vue';
+import { Plus, Edit, Delete, Refresh as RefreshIcon, Sort } from '@element-plus/icons-vue';
 import AddDialog from './add-dialog.vue';
 import { onMounted, ref } from 'vue';
 import { useStore } from '../../store';
-import ItemLayout from '../layout/item-layout.vue';
-import componentItem from './tree/component-item.vue';
 import { useTree } from './use-tree';
 import { useElementSize } from '@vueuse/core';
+import { ElMessageBox } from 'element-plus';
 
 const wrapperRef = ref();
 const { width, height } = useElementSize(wrapperRef);
@@ -81,8 +86,6 @@ const list = ref<{id: string, name: string}[]>([]);
 const tree = ref(playground.tree.map(item => calculateComponent(item)));
 
 onMounted(() => {
-  console.log(height.value);
-  
   refresh();
 });
 
@@ -90,16 +93,19 @@ const onAdd = () => {
   addDialogRef.value!.show();
 };
 
-
-const onDelete = () => {
-  
+const onDelete = async (data) => {
+  await ElMessageBox.confirm('确定删除吗？', '确认');
+  const index = tree.value.findIndex(item => item.id === data.id);
+  playground.tree = playground.tree.filter((item, i) => index !== i);
+  refresh();
 };
 
 const refresh = () => {
-  list.value = playground.tree.map((item) => ({
-    id: item.id,
-    name: `${item.name}-${item.$class}`
-  }));
+  tree.value = playground.tree.map(item => calculateComponent(item));
+};
+
+const onSort = () => {
+  
 };
 </script>
 

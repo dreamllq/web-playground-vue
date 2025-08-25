@@ -15,9 +15,9 @@
           <el-button type='primary' link @click='onEdit(item)'>
             <el-icon><edit /></el-icon>
           </el-button>
-          <el-button type='danger' link @click='onDelete'>
+          <!-- <el-button type='danger' link @click='onDelete'>
             <el-icon><delete /></el-icon>
-          </el-button>
+          </el-button> -->
         </template>
       </item-layout>
     </template>

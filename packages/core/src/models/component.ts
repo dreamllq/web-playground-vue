@@ -4,7 +4,7 @@ import { DirectiveValue } from './directive-value';
 import { PropValue } from './prop-value';
 import { BuildPlaygroundOptions } from '@core/types/register';
 import { EventValue } from './event-value';
-import { ComponentConfig } from '@core/types/compoennt-config';
+import { ComponentConfig } from '@core/types/component-config';
 
 export class Component<
   TRef = any, 

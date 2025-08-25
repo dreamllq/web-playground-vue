@@ -16,6 +16,7 @@
     "@alsi/vue-layout": "^5.3.2",
     "@element-plus/icons-vue": "^2.3.2",
     "eventemitter3": "^5.0.1",
+    "expr-eval": "^2.0.2",
     "jsonata": "^2.1.0",
     "normalize.css": "^8.0.1",
     "sortablejs": "^1.15.6",

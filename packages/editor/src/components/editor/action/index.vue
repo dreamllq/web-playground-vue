@@ -33,9 +33,9 @@
               </el-dropdown-menu>
             </template>
           </el-dropdown>
-          <el-button type='danger' link @click='onDelete'>
+          <!-- <el-button type='danger' link @click='onDelete'>
             <el-icon><delete /></el-icon>
-          </el-button>
+          </el-button> -->
         </template>
       </item-layout>
     </template>
