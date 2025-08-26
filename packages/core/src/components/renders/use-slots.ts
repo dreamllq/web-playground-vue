@@ -13,10 +13,14 @@ export const useSlots = (props: {component: Component, scopeSlot: any}) => {
     const _slots = {};
     Object.entries(props.component.slots).forEach(([key, components]) => {
       _slots[key] = (...args:any[]) => components.map(component => {
-        bus.emit(`slot-${props.component.id}-change`);
             
+        // const scopeSlot = props.scopeSlot || {};
         const scopeSlot = cloneDeep(props.scopeSlot || {});
-        scopeSlot[props.component.id] = args[0];
+        if (args[0] && Object.keys(args[0]).length > 0) {
+          scopeSlot[props.component.id] = args[0];
+        }
+        
+        // bus.emit(`slot-${props.component.id}-change`);
     
         return h(ComponentRender, {
           component: component as Component,
