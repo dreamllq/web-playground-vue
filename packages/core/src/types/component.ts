@@ -1,5 +1,9 @@
 import { EventValue } from '../models/event-value';
 import { PropValue } from '../models/prop-value';
+import { PropValueSlotContext } from '../models/prop-value-slot-context';
+import { PropValueValue } from '../models/prop-value-value';
+import { PropValueVariable } from '../models/prop-value-variable';
+import { PropValueVariableValue } from '../models/prop-value-variable-value';
 
 export enum PropType {
   PROP = 'PROP',
@@ -26,6 +30,7 @@ export interface IPropItem {
 }
 
 export type PropItem = PropValue<any> | EventValue;
+export type CallbackParam = PropValueVariable | PropValueVariableValue | PropValueValue | PropValueSlotContext
 
 
 export type PropValueFunctionJSON = {
@@ -64,7 +69,8 @@ export type PropValueJSON<TValue> = {
 export type EventValueJSON = {
   type: 'EVENT',
   value: {id: string}[] | {id: string},
-  return?: {id: string}
+  return?: {id: string},
+  callbackParams?: (PropValueVariableJSON | PropValueVariableValueJSON | PropValueValueJSON<TValue> | PropValueSlotContextJSON)[]
 }
 
 export type PropItemJSON<TValue=any> = PropValueJSON<TValue> | EventValueJSON;

@@ -14,8 +14,13 @@
       <template v-if='propType === PropType.EVENT'>
         <el-form-item label='事件行为集'>
           <action-select
-            v-model='EventActions'
+            v-model='eventActions'
             multiple />
+        </el-form-item>
+        <el-form-item label='回调参数'>
+          <div style='flex: 1'>
+            <event-callback-params-select v-model='callbackParams' />
+          </div>
         </el-form-item>
       </template>
     </el-form>
@@ -29,6 +34,7 @@ import { PropType, PropValueType } from 'l-play-core';
 import ActionSelect from '../../common/action-select/index.vue';
 import { PropsPropItem, PropsPropValueForm } from './type';
 import PropValueSelect from './prop-value-select.vue';
+import EventCallbackParamsSelect from './event-callback-params-select.vue';
 
 const model = defineModel<PropsPropItem>({ default: () => ({}) });
 const propValueData = ref<PropsPropValueForm>({
@@ -45,12 +51,13 @@ const propValueData = ref<PropsPropValueForm>({
 const name = ref<string>(model.value.name || '');
 const propType = ref<PropType | undefined>(model.value.propType);
 
-const EventActions = ref<string[]>(model.value.EventActions || []);
+const eventActions = ref<string[]>(model.value.eventActions || []);
+const callbackParams = ref<PropsPropValueForm[]>(model.value.callbackParams || []);
 
 watch(model, () => {
   name.value = model.value.name;
   propType.value = model.value.propType;
-  EventActions.value = model.value.EventActions || [];
+  eventActions.value = model.value.eventActions || [];
   propValueData.value.propValueType = model.value.propValueType;
   propValueData.value.value = model.value.value;
   propValueData.value.variable = model.value.variable;
@@ -81,9 +88,13 @@ watch(propValueData, () => {
   model.value.funcReturn = propValueData.value.funcReturn;
 }, { deep: true });
 
-watch(EventActions, () => {
-  model.value.EventActions = EventActions.value;
-});
+watch(eventActions, () => {
+  model.value.eventActions = eventActions.value;
+}, { deep: true });
+
+watch(callbackParams, () => {
+  model.value.callbackParams = callbackParams.value;
+}, { deep: true });
 
 </script>
 

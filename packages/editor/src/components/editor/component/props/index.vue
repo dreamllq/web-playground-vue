@@ -24,8 +24,8 @@
 import { useStore } from '../../../store';
 import { ref } from 'vue';
 import BizForm from './form.vue';
-import { formatPropsEvent, formatPropsPropFunction, formatPropsPropSlotContext, formatPropsPropValue, formatPropsPropVariable, formatPropsPropVariableValue, PropType, PropValueType } from 'l-play-core';
-import { PropsPropItem } from './type';
+import { CallbackParam, formatPropsEvent, formatPropsPropFunction, formatPropsPropSlotContext, formatPropsPropValue, formatPropsPropVariable, formatPropsPropVariableValue, PropType, PropValueSlotContext, PropValueType, PropValueValue, PropValueVariable, PropValueVariableValue } from 'l-play-core';
+import { PropsPropItem, PropsPropValueForm } from './type';
 
 const emits = defineEmits(['success']);
 const { playground } = useStore()!;
@@ -68,13 +68,32 @@ const onSubmit = async () => {
 
 
     } else {
-      const actions = prop.EventActions!.map(actionId => {
+      const actions = prop.eventActions!.map(actionId => {
         const action = playground.actions.find(v => v.id === actionId);
         if (!action) throw new Error('动作不存在');
         return action;
       });
 
-      component.props[prop.name] = formatPropsEvent(actions);
+      const callbackParams = prop.callbackParams!.map(param => {
+        if (param.propValueType === PropValueType.VARIABLE) {
+          const variable = playground.variables.find(v => v.id === param.variable);
+          if (!variable) throw new Error(`变量${prop.variable}不存在`);
+          return new PropValueVariable(variable);
+        } else if (param.propValueType === PropValueType.VARIABLE_VALUE) {
+          const variable = playground.variables.find(v => v.id === param.variable);
+          if (!variable) throw new Error(`变量${prop.variable}不存在`);
+          return new PropValueVariableValue(variable, param.variableKey!);
+        } else if (param.propValueType === PropValueType.VALUE) {
+          return new PropValueValue(param.value);
+        } else if (param.propValueType === PropValueType.SLOT_CONTEXT) {
+          const slotComponent = playground.components.find(c => c.id === param.component);
+          if (!slotComponent) throw new Error(`组件${prop.component}不存在`);
+          return new PropValueSlotContext(slotComponent, param.slotKey!);
+        } else {
+        }
+      });
+
+      component.props[prop.name] = formatPropsEvent(actions, undefined, callbackParams as CallbackParam[]);
     }
   });
   
@@ -134,10 +153,40 @@ const show = (data: {id: string}) => {
       }
 
     } else {
+      const callbackParams:PropsPropValueForm[] = [];
+      if (Array.isArray(item.callbackParams)) {
+        item.callbackParams.forEach(param => {
+          if (param.type === PropValueType.VALUE) {
+            callbackParams.push({
+              propValueType: param.type,
+              value: param.value
+            });
+          } else if (param.type === PropValueType.VARIABLE) {
+            callbackParams.push({
+              propValueType: param.type,
+              variable: param.value.id
+            });
+          } else if (param.type === PropValueType.VARIABLE_VALUE) {
+            callbackParams.push({
+              propValueType: param.type,
+              variable: param.value.id,
+              variableKey: param.key
+            });
+          } else {
+            callbackParams.push({
+              propValueType: param.type,
+              component: param.component.id,
+              slotKey: param.key
+            });
+          }
+        });
+      }
+
       return {
         name,
         propType: item.type,
-        EventActions: Array.isArray(item.value) ? item.value.map(v => v.id) : [item.value.id]
+        eventActions: Array.isArray(item.value) ? item.value.map(v => v.id) : [item.value.id],
+        callbackParams
       };
     }
   });

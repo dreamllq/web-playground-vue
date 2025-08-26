@@ -4,7 +4,8 @@ export type PropsPropItem = {
   name: string,
   propType?: PropType,
   
-  EventActions?: string[],
+  eventActions?: string[],
+  callbackParams?:PropsPropValueForm[]
 } & PropsPropValueForm;
 
 export type PropsPropValueForm = {

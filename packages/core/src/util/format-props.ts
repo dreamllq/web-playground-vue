@@ -8,6 +8,7 @@ import { PropValueValue } from '../models/prop-value-value';
 import { PropValueVariable } from '../models/prop-value-variable';
 import { PropValueVariableValue } from '../models/prop-value-variable-value';
 import { Variable } from '../models/variable';
+import { CallbackParam } from '../types/component';
 
 
 export const formatPropsPropVariable = <T>(variable: Variable): PropValue<T> => (new PropValue<T>(new PropValueVariable(variable)));
@@ -20,4 +21,4 @@ export const formatPropsPropSlotContext = <T>(component: Component, key: string)
 
 export const formatPropsPropFunction = <T>(value: (Action[] | Action), returnVariable?: Variable): PropValue<T> => (new PropValue<T>(new PropValueFunction(value, returnVariable)));
 
-export const formatPropsEvent = (value: (Action[] | Action), returnVariable?: Variable): EventValue => (new EventValue(value, returnVariable));
+export const formatPropsEvent = (value: (Action[] | Action), returnVariable?: Variable, callbackParams?: CallbackParam[]): EventValue => (new EventValue(value, returnVariable, callbackParams));
