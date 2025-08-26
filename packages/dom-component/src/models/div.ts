@@ -16,8 +16,9 @@ type TSlots = {
 
 export class Div extends Component<TRef, TProps, TSlots> {
   $class = 'Div';
+  async = false;
 
-  async getComponent(): Promise<any> {
+  getComponent() {
     return h('div');
   }
 }

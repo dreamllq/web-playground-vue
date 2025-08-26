@@ -10,8 +10,9 @@ type TProps = {
 
 export class Text extends Component<TRef, TProps> {
   $class = 'Text';
+  async = false;
 
-  async getComponent(): Promise<any> {
+  getComponent() {
     return defineComponent((props) => () => String(props.text), {
       props: {
         text: {

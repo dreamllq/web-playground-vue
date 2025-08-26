@@ -45,7 +45,7 @@ const onCopy = () => {
 };
 
 const playground = new Playground();
-const token = 'Bearer eyJraWQiOiJ1YWEtYXV0aG9yaXphdGlvbi1yc2Eta2V5IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiJwYWlwYWkiLCJhdXRvX2xvZ2luIjpmYWxzZSwiaXNzIjoiaHR0cDpcL1wvc2Nwby11YWEtc2VydmljZS50ZXN0LnN2Yy5jbHVzdGVyLmxvY2FsOjMwMDMxXC91YWEiLCJ1c2VySWQiOjY5NDI3OTE1MjM2NDMzOTIxLCJwbGF0Zm9ybSI6IkNPTVBMRVRFX0VESVRJT04iLCJhdXRob3JpdGllcyI6WyI2OTQyNzkxNTQ4NTkxNzE4NCJdLCJhdWQiOiJhcHNfc3lzdGVtIiwibmJmIjoxNzU2MTk1MjE1LCJzY29wZSI6WyJvcGVuaWQiXSwidGVuYW50SWQiOjY5NDI3OTE1MjM2NDMzOTIwLCJleHAiOjE3NTYxOTg4MTUsImlhdCI6MTc1NjE5NTIxNSwic3VwZXJ2aXNvciI6dHJ1ZX0.I_ygzjVpMsmD8fo03p_-qL3Xk2EClqHG7GDiWyf_ENDoDtYdQNjMi5f5yhLzwOceh7c9SLeECkKOV-6F1C5H00-gefy_PmMXLhiq--OZbj-XAUhhiZ-8spExKpODigz7OSutWHl3UH4cUYbgcVJ5d3JuR2g08yjYuYdz_CFW5_y_sZbwf5QcRsEEykg6i51VqV2UpK3FukqhYDUIOjygrpS5Yp-5tGWbHH-SIQG62yCG-mbOq54XhzLIzHCaYTNNBsYkf0zbgil76G7Fe2vAgzhr61YxHCDmLRRcwDNRNaqZ8pr31xNG7BH6DW_XyxA8hvppzSHjez6V2KNhaohWJA';
+const token = 'Bearer eyJraWQiOiJ1YWEtYXV0aG9yaXphdGlvbi1yc2Eta2V5IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiJwYWlwYWkiLCJhdXRvX2xvZ2luIjpmYWxzZSwiaXNzIjoiaHR0cDpcL1wvc2Nwby11YWEtc2VydmljZS50ZXN0LnN2Yy5jbHVzdGVyLmxvY2FsOjMwMDMxXC91YWEiLCJ1c2VySWQiOjY5NDI3OTE1MjM2NDMzOTIxLCJwbGF0Zm9ybSI6IkNPTVBMRVRFX0VESVRJT04iLCJhdXRob3JpdGllcyI6WyI2OTQyNzkxNTQ4NTkxNzE4NCJdLCJhdWQiOiJhcHNfc3lzdGVtIiwibmJmIjoxNzU2MjAyMDU4LCJzY29wZSI6WyJvcGVuaWQiXSwidGVuYW50SWQiOjY5NDI3OTE1MjM2NDMzOTIwLCJleHAiOjE3NTYyMDU2NTgsImlhdCI6MTc1NjIwMjA1OCwic3VwZXJ2aXNvciI6dHJ1ZX0.EBLw3BUHugx62tyetxO1mXjMM2xFCwsmpq4JsnuJ3ZHam79QpRHgW9CvuKNPkJ4ibrItJaLCN2KwkFROUBcbUibIyFNUOBuVfxYF8yXBdXN91OMshLfyD3OgoWby_2lJmYi0nSsH0DWjm1-sZxRb2WMk45aE5DJ3BDZnTXvPX9Gpe9lpE-b8-xgEn-TrvJmc3eFediBBioT6twmbDFcflHDcFqhO5T9KeAY5ONOiWWQcLgVurw7NcBOC7i5WoGY1qGw0qudG62DlQXRXehzBKyCqj_LtwW1GkWjTH-ONnTTv5S_auWdWY0avcgEhlzgWKoLq7IH92TU-_5CZHAkgOA';
 // #region components
 const layout = playground.component(Layout);
 const autoPagination = playground.component(AutoPagination);
@@ -63,6 +63,7 @@ const table = playground.component(Table);
 const column1 = playground.component(TableColumn);
 const operateColumn = playground.component(TableColumn);
 const editButton = playground.component(Button);
+const editButton1 = playground.component(Input);
 const editButtonText = playground.component(Text);
 const editInitLoadingDiv = playground.component(Div);
 
@@ -251,8 +252,12 @@ operateColumn.props.width = formatPropsPropValue(200);
 editButton.props.link = formatPropsPropValue(true);
 editButton.props.type = formatPropsPropValue('primary');
 editButtonText.props.text = formatPropsPropValue('编辑');
-editButton.slots.default = [editButtonText];
-operateColumn.slots.default = [editButtonText];
+// editButton.slots.default = [editButtonText];
+const editButton2 = playground.component(Button);
+const div11 = playground.component(Div);
+div11.props.innerHTML = formatPropsPropValue('编辑');
+editButton2.slots.default = [div11];
+operateColumn.slots.default = [editButton2];
 
 
 editButton.props.onClick = formatPropsEvent([

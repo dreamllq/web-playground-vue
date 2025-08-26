@@ -20,7 +20,7 @@ export enum PropValueType {
 
 
 export interface IComponent<TProps>{
-  getComponent(): Promise<any>;
+  getComponent(): Promise<any> | any;
   toJSON(): any;
 }
 
@@ -70,7 +70,7 @@ export type EventValueJSON = {
   type: 'EVENT',
   value: {id: string}[] | {id: string},
   return?: {id: string},
-  callbackParams?: (PropValueVariableJSON | PropValueVariableValueJSON | PropValueValueJSON<TValue> | PropValueSlotContextJSON)[]
+  callbackParams?: (PropValueVariableJSON | PropValueVariableValueJSON | PropValueValueJSON<any> | PropValueSlotContextJSON)[]
 }
 
 export type PropItemJSON<TValue=any> = PropValueJSON<TValue> | EventValueJSON;

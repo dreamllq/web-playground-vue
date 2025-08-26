@@ -5,7 +5,14 @@ import { useSlots } from './use-slots';
 import { Component } from '../../models/component';
 
 const ComponentRender = defineComponent((props) => {
-  const component = defineAsyncComponent(() => props.component.getComponent());
+  console.log(props);
+  
+  let component:any;
+  if (props.component.async) {
+    component = defineAsyncComponent(() => props.component.getComponent());
+  } else {
+    component = props.component.getComponent();
+  }
 
   const { calculate: calculateProps } = useProps(props);
   const { calculate: calculateDirectives } = useDirectives(props);

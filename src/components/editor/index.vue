@@ -7,6 +7,9 @@
       <el-button @click='onCopy'>
         copy
       </el-button>
+      <el-button @click='onClear'>
+        clear
+      </el-button>
     </div>
     <div style='flex: 1; overflow: hidden;'>
       <play-ground-editor
@@ -42,6 +45,10 @@ const onSave = () => {
   const json = editorRef.value!.api().toJSON();
   console.log(json);
   window.localStorage.setItem('playground', JSON.stringify(json));
+};
+
+const onClear = () => {
+  window.localStorage.removeItem('playground');
 };
 
 const onCopy = () => {

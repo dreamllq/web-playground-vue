@@ -21,6 +21,7 @@ export class Component<
   ref?: TRef;
   slots: TSlots = {} as TSlots;
   $class = 'Component';
+  async = true;
 
 
   constructor(name?:string) {
@@ -72,7 +73,7 @@ export class Component<
       });
     });
   }
-  getComponent(): Promise<any> {
+  getComponent(): Promise<any>|any {
     throw new Error('Method not implemented.');
   }
 }

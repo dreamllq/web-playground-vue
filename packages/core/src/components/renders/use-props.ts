@@ -13,15 +13,8 @@ export const useProps = (props: {component: Component, scopeSlot: any}) => {
 
   refs[props.component.id] = ref();
   const calculate = () => {
-    // const renderKey = ref(0);
-    // const forceRerender = () => {
-    //   renderKey.value += 1; // 改变 key，强制组件重新创建
-    // };
 
-    const _props = {
-      ref: refs[props.component.id]
-      // key: renderKey.value
-    };
+    const _props = { ref: refs[props.component.id] };
     
     Object.entries(props.component.props).forEach(([key, value]) => {
       if (value.type === ComponentPropType.PROP) {
@@ -35,9 +28,6 @@ export const useProps = (props: {component: Component, scopeSlot: any}) => {
         } else if (value.value.type === PropValueType.SLOT_CONTEXT) {
           const cScopeSlot = props.scopeSlot[value.value.component.id];
           _props[key] = get(cScopeSlot, value.value.key, undefined);
-          // bus.once(`slot-${value.value.component.id}-change`, () => {
-          //   forceRerender();
-          // });
         } else if (value.value.type === PropValueType.FUNCTION) {
           _props[key] = async (...args) => {
             await handleActions(value.value.value, args);
