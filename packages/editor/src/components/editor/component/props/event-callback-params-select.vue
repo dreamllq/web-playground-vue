@@ -13,7 +13,7 @@
           <event-callback-param-select :model-value='item' @on-change='(val)=>onChange(index,val)' />
         </div>
         <div class='operator'>
-          <el-button type='danger' link @click='onDelete'>
+          <el-button type='danger' link @click='onDelete(index)'>
             <el-icon><delete /></el-icon>
           </el-button>
           <el-button

@@ -48,7 +48,24 @@ export const useProps = (props: {component: Component, scopeSlot: any}) => {
         }
       } else if (value.type === ComponentPropType.EVENT) {
         _props[key] = async (...args) => {
-          await handleActions(value.value, args);
+          const cArgs: any[] = [];
+          if (Array.isArray(value.callbackParams) && value.callbackParams.length > 0) {
+            value.callbackParams.forEach((param, index) => {
+              if (param.type === PropValueType.VALUE) {
+                cArgs?.push(param.value);
+              } else if (param.type === PropValueType.VARIABLE) {
+                const variable = variables[param.value.id];
+                cArgs?.push(variable.value);
+              } else if (param.type === PropValueType.VARIABLE_VALUE) {
+                const variable = variables[param.value.id];
+                cArgs?.push(get(variable.value, param.key, undefined));
+              } else {
+                const cScopeSlot = props.scopeSlot[param.component.id];
+                cArgs.push(get(cScopeSlot, param.key, undefined));
+              }
+            });
+          }
+          await handleActions(value.value, cArgs.length > 0 ? cArgs : args);
         };
       }
     });
