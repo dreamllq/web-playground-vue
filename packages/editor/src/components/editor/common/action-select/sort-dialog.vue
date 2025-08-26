@@ -1,8 +1,9 @@
 <template>
   <el-dialog
     v-model='dialogVisible'
-    title='行为排序'
+    title='排序'
     width='1000'
+    append-to-body
   >
     <template v-if='dialogVisible'>
       <div ref='sortAreaRef' class='sort-area'>
