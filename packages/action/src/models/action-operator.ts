@@ -8,6 +8,11 @@ type TExtension = {
 export class ActionOperator extends Action<TExtension> { 
   $class = 'ActionOperator';
 
+  constructor(name: string) {
+    super(name);
+    this.extension = { operator: '' };
+  }
+
   handle(params: any[], options:ActionOptions): void {
     if (this.result && this.params.length > 0) {
       const paramValues = this.transformParams(params, options);

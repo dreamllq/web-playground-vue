@@ -11,3 +11,6 @@ export { Select } from './models/select';
 export { Switch } from './models/switch';
 export { TableColumn } from './models/table-column';
 export { Table } from './models/table';
+
+export { ActionMessage } from './models/action-message';
+export { ActionMessageBox } from './models/action-message-box';

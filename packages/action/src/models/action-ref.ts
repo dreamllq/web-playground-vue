@@ -9,6 +9,12 @@ type TExtension = {
 export class ActionRef extends Action<TExtension> {
   $class = 'ActionRef';
 
+  constructor(name: string) {
+    super(name);
+    this.extension.ref = '';
+    this.extension.funcName = '';
+  }
+
   handle(params: any[], options:ActionOptions): Promise<void> | void {
     if (this.extension.ref && this.extension.funcName) {
       const paramValues = this.transformParams(params, options);
