@@ -33,7 +33,7 @@ const formRef = ref<FormInstance>();
 
 const form = ref({
   name: props.defaultData.name || '',
-  value: props.defaultData.value || ''
+  value: props.defaultData.value
 });
 
 const rules = ref({
