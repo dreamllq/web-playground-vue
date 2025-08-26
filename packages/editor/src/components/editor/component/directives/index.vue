@@ -24,7 +24,7 @@
 import { useStore } from '../../../store';
 import { ref } from 'vue';
 import BizForm from './form.vue';
-import { formatPropsEvent, formatPropsPropFunction, formatPropsPropSlotContext, formatPropsPropValue, formatPropsPropVariable, formatPropsPropVariableValue, PropType, PropValueType } from 'l-play-core';
+import { DirectiveValue, formatPropsEvent, formatPropsPropFunction, formatPropsPropSlotContext, formatPropsPropValue, formatPropsPropVariable, formatPropsPropVariableValue, PropType, PropValueSlotContext, PropValueType, PropValueValue, PropValueVariable, PropValueVariableValue } from 'l-play-core';
 import { DirectiveItem } from '../type';
 import { PropsPropValueForm } from '../props/type';
 
@@ -42,8 +42,31 @@ const onSubmit = async () => {
   if (!component) throw new Error('组件不存在');
   component.props = {};
   console.log(data);
-  
 
+  const directives:Record<string, DirectiveValue> = {};
+  if (Array.isArray(data.directives)) {
+    data.directives.forEach(directive => {
+      if (directive.value.propValueType === PropValueType.VARIABLE) {
+        const variable = playground.variables.find(v => v.id === directive.value.variable);
+        if (!variable) throw new Error(`变量${directive.value.variable}不存在`);
+        directives[directive.name] = new DirectiveValue(new PropValueVariable(variable), directive.arg, directive.modifiers);
+      } else if (directive.value.propValueType === PropValueType.VARIABLE_VALUE) {
+        const variable = playground.variables.find(v => v.id === directive.value.variable);
+        if (!variable) throw new Error(`变量${directive.value.variable}不存在`);
+        directives[directive.name] = new DirectiveValue(new PropValueVariableValue(variable, directive.value.variableKey!), directive.arg, directive.modifiers);
+      } else if (directive.value.propValueType === PropValueType.VALUE) {
+        directives[directive.name] = new DirectiveValue(new PropValueValue(directive.value.value), directive.arg, directive.modifiers);
+      } else if (directive.value.propValueType === PropValueType.SLOT_CONTEXT) {
+        const component = playground.components.find(c => c.id === directive.value.component);
+        if (!component) throw new Error(`组件${directive.value.component}不存在`);
+        directives[directive.name] = new DirectiveValue(new PropValueSlotContext(component, directive.value.slotKey!), directive.arg, directive.modifiers);
+      } else {
+        console.warn('不支持的参数类型');
+      }
+    });
+  }
+  
+  component.directives = directives;
   dialogVisible.value = false;
   emits('success');
 };
