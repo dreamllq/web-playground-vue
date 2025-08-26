@@ -74,7 +74,7 @@ const onSubmit = async () => {
         return action;
       });
 
-      const callbackParams = prop.callbackParams!.map(param => {
+      const callbackParams = prop.callbackParams?.map(param => {
         if (param.propValueType === PropValueType.VARIABLE) {
           const variable = playground.variables.find(v => v.id === param.variable);
           if (!variable) throw new Error(`变量${prop.variable}不存在`);

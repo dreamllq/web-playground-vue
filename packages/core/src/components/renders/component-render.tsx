@@ -5,8 +5,6 @@ import { useSlots } from './use-slots';
 import { Component } from '../../models/component';
 
 const ComponentRender = defineComponent((props) => {
-  console.log(props);
-  
   let component:any;
   if (props.component.async) {
     component = defineAsyncComponent(() => props.component.getComponent());

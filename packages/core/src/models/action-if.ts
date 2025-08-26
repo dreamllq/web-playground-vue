@@ -1,4 +1,5 @@
 import { ActionOptions, ActionType } from '../types/action';
+import { BuildPlaygroundOptions } from '../types/register';
 import { Action } from './action';
 
 export class ActionIf extends Action { 
@@ -36,5 +37,9 @@ export class ActionIf extends Action {
       ifActions: this.ifActions.map(item => ({ id: item.id })),
       elseActions: this.elseActions.map(item => ({ id: item.id }))
     };
+  }
+
+  fromJSON(json, options: BuildPlaygroundOptions) { 
+
   }
 }

@@ -11,12 +11,12 @@ export class EventValue {
   type: PropType.EVENT = PropType.EVENT;
   value: Action[] | Action;
   return?: Variable;
-  callbackParams?: CallbackParam[];
+  callbackParams: CallbackParam[] = [];
 
   constructor(value: Action[] | Action, returnVariable?: Variable, callbackParams?: CallbackParam[]) {
     this.value = value;
     this.return = returnVariable;
-    this.callbackParams = callbackParams;
+    this.callbackParams = callbackParams || [];
   }
 
   toJSON():EventValueJSON {
