@@ -2,6 +2,7 @@ import { h, ref } from 'vue';
 import { useStore } from '../store';
 import ComponentRender from './component-render';
 import { Component } from '../../models/component';
+import { cloneDeep } from 'lodash';
 
 export const useSlots = (props: {component: Component, scopeSlot: any}) => { 
   const {
@@ -14,7 +15,7 @@ export const useSlots = (props: {component: Component, scopeSlot: any}) => {
       _slots[key] = (...args:any[]) => components.map(component => {
         bus.emit(`slot-${props.component.id}-change`);
             
-        const scopeSlot = props.scopeSlot || {};
+        const scopeSlot = cloneDeep(props.scopeSlot || {});
         scopeSlot[props.component.id] = args[0];
     
         return h(ComponentRender, {
