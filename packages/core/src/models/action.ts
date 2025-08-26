@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Variable } from './variable';
 import { ActionJSON, ActionOptions, ActionResult, ActionResultType, ActionType, IAction, ParamItem, ParamType } from '../types/action';
 import { Ref } from 'vue';
-import { set, get } from 'lodash';
+import { set, get, cloneDeep } from 'lodash';
 import { ParamContext } from './param-context';
 import { ParamVariable } from './param-variable';
 import { ParamValue } from './param-value';
@@ -98,9 +98,9 @@ export class Action<TExtension extends Record<string, any> = Record<string, any>
       if (this.result.type === ActionResultType.VARIABLE) {
         // console.log(options.variables[this.result.value.id].value, data);
         
-        options.variables[this.result.value.id].value = data;
+        options.variables[this.result.value.id].value = cloneDeep(data);
       } else if (this.result.type === ActionResultType.VARIABLE_VALUE) {
-        set(options.variables[this.result.value.id].value, this.result.key, data);
+        set(options.variables[this.result.value.id].value, this.result.key, cloneDeep(data));
       }
     }
   }
