@@ -43,8 +43,7 @@ const sortAreaRef = ref();
 let sortable: Sortable | null = null;
 const show = async (componentIds: string[]) => {
   components.value = componentIds.map(id => {
-    const component = playground.components.find(a => a.id === id);
-    if (!component) throw new Error('组件不存在');
+    const component = playground.getComponentById(id);
     return component;
   });
 

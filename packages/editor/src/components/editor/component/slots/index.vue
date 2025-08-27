@@ -36,14 +36,12 @@ const title = ref('');
 
 const onSubmit = async () => {
   const data = await formRef.value!.getData();
-  const component = playground.components.find(v => v.id === id);
-  if (!component) throw new Error('组件不存在');
+  const component = playground.getComponentById(id);
 
   component.slots = {};
   data.slots.forEach(({ name, components }) => {
     component.slots[name!] = components!.map(id => {
-      const component = playground.components.find(v => v.id === id);
-      if (!component) throw new Error('组件不存在');
+      const component = playground.getComponentById(id);
       return component;
     });
   });

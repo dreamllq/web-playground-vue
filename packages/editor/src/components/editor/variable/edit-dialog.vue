@@ -38,8 +38,7 @@ const title = ref('');
 
 const onSubmit = async () => {
   const data = await formRef.value!.getData();
-  const variable = playground.variables.find(v => v.id === id);
-  if (!variable) throw new Error('变量不存在');
+  const variable = playground.getVariableById(id);
   variable.name = data.name;
   variable.value = data.value;
 
@@ -49,8 +48,7 @@ const onSubmit = async () => {
 
 const show = (data: {id: string}) => {
   id = data.id;
-  const variable = playground.variables.find(v => v.id === data.id);
-  if (!variable) throw new Error('变量不存在');
+  const variable = playground.getVariableById(data.id);
 
   title.value = `编辑变量-${variable.name}`;
 

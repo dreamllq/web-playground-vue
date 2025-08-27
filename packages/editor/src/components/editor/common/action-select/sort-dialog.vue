@@ -43,8 +43,7 @@ const sortAreaRef = ref();
 let sortable: Sortable | null = null;
 const show = async (actionIds: string[]) => {
   actions.value = actionIds.map(id => {
-    const action = playground.actions.find(a => a.id === id);
-    if (!action) throw new Error('行为不存在');
+    const action = playground.getActionById(id);
     return action;
   });
 

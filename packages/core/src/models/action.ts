@@ -84,8 +84,6 @@ export class Action<TExtension extends Record<string, any> = Record<string, any>
   protected setResultData(params: any[], options: ActionOptions, data: any) {
     if (this.result) {
       if (this.result.type === ActionResultType.VARIABLE) {
-        // console.log(options.variables[this.result.value.id].value, data);
-        
         options.variables[this.result.value.id].value = cloneDeep(data);
       } else if (this.result.type === ActionResultType.VARIABLE_VALUE) {
         set(options.variables[this.result.value.id].value, this.result.key, cloneDeep(data));

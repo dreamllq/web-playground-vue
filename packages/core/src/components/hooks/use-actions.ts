@@ -43,18 +43,10 @@ export const useActions = (playground: Playground, options: {variables: Record<s
 
     let res:any = undefined;
     if (result) {
-      const actions = action.extension.ifActions.map(id => {
-        const action = playground.actions.find(a => a.id === id);
-        if (!action) throw new Error(`Action ${id} not found`);
-        return action;
-      });
+      const actions = action.extension.ifActions.map(id => playground.getActionById(id));
       res = handleActions(actions, args);
     } else {
-      const actions = action.extension.elseActions.map(id => {
-        const action = playground.actions.find(a => a.id === id);
-        if (!action) throw new Error(`Action ${id} not found`);
-        return action;
-      });
+      const actions = action.extension.elseActions.map(id => playground.getActionById(id));
       res = handleActions(actions, args);
     }
 
@@ -64,25 +56,13 @@ export const useActions = (playground: Playground, options: {variables: Record<s
   const tryActionHandle = (action:ActionTry, args:any[]) => {
     let res:any = undefined;
     try {
-      const actions = action.extension.tryActions.map(id => {
-        const action = playground.actions.find(a => a.id === id);
-        if (!action) throw new Error(`Action ${id} not found`);
-        return action;
-      });
+      const actions = action.extension.tryActions.map(id => playground.getActionById(id));
       res = handleActions(actions, args);
     } catch (e) {
-      const actions = action.extension.catchActions.map(id => {
-        const action = playground.actions.find(a => a.id === id);
-        if (!action) throw new Error(`Action ${id} not found`);
-        return action;
-      });
+      const actions = action.extension.catchActions.map(id => playground.getActionById(id));
       res = handleActions(actions, args);
     } finally {
-      const actions = action.extension.finallyActions.map(id => {
-        const action = playground.actions.find(a => a.id === id);
-        if (!action) throw new Error(`Action ${id} not found`);
-        return action;
-      });
+      const actions = action.extension.finallyActions.map(id => playground.getActionById(id));
       res = handleActions(actions, args);
     }
 

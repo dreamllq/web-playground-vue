@@ -32,8 +32,7 @@ const emits = defineEmits(['success']);
 
 const onSubmit = async () => {
   const data = await formRef.value!.getData();
-  const component = playground.components.find(v => v.id === data.component);
-  if (!component) throw new Error('组件不存在');
+  const component = playground.getComponentById(data.component);
 
   playground.tree.push(component);
 

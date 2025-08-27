@@ -41,18 +41,15 @@ const title = ref('');
 
 const onSubmit = async () => {
   const data = await formRef.value!.getData();
-  const action = playground.actions.find(action => action.id === id);
-  if (!action) throw new Error('动作不存在');
+  const action = playground.getActionById(id);
 
   action.params = [];
   data.params.forEach(param => {
     if (param.type === ParamType.VARIABLE) {
-      const variable = playground.variables.find(v => v.id === param.variable);
-      if (!variable) throw new Error(`Variable ${param.variable} not found`);
+      const variable = playground.getVariableById(param.variable!);
       action.params.push(formatActionParamVariable(variable));
     } else if (param.type === ParamType.VARIABLE_VALUE) {
-      const variable = playground.variables.find(v => v.id === param.variable);
-      if (!variable) throw new Error(`Variable ${param.variable} not found`);
+      const variable = playground.getVariableById(param.variable!);
       action.params.push(formatActionParamVariableValue(variable, param.key!));
     } else if (param.type === ParamType.CONTEXT) {
       action.params.push(formatActionParamContext(param.context!));
@@ -62,8 +59,7 @@ const onSubmit = async () => {
   });
 
   if (data.result?.type) {
-    const variable = playground.variables.find(v => v.id === data.result!.variable);
-    if (!variable) throw new Error(`Variable ${data.result.variable} not found`);
+    const variable = playground.getVariableById(data.result.variable!);
     if (data.result.type === ActionResultType.VARIABLE) {
       action.result = formatActionResultVariable(variable);
     } else {
@@ -77,8 +73,7 @@ const onSubmit = async () => {
 
 const show = (data: {id: string}) => {
   id = data.id;
-  const action = playground.actions.find(v => v.id === data.id);
-  if (!action) throw new Error('操作不存在');
+  const action = playground.getActionById(data.id);
   
   title.value = `编辑行为参数&结果-${action.name}-${action.$class}`;
 

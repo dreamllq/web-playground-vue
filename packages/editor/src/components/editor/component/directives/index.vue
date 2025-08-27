@@ -38,8 +38,7 @@ const title = ref('');
 
 const onSubmit = async () => {
   const data = await formRef.value!.getData();
-  const component = playground.components.find(v => v.id === id);
-  if (!component) throw new Error('组件不存在');
+  const component = playground.getComponentById(id);
   component.props = {};
   console.log(data);
 
@@ -47,18 +46,15 @@ const onSubmit = async () => {
   if (Array.isArray(data.directives)) {
     data.directives.forEach(directive => {
       if (directive.value.propValueType === PropValueType.VARIABLE) {
-        const variable = playground.variables.find(v => v.id === directive.value.variable);
-        if (!variable) throw new Error(`变量${directive.value.variable}不存在`);
+        const variable = playground.getVariableById(directive.value.variable!);
         directives[directive.name] = new DirectiveValue(new PropValueVariable(variable), directive.arg, directive.modifiers);
       } else if (directive.value.propValueType === PropValueType.VARIABLE_VALUE) {
-        const variable = playground.variables.find(v => v.id === directive.value.variable);
-        if (!variable) throw new Error(`变量${directive.value.variable}不存在`);
+        const variable = playground.getVariableById(directive.value.variable!);
         directives[directive.name] = new DirectiveValue(new PropValueVariableValue(variable, directive.value.variableKey!), directive.arg, directive.modifiers);
       } else if (directive.value.propValueType === PropValueType.VALUE) {
         directives[directive.name] = new DirectiveValue(new PropValueValue(directive.value.value), directive.arg, directive.modifiers);
       } else if (directive.value.propValueType === PropValueType.SLOT_CONTEXT) {
-        const component = playground.components.find(c => c.id === directive.value.component);
-        if (!component) throw new Error(`组件${directive.value.component}不存在`);
+        const component = playground.getComponentById(directive.value.component!);
         directives[directive.name] = new DirectiveValue(new PropValueSlotContext(component, directive.value.slotKey!), directive.arg, directive.modifiers);
       } else {
         console.warn('不支持的参数类型');
@@ -73,8 +69,7 @@ const onSubmit = async () => {
 
 const show = (data: {id: string}) => {
   id = data.id;
-  const component = playground.components.find(v => v.id === id);
-  if (!component) throw new Error('组件不存在');
+  const component = playground.getComponentById(id);
 
   title.value = `编辑组件指令-${component.name}-${component.$class}`;
 

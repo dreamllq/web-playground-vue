@@ -30,6 +30,24 @@ export class Playground {
     return _t;
   }
 
+  getVariableById(id:string):Variable {
+    const variable = this.variables.find(v => v.id === id);
+    if (!variable) throw new Error(`Variable ${id} not found`);
+    return variable;
+  }
+
+  getActionById(id: string):Action {
+    const action = this.actions.find(a => a.id === id);
+    if (!action) throw new Error(`Action ${id} not found`);
+    return action;
+  }
+
+  getComponentById(id: string):Component {
+    const component = this.components.find(c => c.id === id);
+    if (!component) throw new Error(`Component ${id} not found`);
+    return component;
+  }
+
   toJSON():PlaygroundJSON {
     return {
       tree: this.tree.map(item => ({ id: item.id })),

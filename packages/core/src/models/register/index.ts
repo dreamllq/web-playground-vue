@@ -36,15 +36,13 @@ export class Register {
     });
 
     json.tree?.forEach(item => {
-      const component = playground.components.find(c => c.id === item.id);
-      if (!component) throw new Error(`Component ${item.id} not found`);
+      const component = playground.getComponentById(item.id);
       playground.tree.push(component);
     });
 
     
     json.components?.forEach(json => {
-      const component = playground.components.find(c => c.id === json.id);
-      if (!component) throw new Error(`Component ${json.id} not found`);
+      const component = playground.getComponentById(json.id);
       component.fromJson(json, {
         variables: playground.variables,
         components: playground.components,
@@ -53,8 +51,7 @@ export class Register {
     });
 
     json.actions?.forEach(json => {
-      const action = playground.actions.find(a => a.id === json.id);
-      if (!action) throw new Error(`Action ${json.id} not found`);
+      const action = playground.getActionById(json.id);
       action.fromJSON(json, {
         variables: playground.variables,
         components: playground.components,

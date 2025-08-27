@@ -38,8 +38,7 @@ const title = ref('');
 
 const onSubmit = async () => {
   const data = await formRef.value!.getData();
-  const action = playground.actions.find(action => action.id === id);
-  if (!action) throw new Error('动作不存在');
+  const action = playground.getActionById(id);
 
   action.extension = data.extension;
   
@@ -49,8 +48,7 @@ const onSubmit = async () => {
 
 const show = (data: {id: string}) => {
   id = data.id;
-  const action = playground.actions.find(v => v.id === data.id);
-  if (!action) throw new Error('操作不存在');
+  const action = playground.getActionById(data.id);
 
   title.value = `编辑行为扩展参数-${action.name}-${action.$class}`;
 

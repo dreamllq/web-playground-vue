@@ -40,8 +40,7 @@ const title = ref('');
 
 const onSubmit = async () => {
   const data = await formRef.value!.getData();
-  const component = playground.components.find(v => v.id === id);
-  if (!component) throw new Error('组件不存在');
+  const component = playground.getComponentById(id);
   
   component.name = data.name;
   dialogVisible.value = false;
@@ -50,8 +49,7 @@ const onSubmit = async () => {
 
 const show = (data: {id: string}) => {
   id = data.id;
-  const component = playground.components.find(v => v.id === data.id);
-  if (!component) throw new Error('组件不存在');
+  const component = playground.getComponentById(id);
 
   title.value = `编辑组件-${component.name}-${component.$class}`;
 

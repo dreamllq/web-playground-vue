@@ -37,57 +37,48 @@ const title = ref('');
 
 const onSubmit = async () => {
   const data = await formRef.value!.getData();
-  const component = playground.components.find(v => v.id === id);
-  if (!component) throw new Error('组件不存在');
+  const component = playground.getComponentById(id);
   component.props = {};
   data.props.forEach(prop => {
     if (prop.propType === PropType.PROP) {
       if (prop.propValueType === PropValueType.VARIABLE) {
-        const variable = playground.variables.find(v => v.id === prop.variable);
-        if (!variable) throw new Error(`变量${prop.variable}不存在`);
+        const variable = playground.getVariableById(prop.variable!);
         component.props[prop.name] = formatPropsPropVariable(variable);
       } else if (prop.propValueType === PropValueType.VARIABLE_VALUE) {
-        const variable = playground.variables.find(v => v.id === prop.variable);
-        if (!variable) throw new Error(`变量${prop.variable}不存在`);
+        const variable = playground.getVariableById(prop.variable!);
         component.props[prop.name] = formatPropsPropVariableValue(variable, prop.variableKey!);
       } else if (prop.propValueType === PropValueType.VALUE) {
         component.props[prop.name] = formatPropsPropValue(prop.value);
       } else if (prop.propValueType === PropValueType.SLOT_CONTEXT) {
-        const slotComponent = playground.components.find(c => c.id === prop.component);
-        if (!slotComponent) throw new Error(`组件${prop.component}不存在`);
+        const slotComponent = playground.getComponentById(prop.component!);
         component.props[prop.name] = formatPropsPropSlotContext(slotComponent, prop.slotKey!);
       } else {
         const actions = prop.funcActions!.map(actionId => {
-          const action = playground.actions.find(v => v.id === actionId);
-          if (!action) throw new Error('动作不存在');
+          const action = playground.getActionById(actionId);
           return action;
         });
-        const funcReturn = playground.variables.find(v => v.id === prop.funcReturn);
+        const funcReturn = playground.getVariableById(prop.funcReturn!);
         component.props[prop.name] = formatPropsPropFunction(actions, funcReturn);
       }
 
 
     } else {
       const actions = prop.eventActions!.map(actionId => {
-        const action = playground.actions.find(v => v.id === actionId);
-        if (!action) throw new Error('动作不存在');
+        const action = playground.getActionById(actionId);
         return action;
       });
 
       const callbackParams = prop.callbackParams?.map(param => {
         if (param.propValueType === PropValueType.VARIABLE) {
-          const variable = playground.variables.find(v => v.id === param.variable);
-          if (!variable) throw new Error(`变量${prop.variable}不存在`);
+          const variable = playground.getVariableById(param.variable!);
           return new PropValueVariable(variable);
         } else if (param.propValueType === PropValueType.VARIABLE_VALUE) {
-          const variable = playground.variables.find(v => v.id === param.variable);
-          if (!variable) throw new Error(`变量${prop.variable}不存在`);
+          const variable = playground.getVariableById(param.variable!);
           return new PropValueVariableValue(variable, param.variableKey!);
         } else if (param.propValueType === PropValueType.VALUE) {
           return new PropValueValue(param.value);
         } else if (param.propValueType === PropValueType.SLOT_CONTEXT) {
-          const slotComponent = playground.components.find(c => c.id === param.component);
-          if (!slotComponent) throw new Error(`组件${prop.component}不存在`);
+          const slotComponent = playground.getComponentById(prop.component!);
           return new PropValueSlotContext(slotComponent, param.slotKey!);
         } else {
         }
@@ -105,8 +96,7 @@ const onSubmit = async () => {
 
 const show = (data: {id: string}) => {
   id = data.id;
-  const component = playground.components.find(v => v.id === id);
-  if (!component) throw new Error('组件不存在');
+  const component = playground.getComponentById(id);
 
   title.value = `编辑组件props-${component.name}-${component.$class}`;
 
