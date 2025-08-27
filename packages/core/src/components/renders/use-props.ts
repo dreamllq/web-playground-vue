@@ -29,10 +29,20 @@ export const useProps = (props: {component: Component, scopeSlot: any}) => {
           const cScopeSlot = props.scopeSlot[value.value.component.id];
           _props[key] = get(cScopeSlot, value.value.key, undefined);
         } else if (value.value.type === PropValueType.FUNCTION) {
-          _props[key] = async (...args) => {
-            await handleActions(value.value.value, args);
+          const handleReturn = (res) => {
             if ((value.value as PropValueFunction).return) {
               return variables[(value.value as PropValueFunction).return!.id].value;
+            } else {
+              return res;
+            }
+          };
+
+          _props[key] = (...args) => {
+            const res = handleActions(value.value.value, args);
+            if (res instanceof Promise) {
+              return res.then((res) => handleReturn(res));
+            } else {
+              return handleReturn(res);
             }
           };
         }

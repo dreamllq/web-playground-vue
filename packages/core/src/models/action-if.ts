@@ -1,45 +1,46 @@
-import { ActionOptions, ActionType } from '../types/action';
-import { BuildPlaygroundOptions } from '../types/register';
+import { ActionIfJSON, ActionOptions, ActionType } from '../types/action';
 import { Action } from './action';
+import { Parser } from 'expr-eval';
 
-export class ActionIf extends Action { 
+type TExtension = {
+  operator:string;
+  ifActions: string[];
+  elseActions: string[];
+}
+
+export class ActionIf extends Action<TExtension> { 
   $class = 'ActionIf';
-  condition: string = '';
-  ifActions: Action[] = [];
-  elseActions: Action[] = [];
+  type = ActionType.IF;
 
   constructor(name: string) {
     super(name);
-    this.type = ActionType.IF;
-  }
-
-  get async():boolean {
-    return this.ifActions.some(action => action.async) || this.elseActions.some(action => action.async);
+    this.extension = {
+      operator: '',
+      ifActions: [],
+      elseActions: [] 
+    };
   }
 
   handle(params: any[], options: ActionOptions) {
     const paramValues = this.transformParams(params, options);
-    const result = paramValues.reduce((acc, item) => acc && item, true);
-    return result;
-
-  }
-
-  runCondition(paramValues: any[]):boolean {
-    const result = paramValues.reduce((acc, item) => acc && item, true);
+    const result = calculateSafe(paramValues, this.extension.operator);
     return result;
   }
+}
 
-  toJSON() {
-    const superJSON = super.toJSON();
-    return {
-      ...superJSON,
-      condition: this.condition,
-      ifActions: this.ifActions.map(item => ({ id: item.id })),
-      elseActions: this.elseActions.map(item => ({ id: item.id }))
-    };
-  }
+function calculateSafe(data: any[], expression:string) {
+  // 将 $0, $1 映射为变量 obj.$0, obj.$1
+  const obj = {};
+  const _expression = expression.replace(/\$/g, '_param');
 
-  fromJSON(json, options: BuildPlaygroundOptions) { 
+  data.forEach((val, i) => {
+    obj[`_param${i}`] = val;
+  });
 
+  try {
+    const ast = Parser.parse(_expression);
+    return ast.evaluate(obj);
+  } catch (err: any) {
+    throw new Error(`表达式错误: ${err.message}`);
   }
 }

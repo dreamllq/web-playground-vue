@@ -1,4 +1,4 @@
-import { Register, PlaygroundJSON } from 'l-play-core';
+import { Register, PlaygroundJSON, ActionIf, ActionTry } from 'l-play-core';
 import { ActionFetch, ActionCallback, ActionOperator, ActionRef, ActionStructTransform } from 'l-play-action';
 import { Div, Span, Text } from 'l-play-dom-component';
 import { Button, Checkbox, Dialog, Form, FormItem, Icon, Input, 
@@ -21,7 +21,9 @@ export const useRegister = () => {
         ActionCallback: ActionCallback,
         ActionOperator: ActionOperator,
         ActionRef: ActionRef,
-        ActionStructTransform: ActionStructTransform
+        ActionStructTransform: ActionStructTransform,
+        ActionIf: ActionIf,
+        ActionTry: ActionTry
       },
       components: {
         Div: Div,

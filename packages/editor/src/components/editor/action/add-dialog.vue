@@ -35,7 +35,6 @@ const onSubmit = async () => {
   const ActionT = register.actionRegister.map.get(data.action);
   if (!ActionT) throw new Error(`Action ${data.action} not found`);
   const action = playground.action(ActionT, data.name);
-  action.async = data.async;
 
   dialogVisible.value = false;
   emits('success');

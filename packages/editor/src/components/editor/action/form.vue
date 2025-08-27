@@ -10,9 +10,6 @@
     <el-form-item label='行为选择' prop='action'>
       <register-action-select v-model='form.action' :disabled='disabledProps.includes("action")' />
     </el-form-item>
-    <el-form-item label='异步' prop='async'>
-      <el-switch v-model='form.async' />
-    </el-form-item>
   </el-form>
 </template>
 
@@ -38,8 +35,7 @@ const formRef = ref<FormInstance>();
 
 const form = ref<ActionForm>({
   action: props.defaultData.action || '',
-  name: props.defaultData.name || '',
-  async: props.defaultData.async || false
+  name: props.defaultData.name || ''
 });
 
 const rules = ref({

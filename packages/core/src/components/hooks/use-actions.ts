@@ -23,37 +23,70 @@ export const useActions = (playground: Playground, options: {variables: Record<s
     return paramValues;
   };
 
-  const functionActionHandle = async (action:Action, args:any[]) => {
+  const functionActionHandle = (action:Action, args:any[]) => {
     const paramValues = transformParamValues(action, args);
         
-    return action.handle(paramValues, {
+    const res = action.handle(paramValues, {
       variables: options.variables,
       refs: options.refs
     });
+    
+    return res;
   };
 
-  const ifActionHandle = async (action:ActionIf, args:any[]) => {
+  const ifActionHandle = (action:ActionIf, args:any[]) => {
     const paramValues = transformParamValues(action, args);
     const result = action.handle(paramValues, {
       variables: options.variables,
       refs: options.refs
     });
 
+    let res:any = undefined;
     if (result) {
-      await handleActions(action.ifActions, args);
+      const actions = action.extension.ifActions.map(id => {
+        const action = playground.actions.find(a => a.id === id);
+        if (!action) throw new Error(`Action ${id} not found`);
+        return action;
+      });
+      res = handleActions(actions, args);
     } else {
-      await handleActions(action.elseActions, args);
+      const actions = action.extension.elseActions.map(id => {
+        const action = playground.actions.find(a => a.id === id);
+        if (!action) throw new Error(`Action ${id} not found`);
+        return action;
+      });
+      res = handleActions(actions, args);
     }
+
+    return res;
   };
 
-  const tryActionHandle = async (action:ActionTry, args:any[]) => {
+  const tryActionHandle = (action:ActionTry, args:any[]) => {
+    let res:any = undefined;
     try {
-      await handleActions(action.tryActions, args);
+      const actions = action.extension.tryActions.map(id => {
+        const action = playground.actions.find(a => a.id === id);
+        if (!action) throw new Error(`Action ${id} not found`);
+        return action;
+      });
+      res = handleActions(actions, args);
     } catch (e) {
-      await handleActions(action.catchActions, args);
+      const actions = action.extension.catchActions.map(id => {
+        const action = playground.actions.find(a => a.id === id);
+        if (!action) throw new Error(`Action ${id} not found`);
+        return action;
+      });
+      res = handleActions(actions, args);
     } finally {
-      await handleActions(action.finallyActions, args);
+      const actions = action.extension.finallyActions.map(id => {
+        const action = playground.actions.find(a => a.id === id);
+        if (!action) throw new Error(`Action ${id} not found`);
+        return action;
+      });
+      res = handleActions(actions, args);
     }
+
+    return res;
   };
 
   const forActionHandle = async (action:Action, args:any[]) => {
@@ -61,21 +94,22 @@ export const useActions = (playground: Playground, options: {variables: Record<s
   };
 
   playground.actions.forEach((action:Action) => {
-    actions[action.id] = async (...args:any) => {
+    actions[action.id] = (...args:any) => {
       if (action.type === ActionType.FUNCTION) {
-        await functionActionHandle(action, args);
+        return functionActionHandle(action, args);
       } else if (action.type === ActionType.IF) {
-        await ifActionHandle(action as ActionIf, args);
+        return ifActionHandle(action as ActionIf, args);
       } else if (action.type === ActionType.FOR) {
-        await forActionHandle(action, args);
+        return forActionHandle(action, args);
       } else if (action.type === ActionType.TRY) {
-        await tryActionHandle(action as ActionTry, args);
+        return tryActionHandle(action as ActionTry, args);
       }
     };
   });
   const genActionHandle = (action: Action, args:any) => actions[action.id](...args);
 
-  const handleActions = async (needHandleActions: Action[] | Action, args:any[]) => {
+
+  const handleActions = (needHandleActions: Action[] | Action, args:any[]) => {
     let _actions:Action[] = [];
     if (Array.isArray(needHandleActions)) {
       _actions = needHandleActions;
@@ -84,8 +118,28 @@ export const useActions = (playground: Playground, options: {variables: Record<s
     }
     if (_actions.length === 0) return;
     
-    for (const action of _actions) {
-      await genActionHandle(action, args); 
+    let res:any = undefined;
+    
+    const exec = (list:any[], index:number) => {
+      const action = list[index];
+      const result = genActionHandle(action, args);
+      if (result instanceof Promise) {
+        if (index < list.length - 1) {
+          return result.then(() => exec(list, index + 1));
+        } 
+      } else {
+        if (index < list.length - 1) {
+          return exec(list, index + 1);
+        }
+      }
+      return result;
+    };
+
+    if (_actions.length > 0) {
+      res = exec(_actions, 0);
+      return res;
+    } else {
+      return undefined;
     }
   };
 

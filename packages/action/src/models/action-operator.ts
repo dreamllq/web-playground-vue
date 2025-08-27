@@ -14,13 +14,16 @@ export class ActionOperator extends Action<TExtension> {
   }
 
   handle(params: any[], options:ActionOptions): void {
-    if (this.result && this.params.length > 0) {
+    if (this.params.length > 0) {
       const paramValues = this.transformParams(params, options);
+      
       if (this.extension.operator) {
         const result = calculateSafe(paramValues, this.extension.operator);
         this.setResultData(params, options, result);
+        return result;
       } else {
         this.setResultData(params, options, paramValues[0]);
+        return paramValues[0];
       }
     }
   }

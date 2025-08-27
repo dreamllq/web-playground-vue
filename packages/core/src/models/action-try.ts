@@ -1,18 +1,22 @@
+import { ActionType } from '../types/action';
 import { Action } from './action';
 
-export class ActionTry extends Action {
-  $class = 'ActionTry';
-  tryActions: Action[] = [];
-  catchActions: Action[] = [];
-  finallyActions: Action[] = [];
+type TExtension = {
+  tryActions: string[];
+  catchActions: string[];
+  finallyActions: string[];
+}
 
-  toJSON() {
-    const superJSON = super.toJSON();
-    return {
-      ...superJSON,
-      tryActions: this.tryActions.map(item => ({ id: item.id })),
-      catchActions: this.catchActions.map(item => ({ id: item.id })),
-      finallyActions: this.finallyActions.map(item => ({ id: item.id }))
+export class ActionTry extends Action<TExtension> {
+  $class = 'ActionTry';
+  type = ActionType.TRY;
+  
+  constructor(name: string) {
+    super(name);
+    this.extension = {
+      tryActions: [],
+      catchActions: [],
+      finallyActions: []
     };
   }
 }

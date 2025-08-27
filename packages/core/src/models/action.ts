@@ -20,7 +20,6 @@ export class Action<TExtension extends Record<string, any> = Record<string, any>
   name: string;
   params: ParamItem[] = [];
   result?: ActionResult;
-  private _async:boolean = false;
   $class = 'Action';
   extension: TExtension = {} as TExtension;
 
@@ -34,14 +33,12 @@ export class Action<TExtension extends Record<string, any> = Record<string, any>
       type: this.type,
       name: this.name,
       params: this.params.map(param => param.toJSON()),
-      async: this._async,
       result: this.result?.toJSON(),
       extension: this.extension
     };
   }
 
   fromJSON(json: ActionJSON<TExtension>, options: BuildPlaygroundOptions) { 
-    this.async = json.async;
     this.params = json.params.map(param => {
       if (param.type === 'CONTEXT') {
         return ParamContext.fromJSON(param, options);
@@ -64,15 +61,6 @@ export class Action<TExtension extends Record<string, any> = Record<string, any>
 
     this.extension = json.extension;
   }
-
-  set async(val:boolean) {
-    this._async = val;
-  }
-
-  get async():boolean {
-    return this._async;
-  }
-
 
   handle(params: any[], options: ActionOptions): Promise<any> | any {
     throw new Error('Method not implemented.');

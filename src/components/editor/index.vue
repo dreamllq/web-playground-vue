@@ -54,6 +54,58 @@ const onClear = () => {
 const onCopy = () => {
 
 };
+
+const a = () => new Promise(resolve => {
+  setTimeout(() => {
+    resolve('');
+    console.log('a');
+    
+  }, 1000);
+});
+
+const b = () => new Promise(resolve => {
+  setTimeout(() => {
+    resolve('');
+    console.log('b');
+  }, 1000);
+});
+
+const c = () => {
+  console.log('c');
+  
+};
+
+const delay = () => new Promise(resolve => setTimeout(() => resolve(), 1000));
+const d = async () => {
+  await delay();
+  console.log('d');
+};
+
+const list = [
+  a,
+  c,
+  b,
+  d
+];
+
+const exec = (list, index) => {
+  const func = list[index];
+  const result = func();
+  if (result instanceof Promise) {
+    return result.then(() => {
+      if (index < list.length - 1) {
+        return exec(list, index + 1); 
+      }
+    });
+  } else {
+    if (index < list.length - 1) {
+      return exec(list, index + 1);
+    }
+  }
+};
+
+exec(list, 0);
+
 </script>
 
 <style scoped>

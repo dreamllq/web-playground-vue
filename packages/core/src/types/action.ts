@@ -78,13 +78,18 @@ export type ActionResultVariableValueJSON = {
 export type ActionResultJSON = ActionResultVariableJSON | ActionResultVariableValueJSON;
 
 
-export type ActionJSON<TExtension> = {
+export type ActionJSON<TExtension=any> = {
   $class: string,
   id: string,
   name: string,
   type: ActionType,
-  async: boolean,
   params: ParamItemJSON[],
   result?: ActionResultJSON,
   extension: TExtension
 };
+
+export type ActionIfJSON = {
+  condition:string,
+  ifActions: {id: string}[],
+  elseActions: {id: string}[],
+} & ActionJSON;

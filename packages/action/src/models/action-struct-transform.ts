@@ -8,7 +8,6 @@ export class ActionStructTransform extends Action<TExtension> {
   $class = 'ActionStructTransform';
   constructor(name: string) {
     super(name);
-    this.async = true;
     this.extension.ruleString = '';
   }
 

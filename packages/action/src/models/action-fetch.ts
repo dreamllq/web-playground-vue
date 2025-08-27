@@ -9,10 +9,6 @@ type TExtension = {
 
 export class ActionFetch extends Action<TExtension> { 
   $class = 'ActionFetch';
-  constructor(name: string) {
-    super(name);
-    this.async = true;
-  }
 
   handle(params: any[], options: ActionOptions): Promise<void> {
     return new Promise((resolve, reject) => { 
