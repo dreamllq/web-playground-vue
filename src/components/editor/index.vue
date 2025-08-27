@@ -104,7 +104,7 @@ const exec = (list, index) => {
   }
 };
 
-exec(list, 0);
+// exec(list, 0);
 
 </script>
 

@@ -56,8 +56,7 @@ const show = (data: {id: string}) => {
 
   defaultData.value = {
     action: action.$class,
-    name: action.name,
-    async: action.async
+    name: action.name
   };
 
   dialogVisible.value = true;

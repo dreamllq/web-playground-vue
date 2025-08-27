@@ -18,14 +18,16 @@ export class ActionRef extends Action<TExtension> {
   handle(params: any[], options:ActionOptions): Promise<void> | void {
     if (this.extension.ref && this.extension.funcName) {
       const paramValues = this.transformParams(params, options);
-      if (this.async) {
-        return (async () => {
-          const data = await options.refs[this.extension.ref!].value[this.extension.funcName!](...paramValues);
+      
+      const data = options.refs[this.extension.ref!].value[this.extension.funcName!](...paramValues);
+      if (data instanceof Promise) {
+        return data.then(data => {
           this.setResultData(params, options, data);
-        })();
+          return data;
+        });
       } else {
-        const data = options.refs[this.extension.ref!].value[this.extension.funcName!](...paramValues);
         this.setResultData(params, options, data);
+        return data;
       }
     }
   }

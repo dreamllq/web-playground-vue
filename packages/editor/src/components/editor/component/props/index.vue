@@ -57,7 +57,8 @@ const onSubmit = async () => {
           const action = playground.getActionById(actionId);
           return action;
         });
-        const funcReturn = playground.getVariableById(prop.funcReturn!);
+
+        const funcReturn = prop.funcReturn ? playground.getVariableById(prop.funcReturn) : undefined;
         component.props[prop.name] = formatPropsPropFunction(actions, funcReturn);
       }
 
