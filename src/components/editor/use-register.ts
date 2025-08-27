@@ -3,7 +3,7 @@ import { ActionFetch, ActionCallback, ActionOperator, ActionRef, ActionStructTra
 import { Div, Span, Text } from 'l-play-dom-component';
 import { Button, Checkbox, Dialog, Form, FormItem, Icon, Input, 
   Radio, Select, Switch, Table, TableColumn, DatePicker } from 'l-play-element-plus-component';
-import { VIfElse } from 'l-play-vue-component';
+import { VFor, VIfElse } from 'l-play-vue-component';
 import { Layout } from '@/models/layout';
 import { FormLayoutWrapper } from '@/models/form-layout-wrapper';
 import { FormGrid } from '@/models/form-grid';
@@ -40,6 +40,7 @@ export const useRegister = () => {
         ElDatePicker: DatePicker,
         ElIcon: Icon,
         VIfElse: VIfElse,
+        VFor: VFor,
         Layout: Layout,
         FormLayoutWrapper: FormLayoutWrapper,
         FormGrid: FormGrid,
