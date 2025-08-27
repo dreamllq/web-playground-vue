@@ -80,7 +80,7 @@ const show = (data: {id: string}) => {
   const action = playground.actions.find(v => v.id === data.id);
   if (!action) throw new Error('操作不存在');
   
-  title.value = `编辑行为参数&结果-${action.name}`;
+  title.value = `编辑行为参数&结果-${action.name}-${action.$class}`;
 
   const params = action.params.map(param => {
     if (param.type === ParamType.VARIABLE) {

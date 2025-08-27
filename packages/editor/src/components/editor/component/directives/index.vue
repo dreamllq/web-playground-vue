@@ -76,7 +76,7 @@ const show = (data: {id: string}) => {
   const component = playground.components.find(v => v.id === id);
   if (!component) throw new Error('组件不存在');
 
-  title.value = `编辑组件指令-${component.name}`;
+  title.value = `编辑组件指令-${component.name}-${component.$class}`;
 
   const directives: DirectiveItem[] = [];
   Object.entries(component.directives).forEach(([name, directive]) => {

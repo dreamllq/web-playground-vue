@@ -58,7 +58,7 @@ const show = (data: {id: string}) => {
   const component = playground.components.find(v => v.id === id);
   if (!component) throw new Error('组件不存在');
 
-  title.value = `编辑组件插槽-${component.name}`;
+  title.value = `编辑组件插槽-${component.name}-${component.$class}`;
 
   const slots: SlotItem[] = [];
 

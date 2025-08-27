@@ -7,6 +7,7 @@
         :multiple='multiple'
         :collapse-tags='collapseTags' 
         :collapse-tags-tooltip='collapseTagsTooltip' 
+        filterable
         placeholder='选择组件' />
     </div>
     <div v-if='multiple' class='operator'>

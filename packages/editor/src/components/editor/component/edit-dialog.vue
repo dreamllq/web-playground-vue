@@ -53,7 +53,7 @@ const show = (data: {id: string}) => {
   const component = playground.components.find(v => v.id === data.id);
   if (!component) throw new Error('组件不存在');
 
-  title.value = `编辑组件-${component.name}`;
+  title.value = `编辑组件-${component.name}-${component.$class}`;
 
   defaultData.value = {
     name: component.name,

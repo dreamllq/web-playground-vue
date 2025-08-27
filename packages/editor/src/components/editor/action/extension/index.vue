@@ -52,7 +52,7 @@ const show = (data: {id: string}) => {
   const action = playground.actions.find(v => v.id === data.id);
   if (!action) throw new Error('操作不存在');
 
-  title.value = `编辑行为扩展参数-${action.name}`;
+  title.value = `编辑行为扩展参数-${action.name}-${action.$class}`;
 
   const extension = action.extension;
 

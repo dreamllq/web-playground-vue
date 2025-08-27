@@ -1,5 +1,9 @@
 <template>
-  <el-select-v2 v-model='model' :options='options' :disabled='disabled' />
+  <el-select-v2
+    v-model='model'
+    :options='options'
+    :disabled='disabled'
+    filterable />
 </template>
 
 <script setup lang="ts">

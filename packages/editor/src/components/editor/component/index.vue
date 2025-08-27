@@ -52,10 +52,10 @@
 import AreaLayout from '../layout/area-layout.vue';
 import { Plus, Edit, Delete } from '@element-plus/icons-vue';
 import AddDialog from './add-dialog.vue';
-import EditDialog from './edit-dialog.vue';
 import { onMounted, ref } from 'vue';
 import { useStore } from '../../store';
 import ItemLayout from '../layout/item-layout.vue';
+import EditDialog from './edit-dialog.vue';
 import EditPropsDialog from './props/index.vue';
 import EditSlotsDialog from './slots/index.vue';
 import EditDirectivesDialog from './directives/index.vue';

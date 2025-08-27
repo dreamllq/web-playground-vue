@@ -33,16 +33,16 @@
                 </el-button>
                 <template #dropdown>
                   <el-dropdown-menu>
-                    <el-dropdown-item>
+                    <el-dropdown-item @click='onEdit(data.data.data)'>
                       基本信息
                     </el-dropdown-item>
-                    <el-dropdown-item>
+                    <el-dropdown-item @click='onPropsEdit(data.data.data)'>
                       参数
                     </el-dropdown-item>
-                    <el-dropdown-item>
+                    <el-dropdown-item @click='onDirectivesEdit(data.data.data)'>
                       指令
                     </el-dropdown-item>
-                    <el-dropdown-item>
+                    <el-dropdown-item @click='onSlotsEdit(data.data.data)'>
                       插槽
                     </el-dropdown-item>
                   </el-dropdown-menu>
@@ -64,6 +64,10 @@
   </area-layout>
   <add-dialog ref='addDialogRef' @success='refresh' />
   <sort-dialog ref='sortDialogRef' @success='refresh' />
+  <edit-dialog ref='editDialogRef' @success='refresh' />
+  <edit-props-dialog ref='editPropsDialogRef' />
+  <edit-slots-dialog ref='editSlotsDialogRef' />
+  <edit-directives-dialog ref='editDirectivesDialogRef' />
 </template>
 
 <script setup lang="ts">
@@ -76,6 +80,10 @@ import { useTree } from './use-tree';
 import { useElementSize } from '@vueuse/core';
 import { ElMessageBox } from 'element-plus';
 import SortDialog from './sort/index.vue';
+import EditDialog from '../component/edit-dialog.vue';
+import EditPropsDialog from '../component/props/index.vue';
+import EditSlotsDialog from '../component/slots/index.vue';
+import EditDirectivesDialog from '../component/directives/index.vue';
 
 const wrapperRef = ref();
 const { width, height } = useElementSize(wrapperRef);
@@ -84,6 +92,10 @@ const { calculateComponent } = useTree();
 
 const addDialogRef = ref<InstanceType<typeof AddDialog>>();
 const sortDialogRef = ref<InstanceType<typeof sortDialogRef>>();
+const editDialogRef = ref<InstanceType<typeof EditDialog>>();
+const editPropsDialogRef = ref<InstanceType<typeof EditPropsDialog>>();
+const editSlotsDialogRef = ref<InstanceType<typeof EditSlotsDialog>>();
+const editDirectivesDialogRef = ref<InstanceType<typeof EditDirectivesDialog>>();
 
 const list = ref<{id: string, name: string}[]>([]);
 const tree = ref(playground.tree.map(item => calculateComponent(item)));
@@ -101,6 +113,21 @@ const onDelete = async (data) => {
   const index = tree.value.findIndex(item => item.id === data.id);
   playground.tree = playground.tree.filter((item, i) => index !== i);
   refresh();
+};
+const onEdit = (item) => {
+  editDialogRef.value!.show(item);
+};
+
+const onPropsEdit = (item) => {
+  editPropsDialogRef.value!.show(item);
+};
+
+const onSlotsEdit = (item) => {
+  editSlotsDialogRef.value!.show(item);
+};
+
+const onDirectivesEdit = (item) => {
+  editDirectivesDialogRef.value!.show(item);
 };
 
 const refresh = () => {
