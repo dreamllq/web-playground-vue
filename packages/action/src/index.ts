@@ -4,3 +4,4 @@ export { ActionOperator } from './models/action-operator';
 export { ActionRef } from './models/action-ref';
 export { ActionStructTransform } from './models/action-struct-transform';
 export { ActionLodash } from './models/action-lodash';
+export { ActionEval } from './models/action-eval';
