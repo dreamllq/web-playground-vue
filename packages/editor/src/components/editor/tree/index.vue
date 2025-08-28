@@ -68,6 +68,9 @@
               <el-button type='primary' link @click='onEditLifeCycle(data.data.data)'>
                 <el-icon><edit /></el-icon>
               </el-button>
+              <el-button type='danger' link @click='onDeleteLifeCycle(data.data.data)'>
+                <el-icon><delete /></el-icon>
+              </el-button>
             </div>
           </div>
         </template>
@@ -163,6 +166,12 @@ const onAddLifeCycle = () => {
 
 const onEditLifeCycle = (item) => {
   editLifeCycleDialogRef.value!.show(item);
+};
+
+const onDeleteLifeCycle = async (item) => {
+  await ElMessageBox.confirm('确定要删除吗？', '提示');
+  delete playground.lifeCycle[item.lifeCycle];
+  refresh();
 };
 
 const refresh = () => {
