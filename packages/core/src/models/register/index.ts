@@ -59,6 +59,15 @@ export class Register {
       });
     });
 
+    const lifeCycle = {};
+    if (json.lifeCycle) {
+      Object.entries(json.lifeCycle).forEach(([key, actions]) => {
+        lifeCycle[key] = actions.map(json => playground.getActionById(json.id));
+      });
+    }
+
+    playground.lifeCycle = lifeCycle;
+
     return playground;
   }
 }

@@ -1,3 +1,4 @@
+import { LifeCycle } from '../types/component';
 import { PlaygroundJSON } from '../types/playground';
 import { Action } from './action';
 import { Component } from './component';
@@ -11,6 +12,7 @@ export class Playground {
   components: Component[] = [];
   variables: Variable[] = [];
   actions: Action[] = [];
+  lifeCycle: {[key in LifeCycle]?: Action[]} = {};
 
   var(name: string, value: any) {
     const _var = new Variable(name, value);
@@ -53,7 +55,11 @@ export class Playground {
       tree: this.tree.map(item => ({ id: item.id })),
       components: this.components.map(item => item.toJSON()),
       actions: this.actions.map(item => item.toJSON()),
-      variables: this.variables.map(item => item.toJSON())
+      variables: this.variables.map(item => item.toJSON()),
+      lifeCycle: Object.entries(this.lifeCycle).reduce((acc, [key, actions]) => {
+        acc[key] = actions.map(item => ({ id: item.id }));
+        return acc;
+      }, {})
     };
   }
 }

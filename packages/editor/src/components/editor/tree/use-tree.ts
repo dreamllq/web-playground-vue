@@ -46,5 +46,36 @@ export const useTree = () => {
     };
   };
 
-  return { calculateComponent };
+  const calculateLifeCycle = () => ({
+    id: uuidv4(),
+    label: '生命周期',
+    data: {
+      type: 'lifeCycleArea',
+      data: playground.lifeCycle
+    },
+    children: Object.entries(playground.lifeCycle).map(([key, item]) => ({
+      id: uuidv4(),
+      label: `${key}`,
+      data: {
+        type: 'lifeCycle',
+        data: {
+          lifeCycle: key,
+          actions: item 
+        }
+      },
+      children: item.map(action => ({
+        id: uuidv4(),
+        label: `${action.name}-${action.$class}`,
+        data: {
+          type: 'action',
+          data: item
+        }
+      }))
+    }))
+  });
+
+  return {
+    calculateComponent,
+    calculateLifeCycle 
+  };
 };

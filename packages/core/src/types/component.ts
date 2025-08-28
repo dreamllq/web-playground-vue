@@ -5,6 +5,20 @@ import { PropValueValue } from '../models/prop-value-value';
 import { PropValueVariable } from '../models/prop-value-variable';
 import { PropValueVariableValue } from '../models/prop-value-variable-value';
 
+// export type LifeCycle = 'onMounted' | 'onUpdated' | 'onUnmounted' | 'onBeforeMount' | 'onBeforeUpdate' | 'onBeforeUnmount' | 'onErrorCaptured' | 'onRenderTracked' | 'onRenderTriggered' | 'onActivated' | 'onDeactivated' | 'onServerPrefetch'
+
+export enum LifeCycle {
+  BEFORE_MOUNT = 'BEFORE_MOUNT',
+  MOUNTED= 'MOUNTED',
+  BEFORE_UPDATE = 'BEFORE_UPDATE',
+  UPDATED = 'UPDATED',
+  BEFORE_UNMOUNT = 'BEFORE_UNMOUNT',
+  UNMOUNTED='UNMOUNTED',
+  ACTIVATED='ACTIVATED',
+  DEACTIVATED='DEACTIVATED',
+  ERROR_CAPTURED='ERROR_CAPTURED'
+}
+
 export enum PropType {
   PROP = 'PROP',
   EVENT = 'EVENT',

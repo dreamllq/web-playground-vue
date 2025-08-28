@@ -57,6 +57,18 @@
                 <el-icon><delete /></el-icon>
               </el-button>
             </div>
+
+            <div v-if='data.data.type === "lifeCycleArea"' style='flex: none; padding: 0 8px;'>
+              <el-button type='primary' link @click='onAddLifeCycle'>
+                <el-icon><plus /></el-icon>
+              </el-button>
+            </div>
+
+            <div v-if='data.data.type === "lifeCycle"' style='flex: none; padding: 0 8px;'>
+              <el-button type='primary' link @click='onEditLifeCycle(data.data.data)'>
+                <el-icon><edit /></el-icon>
+              </el-button>
+            </div>
           </div>
         </template>
       </el-tree-v2>
@@ -68,6 +80,8 @@
   <edit-props-dialog ref='editPropsDialogRef' />
   <edit-slots-dialog ref='editSlotsDialogRef' />
   <edit-directives-dialog ref='editDirectivesDialogRef' />
+  <add-life-cycle-dialog ref='addLifeCycleDialogRef' @success='refresh' />
+  <edit-life-cycle-dialog ref='editLifeCycleDialogRef' @success='refresh' />
 </template>
 
 <script setup lang="ts">
@@ -84,11 +98,13 @@ import EditDialog from '../component/edit-dialog.vue';
 import EditPropsDialog from '../component/props/index.vue';
 import EditSlotsDialog from '../component/slots/index.vue';
 import EditDirectivesDialog from '../component/directives/index.vue';
+import AddLifeCycleDialog from './life-cycle/add-dialog.vue';
+import EditLifeCycleDialog from './life-cycle/edit-dialog.vue';
 
 const wrapperRef = ref();
 const { width, height } = useElementSize(wrapperRef);
 const { playground } = useStore()!;
-const { calculateComponent } = useTree();
+const { calculateComponent, calculateLifeCycle } = useTree();
 
 const addDialogRef = ref<InstanceType<typeof AddDialog>>();
 const sortDialogRef = ref<InstanceType<typeof sortDialogRef>>();
@@ -97,8 +113,19 @@ const editPropsDialogRef = ref<InstanceType<typeof EditPropsDialog>>();
 const editSlotsDialogRef = ref<InstanceType<typeof EditSlotsDialog>>();
 const editDirectivesDialogRef = ref<InstanceType<typeof EditDirectivesDialog>>();
 
+const addLifeCycleDialogRef = ref<InstanceType<typeof AddLifeCycleDialog>>();
+const editLifeCycleDialogRef = ref<InstanceType<typeof EditLifeCycleDialog>>();
+
 const list = ref<{id: string, name: string}[]>([]);
-const tree = ref(playground.tree.map(item => calculateComponent(item)));
+const tree = ref();
+
+const calculateTree = () => {
+  const components = playground.tree.map(item => calculateComponent(item));
+  const lifeCycle = calculateLifeCycle();
+  tree.value = [lifeCycle, ...components];
+};
+
+calculateTree();
 
 onMounted(() => {
   refresh();
@@ -130,8 +157,16 @@ const onDirectivesEdit = (item) => {
   editDirectivesDialogRef.value!.show(item);
 };
 
+const onAddLifeCycle = () => {
+  addLifeCycleDialogRef.value!.show();
+};
+
+const onEditLifeCycle = (item) => {
+  editLifeCycleDialogRef.value!.show(item);
+};
+
 const refresh = () => {
-  tree.value = playground.tree.map(item => calculateComponent(item));
+  calculateTree();
 };
 
 const onSort = () => {
