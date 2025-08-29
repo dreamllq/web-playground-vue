@@ -1,4 +1,5 @@
 import { Action } from '../action';
+import { JSONSchema7 } from 'json-schema';
 
 interface Constructor<T = any> {
   new (...args: any[]): T; // `new` 关键字表示这是一个构造函数

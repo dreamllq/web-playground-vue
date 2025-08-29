@@ -18,7 +18,7 @@ import { PropType, ref, watch } from 'vue';
 import ValueTypeSelect from './value-type-select.vue';
 import { ValueType } from './type';
 import { getValueType } from './utils/get-value-type';
-import JsonSchemaRender from './index.vue';
+import JsonSchemaRender from './json-schema-render.vue';
 import { JSONSchema7 } from 'json-schema';
 import FormItem from './common/form-item.vue';
 

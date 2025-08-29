@@ -16,7 +16,7 @@ import { PropType, ref, watch } from 'vue';
 import { ValueType } from '../type';
 import { getValueType } from '../utils/get-value-type';
 import { JSONSchema7 } from 'json-schema';
-import JsonSchemaRender from '../index.vue';
+import JsonSchemaRender from '../json-schema-render.vue';
 import FormItem from '../common/form-item.vue';
 
 const props = defineProps({

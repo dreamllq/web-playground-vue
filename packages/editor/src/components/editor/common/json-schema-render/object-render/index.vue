@@ -37,7 +37,7 @@
 import { PropType, ref, watch } from 'vue';
 import AnyObjectRender from './any-object-render/index.vue';
 import { JSONSchema7 } from 'json-schema';
-import JsonSchemaRender from '../index.vue';
+import JsonSchemaRender from '../json-schema-render.vue';
 import { difference, intersection, isObject } from 'lodash';
 import FormItem from '../common/form-item.vue';
 import { Plus, Edit, Delete } from '@element-plus/icons-vue';

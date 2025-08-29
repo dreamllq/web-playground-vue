@@ -8,7 +8,8 @@
     <biz-form
       v-if='dialogVisible'
       ref='formRef'
-      :default-data='defaultData' />
+      :default-data='defaultData' 
+      :schema='schema' />
 
     <template #footer>
       <div class='dialog-footer'>
@@ -27,14 +28,16 @@
 import { useStore } from '../../../store';
 import { ref } from 'vue';
 import BizForm from './form.vue';
+import { JSONSchema7 } from 'json-schema';
 
 const emits = defineEmits(['success']);
-const { playground } = useStore()!;
+const { playground, register } = useStore()!;
 const dialogVisible = ref(false);
 const defaultData = ref<{extension: Record<string, any>}>();
 let id:string = '';
 const formRef = ref<InstanceType<typeof BizForm>>();
 const title = ref('');
+const schema = ref<JSONSchema7>();
 
 const onSubmit = async () => {
   const data = await formRef.value!.getData();
@@ -52,6 +55,8 @@ const onSubmit = async () => {
 const show = (data: {id: string}) => {
   id = data.id;
   const action = playground.getActionById(data.id);
+  const $class = (register.actionRegister.map.get(action.$class)!) as unknown as {extensionSchema: JSONSchema7};
+  schema.value = $class.extensionSchema;
 
   title.value = `编辑行为扩展参数-${action.name}-${action.$class}`;
 

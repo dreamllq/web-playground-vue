@@ -6,7 +6,7 @@
     label-position='top'>
     <el-form-item label='扩展参数' prop='extension'>
       <div style='flex: 1'>
-        <json-schema-render v-model='form.extension' />
+        <json-schema-render v-model='form.extension' :schema='schema' :render='{PlayGroundComponentSelect:PlayGroundComponentSelect}' />
       </div>
     </el-form-item>
   </el-form>
@@ -16,8 +16,8 @@
 import { PropType, ref } from 'vue';
 import type { FormInstance } from 'element-plus';
 import { cloneDeep } from 'lodash';
-import ObjectRender from '../../common/json-schema-render/object-render/index.vue';
 import JsonSchemaRender from '../../common/json-schema-render/index.vue';
+import PlayGroundComponentSelect from '../../common/component-select/index.vue';
 
 const props = defineProps({
   defaultData: {
@@ -27,6 +27,10 @@ const props = defineProps({
   disabledProps: {
     type: Array,
     default: () => []
+  },
+  schema: {
+    type: Object,
+    default: undefined
   }
 });
 

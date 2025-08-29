@@ -1,4 +1,5 @@
 import { Action, ActionOptions } from 'l-play-core';
+import { extensionSchema } from './action-ref-schema';
 
 type ComponentId = string;
 
@@ -7,6 +8,7 @@ type TExtension = {
   funcName?: string;
 }
 export class ActionRef extends Action<TExtension> {
+  static extensionSchema = extensionSchema;
   $class = 'ActionRef';
 
   constructor(name: string) {

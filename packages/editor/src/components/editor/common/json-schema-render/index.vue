@@ -1,27 +1,28 @@
 <template>
-  <component
-    :is='component'
-    v-if='component'
-    v-model='model'
-    :schema='schema' 
-    :render='render' 
-    v-bind='schema?.["x-props"]' />
+  <div style='display: flex; width: 100%'>
+    <div style='flex: 1'>
+      <json-schema-render v-model='model' :render='render' :schema='schema' />
+    </div>
+    <div style='flex: none; padding-left: 8px;'>
+      <el-button
+        type='primary'
+        link
+        @click='onView'>
+        <el-icon><search /></el-icon>
+      </el-button>
+    </div>
+    <view-json ref='viewJsonRef' />
+  </div>
 </template>
 
 <script setup lang="ts">
 import { JSONSchema7 } from 'json-schema';
-import { computed, PropType } from 'vue';
-import NotSupport from './not-support.vue';
-import AnyRender from './any-render.vue';
-import StringRender from './string-render.vue';
-import NumberRender from './number-render.vue';
-import BoolRender from './bool-render.vue';
-import ObjectRender from './object-render/index.vue';
-import ArrayRender from './array-render/index.vue';
-import IntegerRender from './integer-render.vue';
+import { computed, PropType, ref } from 'vue';
+import { Search } from '@element-plus/icons-vue';
+import JsonSchemaRender from './json-schema-render.vue';
+import ViewJson from './common/view-json.vue';
 
 const model = defineModel<any>({ default: undefined });
-
 const props = defineProps({
   schema: {
     type: Object as PropType<JSONSchema7 | undefined>,
@@ -33,46 +34,12 @@ const props = defineProps({
   }
 });
 
-const component = computed(() => {
-  if (!props.schema) {
-    return AnyRender;
-  }
+const viewJsonRef = ref<InstanceType<typeof ViewJson>>();
 
-  if (props.schema['x-component']) {
-    if (props.render) {
-      const com = props.render[props.schema['x-component']];
-      if (!com) {
-        console.error(`render中不存在 ${props.schema['x-component']}`);
-        console.log(props.render);
-        return NotSupport;
-      } else {
-        return com;
-      }
-    } else {
-      console.error(`render中不存在 ${props.schema['x-component']}`);
-      console.log(props.render);
-      return NotSupport;
-    }
-
-  }
-
-  if (props.schema.type === 'string') {
-    return StringRender;
-  } else if (props.schema.type === 'number') {
-    return NumberRender;
-  } else if (props.schema.type === 'boolean') {
-    return BoolRender;
-  } else if (props.schema.type === 'object') {
-    return ObjectRender;
-  } else if (props.schema.type === 'array') {
-    return ArrayRender;
-  } else if (props.schema.type === 'integer') {
-    return IntegerRender;
-  } else {
-    return NotSupport;
-  }
-});
-
+const onView = () => {
+  console.log(model.value);
+  viewJsonRef.value?.show(model.value);
+};
 </script>
 
 <style scoped>
