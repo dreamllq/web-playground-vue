@@ -1,9 +1,19 @@
 <template>
-  <el-select-v2 v-model='model' :options='options' @change='onChange' />
+  <el-select-v2 v-model='model' :options='filterOptions' @change='onChange' />
 </template>
 
 <script setup lang="ts">
-const model = defineModel<'string'|'number'|'boolean'|'object'|'array'>();
+import { ValueType } from './type';
+
+
+const props = defineProps({
+  types: {
+    type: Array,
+    default: undefined
+  }
+});
+
+const model = defineModel<ValueType>();
 if (!model.value) {
   model.value = 'string';
 }
@@ -15,6 +25,10 @@ const onChange = () => {
 };
 
 const options = [
+  {
+    value: 'null',
+    label: '空'
+  },
   {
     value: 'string',
     label: '字符串'
@@ -36,6 +50,20 @@ const options = [
     label: '数组'
   }
 ];
+
+let filterOptions:{
+    value: string;
+    label: string;
+}[] = [];
+if (Array.isArray(props.types)) {
+  options.forEach(item => {
+    if (props.types?.includes(item.value)) {
+      filterOptions.push(item);
+    }
+  });
+} else {
+  filterOptions = options;
+}
 </script>
 
 <style scoped>

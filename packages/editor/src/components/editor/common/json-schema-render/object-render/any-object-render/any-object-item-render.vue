@@ -1,22 +1,33 @@
 <template>
   <div>
     <!-- <value-type-select v-model='valueType' style='width: 150px' /> -->
-    <el-form label-width='80px'>
-      <el-form-item label='数据类型'>
-        <div style='flex: 1'>
-          <value-type-select v-model='valueType' />
-        </div>
-      </el-form-item>
-    </el-form>
-    <object-item-render v-model='objectItem' />
+    <form-item label='数据类型'>
+      <div style='flex: 1'>
+        <value-type-select v-model='valueType' :types='schema?[schema.type]:undefined' />
+      </div>
+    </form-item>
+    <object-item-render v-model='objectItem' :schema='schema' :render='render' />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { PropType, ref, watch } from 'vue';
 import ValueTypeSelect from '../../value-type-select.vue';
 import ObjectItemRender from '../object-item-render.vue';
 import { ValueType } from '../../type';
+import { JSONSchema7 } from 'json-schema';
+import FormItem from '../../common/form-item.vue';
+
+const props = defineProps({
+  schema: {
+    type: Object as PropType<JSONSchema7 | undefined>,
+    default: undefined
+  },
+  render: {
+    type: Object,
+    default: undefined
+  }
+});
 
 type ListItem ={
   key: string,
@@ -65,6 +76,8 @@ watch(valueType, () => {
 });
 
 watch(objectItem, () => {
+  console.log(objectItem.value);
+  
   model.value.key = objectItem.value.key;
   model.value.value = objectItem.value.value;
   emits('update:modelValue', model.value);

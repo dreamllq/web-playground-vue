@@ -40,6 +40,9 @@ const onSubmit = async () => {
   const data = await formRef.value!.getData();
   const action = playground.getActionById(id);
 
+  console.log(data);
+  
+
   action.extension = data.extension;
   
   dialogVisible.value = false;
@@ -53,6 +56,7 @@ const show = (data: {id: string}) => {
   title.value = `编辑行为扩展参数-${action.name}-${action.$class}`;
 
   const extension = action.extension;
+  console.log(extension);
 
   defaultData.value = { extension };
 

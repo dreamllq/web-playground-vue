@@ -34,10 +34,24 @@
 <script setup lang="ts">
 import { Plus, Edit, Delete } from '@element-plus/icons-vue';
 import AnyRender from '../any-render.vue';
+import { PropType } from 'vue';
+import { JSONSchema7 } from 'json-schema';
+
+const props = defineProps({
+  schema: {
+    type: Object as PropType<JSONSchema7 | undefined>,
+    default: undefined
+  },
+  render: {
+    type: Object,
+    default: undefined
+  }
+});
+
 const model = defineModel<any[]>({ default: () => [] });
 
 const onAdd = () => {
-  model.value.push('');
+  model.value = [...model.value, ''];
 };
 
 const onChange = (index:number, val: any) => {

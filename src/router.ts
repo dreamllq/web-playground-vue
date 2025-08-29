@@ -20,6 +20,10 @@ const routes = [
   {
     path: '/editor',
     component: () => import('@/components/editor/index.vue')
+  },
+  {
+    path: '/schema',
+    component: () => import('@/components/schema/index.vue')
   }
 ];
 

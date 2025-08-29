@@ -34,9 +34,6 @@
         "./src/*/index.vue"
       ]
     },
-    "typeRoots": [
-      "./node_modules/@types"
-    ],
     "outDir": "ts-dist"
   },
   "include": [

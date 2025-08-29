@@ -1,4 +1,14 @@
 export const getValueType = (value: any) => {
   const type = typeof value;
-  return type === 'object' ? (Array.isArray(value) ? 'array' : 'object') : type;
+  if (type === 'object') {
+    if (Array.isArray(value)) {
+      return 'array';
+    } else if (value === null) {
+      return 'null';
+    } else {
+      return 'object';
+    }
+  } else {
+    return type;
+  }
 };

@@ -6,7 +6,7 @@
     label-position='top'>
     <el-form-item label='扩展参数' prop='extension'>
       <div style='flex: 1'>
-        <object-render v-model='form.extension' />
+        <json-schema-render v-model='form.extension' />
       </div>
     </el-form-item>
   </el-form>
@@ -17,6 +17,7 @@ import { PropType, ref } from 'vue';
 import type { FormInstance } from 'element-plus';
 import { cloneDeep } from 'lodash';
 import ObjectRender from '../../common/json-schema-render/object-render/index.vue';
+import JsonSchemaRender from '../../common/json-schema-render/index.vue';
 
 const props = defineProps({
   defaultData: {

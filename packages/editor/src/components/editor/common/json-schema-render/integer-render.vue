@@ -3,19 +3,22 @@
     v-if='schema?.enum'
     v-model='model' 
     clearable
-    :options='schema.enum.map(item=>({label: item, value: item}))' />
-  <el-input
+    :options='schema.enum.map(item=>({label: String(item), value: Math.floor(Number(item))}))' />
+  <el-input-number
     v-else
-    v-model='model' 
+    v-model='model'
     clearable
-    type='textarea' />
+    type='number' 
+    style='width: 100%'
+    :step='1'
+    step-strictly />
 </template>
 
 <script setup lang="ts">
 import { JSONSchema7 } from 'json-schema';
-import { PropType } from 'vue';
+import { PropType, ref, watch } from 'vue';
 
-const model = defineModel<string>({ default: '' });
+const model = defineModel<number>();
 
 const props = defineProps({
   schema: {

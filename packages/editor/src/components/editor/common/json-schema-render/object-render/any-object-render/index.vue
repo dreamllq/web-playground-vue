@@ -11,7 +11,11 @@
     <template v-for='(item, index) in list' :key='index'>
       <div class='any-object-item'>
         <div class='select'>
-          <any-object-item-render :model-value='item' @update:model-value='(val)=>onChange(index,val)' />
+          <any-object-item-render
+            :model-value='item'
+            :schema='schema'
+            :render='render'
+            @update:model-value='(val)=>onChange(index,val)' />
         </div>
         <div class='operator'>
           <el-button type='danger' link @click='onDelete(index)'>
@@ -33,11 +37,23 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { PropType, ref } from 'vue';
 import AnyObjectItemRender from './any-object-item-render.vue';
 import { Plus, Edit, Delete } from '@element-plus/icons-vue';
 import ValueTypeSelect from '../../value-type-select.vue';
 import { ValueType } from '../../type';
+import { JSONSchema7 } from 'json-schema';
+
+const props = defineProps({
+  schema: {
+    type: Object as PropType<JSONSchema7 | undefined>,
+    default: undefined
+  },
+  render: {
+    type: Object,
+    default: undefined
+  }
+});
 
 const model = defineModel<Record<string, any>>({ default: () => ({}) });
 
@@ -57,12 +73,14 @@ const onAdd = () => {
   list.value.push({
     key: '',
     value: '',
-    valueType: 'string'
+    valueType: props.schema ? props.schema.type as ValueType : 'string'
   });
   transformObject();
 };
 
 const onChange = (index:number, val: ListItem) => {
+  console.log(index, val);
+  
   list.value[index] = val;
   transformObject();
 };

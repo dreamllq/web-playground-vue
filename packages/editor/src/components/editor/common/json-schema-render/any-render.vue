@@ -1,49 +1,33 @@
 <template>
   <div>
-    <el-form label-width='80px'>
-      <el-form-item label='数据类型'>
-        <div style='flex: 1'>
-          <value-type-select v-model='valueType' />
-        </div>
-      </el-form-item>
-      <el-form-item label='value'>
-        <div style='flex: 1'>
-          <template v-if="valueType === 'string'">
-            <string-render v-model='model' placeholder='value' />
-          </template>
-          <template v-else-if="valueType === 'number'">
-            <number-render v-model='model' placeholder='value' />
-          </template>
-          <template v-else-if="valueType === 'boolean'">
-            <bool-render v-model='model' placeholder='value' />
-          </template>
-          <template v-else-if="valueType === 'object'">
-            <object-render v-model='model' placeholder='value' />
-          </template>
-          <template v-else-if="valueType === 'array'">
-            <array-render v-model='model' placeholder='value' />
-          </template>
-          <template v-else>
-            <span>暂不支持</span>
-          </template>
-        </div>
-      </el-form-item>
-    </el-form>
+    <form-item label='数据类型'>
+      <div style='flex: 1'>
+        <value-type-select v-model='valueType' />
+      </div>
+    </form-item>
+    <form-item v-if='valueType !== "null"' label='value'>
+      <div style='flex: 1'>
+        <json-schema-render v-model='model' :render='render' :schema='{type: valueType, additionalProperties: true}' />
+      </div>
+    </form-item>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { PropType, ref, watch } from 'vue';
 import ValueTypeSelect from './value-type-select.vue';
 import { ValueType } from './type';
-import StringRender from './string-render.vue';
-import ObjectRender from './object-render/index.vue';
-import NumberRender from './number-render.vue';
-import BoolRender from './bool-render.vue';
-import ArrayRender from './array-render/index.vue';
 import { getValueType } from './utils/get-value-type';
+import JsonSchemaRender from './index.vue';
+import { JSONSchema7 } from 'json-schema';
+import FormItem from './common/form-item.vue';
 
-
+const props = defineProps({
+  render: {
+    type: Object,
+    default: undefined
+  }
+});
 const model = defineModel<any>({ default: '' });
 
 const valueType = ref<ValueType>(getValueType(model.value) as ValueType);
@@ -63,6 +47,8 @@ watch(valueType, () => {
     model.value = 0;
   } else if (valueType.value === 'string') {
     model.value = '';
+  } else if (valueType.value === 'null') {
+    model.value = null;
   }
 });
 

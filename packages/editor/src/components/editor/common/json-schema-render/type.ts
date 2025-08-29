@@ -1,1 +1,1 @@
-export type ValueType = 'string'|'number'|'boolean'|'object'|'array'
+export type ValueType = 'string'|'number'|'boolean'|'object'|'array'|'null'

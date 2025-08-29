@@ -1,44 +1,34 @@
 <template>
-  <el-form label-width='80px'>
-    <el-form-item label='key'>
-      <div style='flex: 1'>
-        <el-input v-model='key' placeholder='key' />
-      </div>
-    </el-form-item>
-    <el-form-item label='value'>
-      <div style='flex: 1'>
-        <template v-if="valueType === 'string'">
-          <string-render v-model='value' placeholder='value' />
-        </template>
-        <template v-else-if="valueType === 'number'">
-          <number-render v-model='value' placeholder='value' />
-        </template>
-        <template v-else-if="valueType === 'boolean'">
-          <bool-render v-model='value' placeholder='value' />
-        </template>
-        <template v-else-if="valueType === 'object'">
-          <object-render v-model='value' placeholder='value' />
-        </template>
-        <template v-else-if="valueType === 'array'">
-          <array-render v-model='value' placeholder='value' />
-        </template>
-        <template v-else>
-          <span>暂不支持</span>
-        </template>
-      </div>
-    </el-form-item>
-  </el-form>
+  <form-item label='key'>
+    <div style='flex: 1'>
+      <el-input v-model='key' placeholder='key' />
+    </div>
+  </form-item>
+  <form-item label='value'>
+    <div style='flex: 1'>
+      <json-schema-render v-model='value' :render='render' :schema='{type: valueType, additionalProperties: true}' />
+    </div>
+  </form-item>
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
-import StringRender from '../string-render.vue';
-import ObjectRender from './index.vue'; ;
-import NumberRender from '../number-render.vue';
-import BoolRender from '../bool-render.vue';
+import { PropType, ref, watch } from 'vue';
 import { ValueType } from '../type';
 import { getValueType } from '../utils/get-value-type';
-import ArrayRender from '../array-render/index.vue';
+import { JSONSchema7 } from 'json-schema';
+import JsonSchemaRender from '../index.vue';
+import FormItem from '../common/form-item.vue';
+
+const props = defineProps({
+  schema: {
+    type: Object as PropType<JSONSchema7 | undefined>,
+    default: undefined
+  },
+  render: {
+    type: Object,
+    default: undefined
+  }
+});
 
 type ObjectItem = {
   key: string;
@@ -53,7 +43,7 @@ const model = defineModel<ObjectItem>({
 });
 
 const key = ref<string>(model.value.key || '');
-const value = ref<any>(model.value.value || '');
+const value = ref<any>(model.value.value);
 const valueType = ref<ValueType>(getValueType(value.value) as ValueType);
 
 watch(model, () => {
