@@ -1,5 +1,6 @@
 import { Action, ActionOptions } from 'l-play-core';
 import { extensionSchema } from './action-fetch.schema';
+import { urlStringify } from 'simple-url-stringify';
 
 type TExtension = {
   url?:string,
@@ -16,7 +17,13 @@ export class ActionFetch extends Action<TExtension> {
 
   handle(params: any[], options: ActionOptions): Promise<void> {
     return new Promise((resolve, reject) => { 
-      const request = new Request(this.extension.url!, {
+      const url = urlStringify({
+        url: this.extension.url!,
+        params: this.extension.params,
+        query: this.extension.query
+      });
+      
+      const request = new Request(url, {
         method: this.extension.method || 'GET',
         body: this.extension.body || undefined,
         headers: this.extension.headers || {}
