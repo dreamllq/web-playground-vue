@@ -6,7 +6,8 @@
       v-model='model'
       :schema='schema' 
       :render='render' 
-      v-bind='xProps' />
+      v-bind='xProps' 
+      @update:model-value='onUpdateModelValue' />
     <template v-if='schema?.description' #description>
       {{ schema?.description }}
     </template>
@@ -15,7 +16,7 @@
 
 <script setup lang="ts">
 import { JSONSchema7 } from 'json-schema';
-import { computed, PropType } from 'vue';
+import { computed, PropType, ref } from 'vue';
 import NotSupport from './not-support.vue';
 import AnyRender from './any-render.vue';
 import StringRender from './string-render.vue';
@@ -40,6 +41,11 @@ const props = defineProps({
   }
 });
 
+const onUpdateModelValue = (val) => {
+  // console.log(val);
+  
+};
+
 const component = computed(() => {
   if (!props.schema) {
     return AnyRender;
@@ -63,26 +69,29 @@ const component = computed(() => {
 
   }
 
-  if (props.schema.type === 'string') {
-    return StringRender;
-  } else if (props.schema.type === 'number') {
-    return NumberRender;
-  } else if (props.schema.type === 'boolean') {
-    return BoolRender;
-  } else if (props.schema.type === 'object') {
-    return ObjectRender;
-  } else if (props.schema.type === 'array') {
-    return ArrayRender;
-  } else if (props.schema.type === 'integer') {
-    return IntegerRender;
-  } else {
-    return NotSupport;
+  if (props.schema.type) {
+    if (props.schema.type === 'string') {
+      return StringRender;
+    } else if (props.schema.type === 'number') {
+      return NumberRender;
+    } else if (props.schema.type === 'boolean') {
+      return BoolRender;
+    } else if (props.schema.type === 'object') {
+      return ObjectRender;
+    } else if (props.schema.type === 'array') {
+      return ArrayRender;
+    } else if (props.schema.type === 'integer') {
+      return IntegerRender;
+    } 
   }
-});
 
-const onView = () => {
-  
-};
+  if (Array.isArray(props.schema.oneOf) && props.schema.oneOf.length > 0) {
+    return AnyRender;
+  }
+
+  return NotSupport;
+
+});
 
 </script>
 

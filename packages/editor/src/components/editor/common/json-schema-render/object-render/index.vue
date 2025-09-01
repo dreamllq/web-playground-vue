@@ -38,9 +38,10 @@ import { PropType, ref, watch } from 'vue';
 import AnyObjectRender from './any-object-render/index.vue';
 import { JSONSchema7 } from 'json-schema';
 import JsonSchemaRender from '../json-schema-render.vue';
-import { difference, intersection, isObject } from 'lodash';
+import { cloneDeep, difference, intersection, isObject } from 'lodash';
 import FormItem from '../common/form-item.vue';
 import { Plus, Edit, Delete } from '@element-plus/icons-vue';
+import { deepEqual } from '../deep-equal';
 
 const props = defineProps({
   schema: {
@@ -50,10 +51,14 @@ const props = defineProps({
   render: {
     type: Object,
     default: undefined
+  },
+  modelValue: {
+    type: Object,
+    default: () => ({})
   }
 });
 
-const model = defineModel<Record<string, any>>({ default: () => ({}) });
+const model = ref(props.modelValue);
 const emits = defineEmits(['update:modelValue']);
 
 const form = ref<any>({});
@@ -73,12 +78,19 @@ if (props.schema?.properties) {
 }
 
 const onFormChange = (key, val) => {
-  if (Object.keys(val).length === 0) {
+  
+  if (isObject(val) && Object.keys(val).length === 0) {
     delete form.value[key];
   } else {
     form.value[key] = val;
   }
 };
+
+watch(() => props.modelValue, () => {
+  if (!deepEqual(model.value, props.modelValue)) {
+    model.value = cloneDeep(props.modelValue);
+  }
+}, { deep: true });
 
 
 watch(() => [form.value, anyForm.value], (newVAlue, oldValue) => {
@@ -86,6 +98,7 @@ watch(() => [form.value, anyForm.value], (newVAlue, oldValue) => {
     ...anyForm.value,
     ...form.value
   };
+  emits('update:modelValue', cloneDeep(model.value));
 }, { deep: true });
 
 watch(model, () => { 

@@ -79,8 +79,6 @@ const onAdd = () => {
 };
 
 const onChange = (index:number, val: ListItem) => {
-  console.log(index, val);
-  
   list.value[index] = val;
   transformObject();
 };

@@ -16,4 +16,4 @@ export const extensionSchema: JSONSchema7 = {
     },
     additionalProperties: false
   }
-};
+} as JSONSchema7;

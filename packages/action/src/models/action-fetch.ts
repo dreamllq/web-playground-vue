@@ -1,13 +1,17 @@
 import { Action, ActionOptions } from 'l-play-core';
+import { extensionSchema } from './action-fetch.schema';
 
 type TExtension = {
   url?:string,
   method?:string,
   headers?:Record<string, string>
-  body?:any
+  body?:any,
+  query?:Record<string, any>
+  params?:Record<string, any>
 }
 
 export class ActionFetch extends Action<TExtension> { 
+  static extensionSchema = extensionSchema;
   $class = 'ActionFetch';
 
   handle(params: any[], options: ActionOptions): Promise<void> {

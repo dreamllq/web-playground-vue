@@ -76,8 +76,6 @@ watch(valueType, () => {
 });
 
 watch(objectItem, () => {
-  console.log(objectItem.value);
-  
   model.value.key = objectItem.value.key;
   model.value.value = objectItem.value.value;
   emits('update:modelValue', model.value);

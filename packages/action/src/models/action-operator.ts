@@ -1,5 +1,6 @@
 import { Action, ActionOptions } from 'l-play-core';
 import { Parser } from 'expr-eval';
+import { extensionSchema } from './action-operator.schema';
 
 type TExtension = {
   operator?:string;
@@ -7,6 +8,7 @@ type TExtension = {
 
 export class ActionOperator extends Action<TExtension> { 
   $class = 'ActionOperator';
+  static extensionSchema = extensionSchema;
 
   constructor(name: string) {
     super(name);

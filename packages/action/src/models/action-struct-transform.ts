@@ -1,11 +1,13 @@
 import { Action, ActionOptions, BuildPlaygroundOptions } from 'l-play-core';
 import jsonata from 'jsonata';
+import { extensionSchema } from './action-struct-transform.schema';
 
 type TExtension = {
   ruleString: string
 }
 export class ActionStructTransform extends Action<TExtension> { 
   $class = 'ActionStructTransform';
+  static extensionSchema = extensionSchema;
   constructor(name: string) {
     super(name);
     this.extension.ruleString = '';

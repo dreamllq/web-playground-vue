@@ -1,5 +1,5 @@
 import { Action, ActionOptions } from 'l-play-core';
-import { extensionSchema } from './action-ref-schema';
+import { extensionSchema } from './action-ref.schema';
 
 type ComponentId = string;
 
